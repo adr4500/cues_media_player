@@ -1,5 +1,8 @@
 add_subdirectory(JUCE)
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC JUCE_WEB_BROWSER=0)
+target_compile_definitions(${PROJECT_NAME} PUBLIC JUCE_USE_CURL=0)
+
 target_include_directories(
   ${PROJECT_NAME}
   PRIVATE ThirdParty/JUCE/modules/juce_analytics
