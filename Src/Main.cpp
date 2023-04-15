@@ -30,8 +30,30 @@ public:
     //==============================================================================
     void initialise (const juce::String& commandLine) override
     {
-        // This method is where you should put your application's initialisation
-        // code..
+        if(not externalInfo.setCSVPath("Cues.csv"))
+        {
+            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
+                                                "Error",
+                                                "The CSV file does not exist");
+            quit();
+            return;
+        }
+        if (not externalInfo.setVideoPath("Video.mp4"))
+        {
+            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
+                                                "Error",
+                                                "The video file does not exist");
+            quit();
+            return;
+        }
+        if (not externalInfo.setupCSV())
+        {
+            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
+                                                "Error",
+                                                "The CSV file is not valid");
+            quit();
+            return;
+        }
 
         mainWindow.reset (new MainWindow (getApplicationName ()));
     }
