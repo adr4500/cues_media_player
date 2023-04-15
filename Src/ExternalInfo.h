@@ -24,8 +24,8 @@ public:
 
     //==============================================================================
     // Setters
-    void setVideoPath(juce::String path);
-    void setCSVPath(juce::String path);
+    bool setVideoPath(juce::String path);
+    bool setCSVPath(juce::String path);
 
     //==============================================================================
     // Setup

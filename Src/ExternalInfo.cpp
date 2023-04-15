@@ -19,16 +19,26 @@ std::vector<Cue>& ExternalInfo::getCues () { return cues; }
 
 //==============================================================================
 // Setters
-void ExternalInfo::setVideoPath (juce::String path)
+bool ExternalInfo::setVideoPath (juce::String path)
 {
     videoPath = path;
     videoFile = juce::File (videoPath);
+
+    if (videoFile.existsAsFile ())
+        return true;
+    else
+        return false;
 }
 
-void ExternalInfo::setCSVPath (juce::String path)
+bool ExternalInfo::setCSVPath (juce::String path)
 {
     CSVPath = path;
     CSVFile = juce::File (CSVPath);
+
+    if (CSVFile.existsAsFile ())
+        return true;
+    else
+        return false;
 }
 
 //==============================================================================
@@ -40,7 +50,8 @@ bool ExternalInfo::setupCSV ()
     if (CSVLines.size () == 0)
         return false;
 
-    for (int i = 0; i < CSVLines.size (); i++)
+    // Ignore the first line of description
+    for (int i = 1; i < CSVLines.size (); i++)
     {
         juce::StringArray line;
 
