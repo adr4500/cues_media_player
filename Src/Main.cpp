@@ -10,11 +10,11 @@
 #include "MainComponent.h"
 
 //==============================================================================
-class cues_media_playerApplication : public juce::JUCEApplication
+class CMPApplication : public juce::JUCEApplication
 {
 public:
     //==============================================================================
-    cues_media_playerApplication () {}
+    CMPApplication () {}
 
     const juce::String getApplicationName () override
     {
@@ -24,7 +24,7 @@ public:
     {
         return ProjectInfo::versionString;
     }
-    bool moreThanOneInstanceAllowed () override { return true; }
+    bool moreThanOneInstanceAllowed () override { return false; }
 
     //==============================================================================
     void initialise (const juce::String& commandLine) override
@@ -113,4 +113,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (cues_media_playerApplication)
+START_JUCE_APPLICATION (CMPApplication)

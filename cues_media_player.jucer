@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="WtGlSN" name="cues_media_player" projectType="guiapp" useAppConfig="0"
+<JUCERPROJECT id="WtGlSN" name="CMP" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               version="0.0.0" companyName="SiMDE" companyWebsite="https://assos.utc.fr/simde/"
               cppLanguageStandard="20">
-  <MAINGROUP id="YVRKD7" name="cues_media_player">
+  <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
       <FILE id="zUsRWN" name="Main.cpp" compile="1" resource="0" file="Src/Main.cpp"/>
       <FILE id="N944nx" name="MainComponent.h" compile="0" resource="0" file="Src/MainComponent.h"/>

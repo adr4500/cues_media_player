@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.4)
 
-project("cues_media_player")
+project("CMP")
 
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/ThirdParty/FRUT/prefix/FRUT/cmake")
@@ -10,8 +10,6 @@ include(Reprojucer)
 
 if(MSVC)
   add_compile_options(/bigobj)
-else()
-  add_compile_options(-Wa,-mbig-obj)
 endif()
 
 set(cues_media_player_jucer_FILE
@@ -22,7 +20,7 @@ jucer_project_begin(JUCER_FORMAT_VERSION "1" PROJECT_FILE
 
 jucer_project_settings(
   PROJECT_NAME
-  "cues_media_player"
+  "CMP"
   PROJECT_VERSION
   "0.0.0"
   COMPANY_NAME
@@ -39,12 +37,12 @@ jucer_project_settings(
   PROJECT_TYPE
   "GUI Application"
   BUNDLE_IDENTIFIER
-  "com.SiMDE.cues_media_player"
+  "com.SiMDE.CMP"
   CXX_LANGUAGE_STANDARD
   "C++20")
 
 jucer_project_files(
-  "cues_media_player/Src"
+  "CMP/Src"
   # Compile   Xcode     Binary    File Resource  Resource
   x
   .
