@@ -4,7 +4,7 @@ format :
 
 generate :
 	ThirdParty/FRUT/prefix/FRUT/bin/Jucer2CMake reprojucer cues_media_player.jucer ThirdParty/FRUT/prefix/FRUT/cmake/Reprojucer.cmake
-	sed -i '/include(Reprojucer)/a  \ \nif (MSVC)\nadd_compile_options(/bigobj)\nelse ()\nadd_compile_options(-Wa,-mbig-obj)\nendif ()' CMakeLists.txt
+	sed -i '/include(Reprojucer)/a  \ \nif (MSVC)\nadd_compile_options(/bigobj)\nendif ()' CMakeLists.txt
 	cmake-format -i CMakeLists.txt
 
 configure :
