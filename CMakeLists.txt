@@ -121,6 +121,11 @@ jucer_project_module(
   # JUCE_WEB_BROWSER JUCE_USE_WIN_WEBVIEW2 JUCE_ENABLE_LIVE_CONSTANT_EDITOR
 )
 
+jucer_project_module(
+  juce_video PATH "ThirdParty/JUCE/modules"
+  # JUCE_USE_CAMERA JUCE_SYNC_VIDEO_VOLUME_WITH_OS_MEDIA_VOLUME
+)
+
 jucer_export_target("Code::Blocks (Windows)")
 
 jucer_export_target_configuration(

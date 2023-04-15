@@ -33,6 +33,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -47,6 +48,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017">
@@ -61,6 +63,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2019 targetFolder="Builds/VisualStudio2019">
@@ -75,6 +78,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2022 targetFolder="Builds/VisualStudio2022">
@@ -89,6 +93,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>
@@ -99,5 +104,6 @@
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
 </JUCERPROJECT>
