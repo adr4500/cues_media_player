@@ -30,28 +30,37 @@ public:
     //==============================================================================
     void initialise (const juce::String& commandLine) override
     {
-        if(not externalInfo.setCSVPath("Cues.csv"))
+        if (not externalInfo.setCSVPath ("Cues.csv"))
         {
-            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
-                                                "Error",
-                                                "The CSV file does not exist");
-            quit();
+            juce::AlertWindow::showMessageBoxAsync (
+                juce::AlertWindow::AlertIconType::WarningIcon,
+                "Error",
+                "The CSV file does not exist",
+                "OK",
+                nullptr,
+                juce::ModalCallbackFunction::create ([] (int) { juce::MessageManager::getInstance()->stopDispatchLoop(); }));
             return;
         }
-        if (not externalInfo.setVideoPath("Video.mp4"))
+        if (not externalInfo.setVideoPath ("Video.mp4"))
         {
-            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
-                                                "Error",
-                                                "The video file does not exist");
-            quit();
+            juce::AlertWindow::showMessageBoxAsync (
+                juce::AlertWindow::AlertIconType::WarningIcon,
+                "Error",
+                "The video file does not exist",
+                "OK",
+                nullptr,
+                juce::ModalCallbackFunction::create ([] (int) { juce::MessageManager::getInstance()->stopDispatchLoop(); }));
             return;
         }
-        if (not externalInfo.setupCSV())
+        if (not externalInfo.setupCSV ())
         {
-            juce::AlertWindow::showMessageBoxAsync(juce::AlertWindow::AlertIconType::WarningIcon,
-                                                "Error",
-                                                "The CSV file is not valid");
-            quit();
+            juce::AlertWindow::showMessageBoxAsync (
+                juce::AlertWindow::AlertIconType::WarningIcon,
+                "Error",
+                "The CSV file is not valid",
+                "OK",
+                nullptr,
+                juce::ModalCallbackFunction::create ([] (int) { juce::MessageManager::getInstance()->stopDispatchLoop(); }));
             return;
         }
 
