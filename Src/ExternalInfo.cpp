@@ -19,10 +19,10 @@ std::vector<Cue>& ExternalInfo::getCues () { return cues; }
 
 //==============================================================================
 // Setters
-bool ExternalInfo::setVideoPath (juce::String path)
+bool ExternalInfo::setVideoPath (juce::String _path)
 {
-    videoPath = path;
-    videoFile = juce::File (videoPath);
+    videoPath = _path;
+    videoFile = juce::File::getCurrentWorkingDirectory ().getChildFile (videoPath);
 
     if (videoFile.existsAsFile ())
         return true;
@@ -30,10 +30,10 @@ bool ExternalInfo::setVideoPath (juce::String path)
         return false;
 }
 
-bool ExternalInfo::setCSVPath (juce::String path)
+bool ExternalInfo::setCSVPath (juce::String _path)
 {
-    CSVPath = path;
-    CSVFile = juce::File (CSVPath);
+    CSVPath = _path;
+    CSVFile = juce::File::getCurrentWorkingDirectory ().getChildFile (CSVPath);
 
     if (CSVFile.existsAsFile ())
         return true;
@@ -72,13 +72,13 @@ bool ExternalInfo::setupCSV ()
 
 void ExternalInfo::sortCues ()
 {
-    std::sort (cues.begin (), cues.end (), [](const Cue& a, const Cue& b) {
+    std::sort (cues.begin (), cues.end (), [] (const Cue& a, const Cue& b) {
         return a.getTimecode () < b.getTimecode ();
     });
 }
 
 //==============================================================================
-// CSV
+// Private methods
 void ExternalInfo::readCSV ()
 {
     CSVLines.clear ();

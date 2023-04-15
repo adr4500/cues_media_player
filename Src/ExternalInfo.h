@@ -24,8 +24,8 @@ public:
 
     //==============================================================================
     // Setters
-    bool setVideoPath(juce::String path);
-    bool setCSVPath(juce::String path);
+    bool setVideoPath(juce::String _path);
+    bool setCSVPath(juce::String _path);
 
     //==============================================================================
     // Setup
@@ -34,7 +34,7 @@ public:
 
 private:
     //==============================================================================
-    // CSV
+    // Private methods
     void readCSV();
 
     //==============================================================================
