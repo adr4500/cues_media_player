@@ -28,7 +28,7 @@ jucer_project_settings(
   COMPANY_WEBSITE
   "https://assos.utc.fr/simde/"
   USE_GLOBAL_APPCONFIG_HEADER
-  OFF
+  ON
   ADD_USING_NAMESPACE_JUCE_TO_JUCE_HEADER
   OFF
   DISPLAY_THE_JUCE_SPLASH_SCREEN
@@ -44,6 +44,30 @@ jucer_project_settings(
 jucer_project_files(
   "CMP/Src"
   # Compile   Xcode     Binary    File Resource  Resource
+  x
+  .
+  .
+  "Src/Cue.cpp"
+  .
+  .
+  .
+  "Src/Cue.h"
+  x
+  .
+  .
+  "Src/ExternalInfo.cpp"
+  .
+  .
+  .
+  "Src/ExternalInfo.h"
+  x
+  .
+  .
+  "Src/Timecode.cpp"
+  .
+  .
+  .
+  "Src/Timecode.h"
   x
   .
   .

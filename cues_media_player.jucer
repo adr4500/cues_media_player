@@ -6,6 +6,13 @@
               cppLanguageStandard="20">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="c3xacu" name="Cue.cpp" compile="1" resource="0" file="Src/Cue.cpp"/>
+      <FILE id="zM9InN" name="Cue.h" compile="0" resource="0" file="Src/Cue.h"/>
+      <FILE id="QjNY5d" name="ExternalInfo.cpp" compile="1" resource="0"
+            file="Src/ExternalInfo.cpp"/>
+      <FILE id="mWFUo1" name="ExternalInfo.h" compile="0" resource="0" file="Src/ExternalInfo.h"/>
+      <FILE id="pzUgDU" name="Timecode.cpp" compile="1" resource="0" file="Src/Timecode.cpp"/>
+      <FILE id="N8syCN" name="Timecode.h" compile="0" resource="0" file="Src/Timecode.h"/>
       <FILE id="zUsRWN" name="Main.cpp" compile="1" resource="0" file="Src/Main.cpp"/>
       <FILE id="N944nx" name="MainComponent.h" compile="0" resource="0" file="Src/MainComponent.h"/>
       <FILE id="XOMrBe" name="MainComponent.cpp" compile="1" resource="0"

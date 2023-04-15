@@ -8,6 +8,7 @@
 
 #include <JuceHeader.h>
 #include "MainComponent.h"
+#include "ExternalInfo.h"
 
 //==============================================================================
 class CMPApplication : public juce::JUCEApplication
@@ -109,6 +110,7 @@ public:
 
 private:
     std::unique_ptr<MainWindow> mainWindow;
+    CMP::ExternalInfo externalInfo;
 };
 
 //==============================================================================
