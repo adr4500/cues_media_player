@@ -74,8 +74,9 @@ public:
     }
 
     //==============================================================================
-    void initialise (const juce::String& commandLine) override
+    void initialise (const juce::String& /*commandLine*/) override
     {
+        CMP::Video::setMainThread (this);
         if (not externalInfo.setCSVPath ("Cues.csv"))
         {
             juce::AlertWindow::showMessageBoxAsync (
@@ -89,7 +90,7 @@ public:
                 }));
             return;
         }
-        if (not externalInfo.setVideoPath ("Video.avi"))
+        if (not externalInfo.setVideoPath ("Video.mp4"))
         {
             juce::AlertWindow::showMessageBoxAsync (
                 juce::AlertWindow::AlertIconType::WarningIcon,
@@ -118,7 +119,7 @@ public:
         controlPannelWindow.reset (
             new ControlPannelWindow (getApplicationName ()));
 
-        video = new CMP::Video (externalInfo.getVideoFile (), this);
+        video = new CMP::Video (externalInfo.getVideoFile ());
     }
 
     void shutdown () override
@@ -137,7 +138,7 @@ public:
         quit ();
     }
 
-    void anotherInstanceStarted (const juce::String& commandLine) override
+    void anotherInstanceStarted (const juce::String& /*commandLine*/) override
     {
         // When another instance of the app is launched while this one is
         // running, this method is invoked, and the commandLine parameter tells

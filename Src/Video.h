@@ -15,7 +15,7 @@ class Video : juce::MessageListener
 {
 public:
     //==============================================================================
-    Video (const juce::File& _videoFile, juce::MessageListener* _mainThread);
+    Video (const juce::File& _videoFile);
     ~Video () = default;
 
     //==============================================================================
@@ -28,9 +28,8 @@ public:
     void handleMessage (const juce::Message& _message) override;
 
     //==============================================================================
-    // Routine
-    void routine ();
-    void handleGstMessage (GstMessage* _msg);
+    // Static
+    static void setMainThread (juce::MessageListener* _mainThread);
 
 private:
     //==============================================================================
@@ -39,9 +38,55 @@ private:
     void restartAndPause ();
     void terminate ();
 
-    bool playing{false};
+    class VideoThread : public juce::Thread
+    {
+    public:
+        VideoThread (juce::String _videoPath)
+            : Thread ("Video Thread"), videoPath (_videoPath)
+        {
+        }
+        ~VideoThread () = default;
 
-    juce::MessageListener* mainThread{nullptr};
+        void run () override;
+        void recieveMessage (const VideoMessage& _message);
+
+        void stop ();
+
+        bool isPlaying () const;
+
+    private:
+        static gboolean
+        busCallback (GstBus* _bus, GstMessage* _msg, gpointer _data);
+
+        static void
+        onPadAdded (GstElement* _element, GstPad* _pad, gpointer _data);
+        static GstPadProbeReturn encoderCbHaveData (GstPad* pad,
+                                                    GstPadProbeInfo* info,
+                                                    gpointer user_data);
+
+        void clean ();
+
+        GstElement* pipeline{nullptr};
+        GstElement* source{nullptr};
+        GstElement* demuxer{nullptr};
+        GstElement* parser{nullptr};
+        GstElement* decoder{nullptr};
+        GstElement* conv{nullptr};
+        GstElement* sink{nullptr};
+
+        GMainLoop* loop;
+
+        GstBus* bus{nullptr};
+        guint busWatchId{0};
+        GstMessage* msg{nullptr};
+
+        bool playing{false};
+
+        juce::String videoPath;
+    } videoThread;
+
+
+    static juce::MessageListener* mainThread;
 };
 
 } // namespace CMP
