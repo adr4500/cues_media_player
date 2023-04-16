@@ -8,34 +8,35 @@ namespace CMP
 
 //==============================================================================
 /*
-    This class stores the data that is imported from external files : The CSV file that contains cues and the video.
+    This class stores the data that is imported from external files : The CSV
+   file that contains cues and the video.
 */
 class ExternalInfo
 {
 public:
     //==============================================================================
-    ExternalInfo();
-    ~ExternalInfo();
+    ExternalInfo ();
+    ~ExternalInfo ();
 
     //==============================================================================
     // Getters
-    juce::File& getVideoFile();
-    std::vector<Cue>& getCues();
+    juce::File& getVideoFile ();
+    std::vector<Cue>& getCues ();
 
     //==============================================================================
     // Setters
-    bool setVideoPath(juce::String _path);
-    bool setCSVPath(juce::String _path);
+    bool setVideoPath (juce::String _path);
+    bool setCSVPath (juce::String _path);
 
     //==============================================================================
     // Setup
-    bool setupCSV();
-    void sortCues();
+    bool setupCSV ();
+    void sortCues ();
 
 private:
     //==============================================================================
     // Private methods
-    void readCSV();
+    void readCSV ();
 
     //==============================================================================
     juce::String videoPath;
@@ -47,4 +48,4 @@ private:
     std::vector<Cue> cues;
 };
 
-}
+} // namespace CMP
