@@ -31,14 +31,13 @@ private:
 };
 
 
-
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
 class CueComponent : public juce::Component
 {
-public :
+public:
     //==============================================================================
     CueComponent (Timecode& _current_time);
     ~CueComponent () override;
@@ -49,7 +48,7 @@ public :
 
     //==============================================================================
     void setCue (Cue* _cue);
-    void updateTime();
+    void updateTime ();
 
     //==============================================================================
     Cue* getCue ();

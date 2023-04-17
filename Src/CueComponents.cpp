@@ -22,15 +22,12 @@ void CircleIndicator::paint (juce::Graphics& g)
     g.fillEllipse (justifiedEllipse);
 }
 
-void CircleIndicator::setColor (juce::Colour _color)
-{
-    color = _color;
-}
+void CircleIndicator::setColor (juce::Colour _color) { color = _color; }
 
 void CircleIndicator::setStatus (bool _is_on)
 {
     fillColour = _is_on ? color : juce::Colours::black;
-    repaint();
+    repaint ();
 }
 
 
@@ -42,7 +39,7 @@ CueComponent::CueComponent (Timecode& _current_time)
     addAndMakeVisible (timecodeLabel);
     addAndMakeVisible (cueNameLabel);
     addAndMakeVisible (cueDescriptionLabel);
-    timecodeLabel.setFont(juce::Font(20.0f));
+    timecodeLabel.setFont (juce::Font (20.0f));
 
     addAndMakeVisible (circleIndicators[0]);
     addAndMakeVisible (circleIndicators[1]);
@@ -77,27 +74,28 @@ void CueComponent::resized ()
     // Name and description
     auto labelWidth = static_cast<int> (getWidth () * 0.3);
     auto labelHeight = static_cast<int> (getHeight () * 0.4);
-    cueNameLabel.setBounds (
-        leftMargin, topMargin, labelWidth, labelHeight);
+    cueNameLabel.setBounds (leftMargin, topMargin, labelWidth, labelHeight);
     cueDescriptionLabel.setBounds (
         leftMargin, 2 * topMargin + labelHeight, labelWidth, labelHeight);
-    
+
     // Timecode
     auto timecodeWidth = static_cast<int> (getWidth () * 0.3);
     auto timecodeHeight = static_cast<int> (getHeight () * 0.9);
     timecodeLabel.setBounds (
         leftMargin + labelWidth, topMargin, timecodeWidth, timecodeHeight);
-    
+
     // Circle Indicators
     auto space_between_circles = static_cast<int> (getWidth () * 0.01);
-    auto circleWidth = static_cast<int> ((getWidth () * 0.3 - space_between_circles)/4);
+    auto circleWidth =
+        static_cast<int> ((getWidth () * 0.3 - space_between_circles) / 4);
     for (int i = 0; i < 4; i++)
     {
         circleIndicators[i].setBounds (
-            leftMargin + labelWidth + timecodeWidth + space_between_circles + i * (circleWidth + space_between_circles),
+            leftMargin + labelWidth + timecodeWidth + space_between_circles +
+                i * (circleWidth + space_between_circles),
             0,
             circleWidth,
-            getHeight());
+            getHeight ());
     }
 }
 
@@ -109,7 +107,8 @@ void CueComponent::setCue (Cue* _cue)
     if (cue != nullptr)
     {
         cueNameLabel.setText (cue->getName (), juce::dontSendNotification);
-        cueDescriptionLabel.setText (cue->getDescription (), juce::dontSendNotification);
+        cueDescriptionLabel.setText (cue->getDescription (),
+                                     juce::dontSendNotification);
     }
     else
     {
@@ -137,19 +136,19 @@ void CueComponent::updateTime ()
         circleIndicators[1].setStatus (false);
         circleIndicators[2].setStatus (false);
         circleIndicators[3].setStatus (false);
-        if (time.toSeconds() > 0)
+        if (time.toSeconds () > 0)
         {
             circleIndicators[3].setStatus (true);
         }
-        if (time.toSeconds() > -1)
+        if (time.toSeconds () > -1)
         {
             circleIndicators[2].setStatus (true);
         }
-        if (time.toSeconds() > -2)
+        if (time.toSeconds () > -2)
         {
             circleIndicators[1].setStatus (true);
         }
-        if (time.toSeconds() > -3)
+        if (time.toSeconds () > -3)
         {
             circleIndicators[0].setStatus (true);
         }
@@ -157,7 +156,4 @@ void CueComponent::updateTime ()
 }
 
 //==============================================================================
-Cue* CueComponent::getCue ()
-{
-    return cue;
-}
+Cue* CueComponent::getCue () { return cue; }

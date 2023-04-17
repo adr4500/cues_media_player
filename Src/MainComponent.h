@@ -46,10 +46,14 @@ private:
     Timecode& current_time;
     ExternalInfo& externalInfo;
 
+    Timecode lastCueExecution;
+
+
     juce::TextButton pausePlayButton;
 
     std::vector<CueComponent*> cueComponents;
     int firstCueId{0};
+    int nextCuePosition{0};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

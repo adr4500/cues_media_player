@@ -6,7 +6,9 @@ using namespace CMP;
 juce::MessageListener* MainComponent::mainApplication = nullptr;
 
 //==============================================================================
-MainComponent::MainComponent (Timecode& _current_time, ExternalInfo& _externalInfo) : current_time (_current_time), externalInfo (_externalInfo)
+MainComponent::MainComponent (Timecode& _current_time,
+                              ExternalInfo& _externalInfo)
+    : current_time (_current_time), externalInfo (_externalInfo)
 {
     assert (mainApplication != nullptr);
 
@@ -31,7 +33,7 @@ MainComponent::MainComponent (Timecode& _current_time, ExternalInfo& _externalIn
     // Configure Cues Components
     for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
     {
-        cueComponents.emplace_back (new CueComponent(current_time));
+        cueComponents.emplace_back (new CueComponent (current_time));
         addAndMakeVisible (cueComponents[i]);
     }
 
@@ -68,18 +70,18 @@ void MainComponent::resized ()
 
     pausePlayButton.setBounds (
         leftMargin, topMargin, buttonWidth, buttonHeight);
-    
+
     for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
     {
         auto cueComponentHeight = static_cast<int> (getHeight () * 0.15);
         auto cueComponentWidth = static_cast<int> (getWidth () * 0.96);
         auto cueComponentTopMargin = static_cast<int> (getHeight () * 0.02);
         auto cueComponentLeftMargin = static_cast<int> (getWidth () * 0.02);
-        cueComponents[i]->setBounds (
-            cueComponentLeftMargin,
-            cueComponentTopMargin + buttonHeight + i * cueComponentHeight,
-            cueComponentWidth,
-            cueComponentHeight);
+        cueComponents[i]->setBounds (cueComponentLeftMargin,
+                                     cueComponentTopMargin + buttonHeight +
+                                         i * cueComponentHeight,
+                                     cueComponentWidth,
+                                     cueComponentHeight);
     }
 }
 
@@ -107,12 +109,35 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 {
                     cueComponent->updateTime ();
                 }
-                if (cueComponents[0]->getCue())
+                if (cueComponents[nextCuePosition]->getCue ())
                 {
-                    if (cueComponents[0]->getCue()->getTimecode() + Timecode(static_cast<uint64_t>(3) * 1000000000) < current_time )
+                    if (cueComponents[nextCuePosition]->getCue ()->getTimecode () <
+                        current_time)
                     {
                         firstCueId++;
+                        nextCuePosition++;
+                        lastCueExecution = current_time;
+                    }
+                    /*
+                    If there are too many "reached" cues, we remove them.
+                    If the last reached cue is more than 5 seconds ago AND
+                       the next cue is more than 5 seconds away, we remove the
+                       reached cues.
+                    */
+                    if ((nextCuePosition >= NB_DISPLAYED_TIMECODES) ||
+                        (lastCueExecution +
+                                 Timecode (static_cast<uint64_t> (5) *
+                                           1000000000) <
+                             current_time &&
+                         cueComponents[nextCuePosition]
+                                     ->getCue ()
+                                     ->getTimecode () -
+                                 Timecode (static_cast<uint64_t> (5) *
+                                           1000000000) >
+                             current_time))
+                    {
                         updateFirstCueId ();
+                        nextCuePosition = 0;
                     }
                 }
             }
@@ -131,7 +156,7 @@ void MainComponent::updateFirstCueId ()
         auto* cueComponent = cueComponents[i];
         if (firstCueId + i < externalInfo.getCues ().size ())
         {
-            cueComponent->setCue (&externalInfo.getCues()[firstCueId + i]);
+            cueComponent->setCue (&externalInfo.getCues ()[firstCueId + i]);
         }
         else
         {
