@@ -1,4 +1,5 @@
 #include "Timecode.h"
+#include "Settings.h"
 
 using namespace CMP;
 
@@ -6,97 +7,77 @@ using namespace CMP;
 
 Timecode::Timecode (juce::String _timecode)
 {
-    hours = _timecode.substring (0, 2).getIntValue ();
-    minutes = _timecode.substring (3, 5).getIntValue ();
-    seconds = _timecode.substring (6, 8).getIntValue ();
-    frames = _timecode.substring (9, 11).getIntValue ();
+    auto hours = _timecode.substring (0, 2).getIntValue ();
+    auto minutes = _timecode.substring (3, 5).getIntValue ();
+    auto seconds = _timecode.substring (6, 8).getIntValue ();
+    auto frames = _timecode.substring (9, 11).getIntValue ();
+
+    framesTotal = frames + seconds * FPS + minutes * 60 * FPS + hours * 3600 * FPS;
 }
 
 Timecode::~Timecode () {}
 
+Timecode::Timecode (uint64_t nanoseconds)
+{
+    framesTotal = static_cast<int32_t>(nanoseconds * FPS / 1000000000);
+}
+
 //==============================================================================
 // Getters
-int Timecode::getHours () const { return hours; }
+int Timecode::getHours () const { return std::abs(framesTotal) / (3600 * FPS); }
 
-int Timecode::getMinutes () const { return minutes; }
+int Timecode::getMinutes () const { return std::abs(framesTotal) / (60 * FPS) % 60; }
 
-int Timecode::getSeconds () const { return seconds; }
+int Timecode::getSeconds () const { return std::abs(framesTotal) / FPS % 60; }
 
-int Timecode::getFrames () const { return frames; }
+int Timecode::getFrames () const { return std::abs(framesTotal) % FPS; }
+
+int32_t Timecode::getFramesTotal () const { return framesTotal; }
+
+juce::String Timecode::toString () const
+{
+    juce::String timecode;
+
+    if (framesTotal < 0)
+        timecode << "-";
+
+    timecode << juce::String::formatted ("%02d", getHours ()) << ":"
+             << juce::String::formatted ("%02d", getMinutes ()) << ":"
+             << juce::String::formatted ("%02d", getSeconds ()) << ":"
+             << juce::String::formatted ("%02d", getFrames ());
+
+    return timecode;
+}
+
+float Timecode::toSeconds () const
+{
+    return framesTotal / (float) FPS;
+}
 
 //==============================================================================
 // Setters
-void Timecode::setHours (int _hours) { hours = _hours; }
-
-void Timecode::setMinutes (int _minutes) { minutes = _minutes; }
-
-void Timecode::setSeconds (int _seconds) { seconds = _seconds; }
-
-void Timecode::setFrames (int _frames) { frames = _frames; }
+void Timecode::setFramesTotal (int32_t _framesTotal) { framesTotal = _framesTotal; }
 
 //==============================================================================
 // Operators
 bool Timecode::operator> (const Timecode& other) const
 {
-    if (hours > other.hours)
-        return true;
-    else if (hours == other.hours)
-    {
-        if (minutes > other.minutes)
-            return true;
-        else if (minutes == other.minutes)
-        {
-            if (seconds > other.seconds)
-                return true;
-            else if (seconds == other.seconds)
-            {
-                if (frames > other.frames)
-                    return true;
-            }
-        }
-    }
-
-    return false;
+    return framesTotal > other.framesTotal;
 }
 
 bool Timecode::operator< (const Timecode& other) const
 {
-    if (hours < other.hours)
-        return true;
-    else if (hours == other.hours)
-    {
-        if (minutes < other.minutes)
-            return true;
-        else if (minutes == other.minutes)
-        {
-            if (seconds < other.seconds)
-                return true;
-            else if (seconds == other.seconds)
-            {
-                if (frames < other.frames)
-                    return true;
-            }
-        }
-    }
-
-    return false;
+    return framesTotal < other.framesTotal;
 }
 
 bool Timecode::operator== (const Timecode& other) const
 {
-    if (hours == other.hours && minutes == other.minutes &&
-        seconds == other.seconds && frames == other.frames)
-        return true;
-
-    return false;
+    return framesTotal == other.framesTotal;
 }
 
 bool Timecode::operator!= (const Timecode& other) const
 {
-    if (not(*this == other))
-        return true;
-
-    return false;
+ return framesTotal != other.framesTotal;
 }
 
 bool Timecode::operator>= (const Timecode& other) const
@@ -113,4 +94,29 @@ bool Timecode::operator<= (const Timecode& other) const
         return true;
 
     return false;
+}
+
+Timecode& Timecode::operator= (const Timecode& other)
+{
+    framesTotal = other.framesTotal;
+
+    return *this;
+}
+
+Timecode CMP::operator- (const Timecode& lhs, const Timecode& rhs)
+{
+    Timecode result;
+
+    result.framesTotal = lhs.framesTotal - rhs.framesTotal;
+
+    return result;
+}
+
+Timecode CMP::operator+ (const Timecode& lhs, const Timecode& rhs)
+{
+    Timecode result;
+
+    result.framesTotal = lhs.framesTotal + rhs.framesTotal;
+
+    return result;
 }

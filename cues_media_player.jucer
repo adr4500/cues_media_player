@@ -6,6 +6,10 @@
               cppLanguageStandard="20">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="w82odu" name="CueComponent.h" compile="0" resource="0" file="Src/CueComponent.h"/>
+      <FILE id="PqL6SL" name="CueComponents.cpp" compile="1" resource="0"
+            file="Src/CueComponents.cpp"/>
+      <FILE id="yHignB" name="Settings.h" compile="0" resource="0" file="Src/Settings.h"/>
       <FILE id="BWLODc" name="Video.cpp" compile="1" resource="0" file="Src/Video.cpp"/>
       <FILE id="DcVzad" name="Video.h" compile="0" resource="0" file="Src/Video.h"/>
       <FILE id="c3xacu" name="Cue.cpp" compile="1" resource="0" file="Src/Cue.cpp"/>

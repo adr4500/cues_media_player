@@ -41,13 +41,10 @@ public:
     // Static
     static void setMainThread (juce::MessageListener* _mainThread);
 
-private:
     //==============================================================================
-    // Setters
-    void togglePlayPause ();
-    void restartAndPause ();
-    void terminate ();
+    guint64 getRunningTime() const;
 
+private:
     class VideoThread : public juce::Thread
     {
     public:
@@ -63,6 +60,8 @@ private:
         void stop ();
 
         bool isPlaying () const;
+
+        guint64 getRunningTime() const;
 
     private:
         static gboolean

@@ -14,7 +14,7 @@ Cue::~Cue () {}
 
 //==============================================================================
 // Getters
-CMP::Timecode Cue::getTimecode () const { return timecode; }
+Timecode Cue::getTimecode () const { return timecode; }
 
 juce::String Cue::getName () const { return name; }
 

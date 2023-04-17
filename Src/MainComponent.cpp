@@ -6,7 +6,7 @@ using namespace CMP;
 juce::MessageListener* MainComponent::mainApplication = nullptr;
 
 //==============================================================================
-MainComponent::MainComponent ()
+MainComponent::MainComponent (Timecode& _current_time, ExternalInfo& _externalInfo) : current_time (_current_time), externalInfo (_externalInfo)
 {
     assert (mainApplication != nullptr);
 
@@ -27,10 +27,25 @@ MainComponent::MainComponent ()
         }
     };
     addAndMakeVisible (pausePlayButton);
+
+    // Configure Cues Components
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        cueComponents.emplace_back (new CueComponent(current_time));
+        addAndMakeVisible (cueComponents[i]);
+    }
+
     setSize (600, 400);
 }
 
-MainComponent::~MainComponent () {}
+MainComponent::~MainComponent ()
+{
+    for (auto& cueComponent : cueComponents)
+    {
+        delete cueComponent;
+    }
+    cueComponents.clear ();
+}
 
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g)
@@ -53,6 +68,19 @@ void MainComponent::resized ()
 
     pausePlayButton.setBounds (
         leftMargin, topMargin, buttonWidth, buttonHeight);
+    
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        auto cueComponentHeight = static_cast<int> (getHeight () * 0.15);
+        auto cueComponentWidth = static_cast<int> (getWidth () * 0.96);
+        auto cueComponentTopMargin = static_cast<int> (getHeight () * 0.02);
+        auto cueComponentLeftMargin = static_cast<int> (getWidth () * 0.02);
+        cueComponents[i]->setBounds (
+            cueComponentLeftMargin,
+            cueComponentTopMargin + buttonHeight + i * cueComponentHeight,
+            cueComponentWidth,
+            cueComponentHeight);
+    }
 }
 
 //==============================================================================
@@ -68,11 +96,47 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 pausePlayButton.setButtonText ("Pause");
                 isVideoPlaying = true;
             }
-            else
+            else if (messagePtr->getMessage () == "Paused")
             {
                 pausePlayButton.setButtonText ("Play");
                 isVideoPlaying = false;
             }
+            else if (messagePtr->getMessage () == "Timer")
+            {
+                for (auto& cueComponent : cueComponents)
+                {
+                    cueComponent->updateTime ();
+                }
+                if (cueComponents[0]->getCue())
+                {
+                    if (cueComponents[0]->getCue()->getTimecode() + Timecode(static_cast<uint64_t>(3) * 1000000000) < current_time )
+                    {
+                        firstCueId++;
+                        updateFirstCueId ();
+                    }
+                }
+            }
+            else if (messagePtr->getMessage () == "Cues")
+            {
+                updateFirstCueId ();
+            }
         }
+    }
+}
+
+void MainComponent::updateFirstCueId ()
+{
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        auto* cueComponent = cueComponents[i];
+        if (firstCueId + i < externalInfo.getCues ().size ())
+        {
+            cueComponent->setCue (&externalInfo.getCues()[firstCueId + i]);
+        }
+        else
+        {
+            cueComponent->setCue (nullptr);
+        }
+        cueComponent->updateTime ();
     }
 }
