@@ -10,6 +10,10 @@
       <FILE id="DcVzad" name="Video.h" compile="0" resource="0" file="Src/Video.h"/>
       <FILE id="c3xacu" name="Cue.cpp" compile="1" resource="0" file="Src/Cue.cpp"/>
       <FILE id="zM9InN" name="Cue.h" compile="0" resource="0" file="Src/Cue.h"/>
+      <FILE id="b6MNRQ" name="ControlPannelMessage.cpp" compile="1" resource="0"
+            file="Src/ControlPannelMessage.cpp"/>
+      <FILE id="m0z4zF" name="ControlPannelMessage.h" compile="0" resource="0"
+            file="Src/ControlPannelMessage.h"/>
       <FILE id="ORATdG" name="VideoMessage.cpp" compile="1" resource="0"
             file="Src/VideoMessage.cpp"/>
       <FILE id="teELDu" name="VideoMessage.h" compile="0" resource="0" file="Src/VideoMessage.h"/>

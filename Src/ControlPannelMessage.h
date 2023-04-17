@@ -10,7 +10,7 @@ namespace CMP
     This class represents a message sent to Video. It is meant to be
    bidirectional.
 */
-class VideoMessage : public juce::Message
+class ControlPannelMessage : public juce::Message
 {
 public:
     //==============================================================================
@@ -18,22 +18,19 @@ public:
     {
         None,
 
-        TO_VIDEO = 1,
+        TO_PANNEL = 1,
+        Refresh,
 
+        FROM_PANNEL = 100,
         Play,
         Pause,
         Restart,
-        Terminate,
-
-        FROM_VIDEO = 100,
-        ErrorFromVideo,
-        EndOfStream,
-        StateChanged
+        ErrorFromPannel,
     };
 
     //==============================================================================
-    VideoMessage (Type _type, juce::String _message = juce::String ());
-    ~VideoMessage () = default;
+    ControlPannelMessage (Type _type, juce::String _message = juce::String ());
+    ~ControlPannelMessage () = default;
 
     //==============================================================================
     // Getters
