@@ -6,7 +6,7 @@ using namespace CMP;
 juce::MessageListener* MainComponent::mainApplication = nullptr;
 
 //==============================================================================
-MainComponent::MainComponent ()
+MainComponent::MainComponent (Timecode& _current_time) : current_time (_current_time)
 {
     assert (mainApplication != nullptr);
 
@@ -27,6 +27,8 @@ MainComponent::MainComponent ()
         }
     };
     addAndMakeVisible (pausePlayButton);
+    addAndMakeVisible (timecodeLabel);
+    timecodeLabel.setText ("Pending...", juce::dontSendNotification);
     setSize (600, 400);
 }
 
@@ -53,6 +55,8 @@ void MainComponent::resized ()
 
     pausePlayButton.setBounds (
         leftMargin, topMargin, buttonWidth, buttonHeight);
+    timecodeLabel.setBounds (
+        leftMargin, 2*topMargin + buttonHeight, buttonWidth, buttonHeight);
 }
 
 //==============================================================================
@@ -68,10 +72,14 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 pausePlayButton.setButtonText ("Pause");
                 isVideoPlaying = true;
             }
-            else
+            else if (messagePtr->getMessage () == "Paused")
             {
                 pausePlayButton.setButtonText ("Play");
                 isVideoPlaying = false;
+            }
+            else if (messagePtr->getMessage () == "Timer")
+            {
+                timecodeLabel.setText (current_time.toString(), juce::dontSendNotification);
             }
         }
     }

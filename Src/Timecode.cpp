@@ -14,6 +14,14 @@ Timecode::Timecode (juce::String _timecode)
 
 Timecode::~Timecode () {}
 
+Timecode::Timecode (uint64_t nanoseconds)
+{
+    hours = static_cast<int>(nanoseconds / 3600000000000);
+    minutes = (nanoseconds / 60000000000) % 60;
+    seconds = (nanoseconds / 1000000000) % 60;
+    frames = (nanoseconds / 41666667) % 25;
+}
+
 //==============================================================================
 // Getters
 int Timecode::getHours () const { return hours; }
@@ -23,6 +31,29 @@ int Timecode::getMinutes () const { return minutes; }
 int Timecode::getSeconds () const { return seconds; }
 
 int Timecode::getFrames () const { return frames; }
+
+juce::String Timecode::toString () const
+{
+    juce::String timecode;
+
+    if (hours < 10)
+        timecode += "0";
+    timecode += juce::String (hours) + ":";
+
+    if (minutes < 10)
+        timecode += "0";
+    timecode += juce::String (minutes) + ":";
+
+    if (seconds < 10)
+        timecode += "0";
+    timecode += juce::String (seconds) + ":";
+
+    if (frames < 10)
+        timecode += "0";
+    timecode += juce::String (frames);
+
+    return timecode;
+}
 
 //==============================================================================
 // Setters
@@ -113,4 +144,14 @@ bool Timecode::operator<= (const Timecode& other) const
         return true;
 
     return false;
+}
+
+Timecode& Timecode::operator= (const Timecode& other)
+{
+    hours = other.hours;
+    minutes = other.minutes;
+    seconds = other.seconds;
+    frames = other.frames;
+
+    return *this;
 }

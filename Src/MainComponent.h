@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "ControlPannelMessage.h"
+#include "Timecode.h"
 
 namespace CMP
 {
@@ -15,7 +16,7 @@ class MainComponent : public juce::Component, public juce::MessageListener
 {
 public:
     //==============================================================================
-    MainComponent ();
+    MainComponent (Timecode& _current_time);
     ~MainComponent () override;
 
     //==============================================================================
@@ -37,7 +38,10 @@ private:
 
     bool isVideoPlaying{false};
 
+    Timecode& current_time;
+
     juce::TextButton pausePlayButton;
+    juce::Label timecodeLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

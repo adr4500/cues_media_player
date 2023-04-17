@@ -126,6 +126,7 @@ public:
     //==============================================================================
     void initialise (const juce::String& /*commandLine*/) override
     {
+        current_timecode = new CMP::Timecode();
         CMP::Video::setMainThread (this);
         CMP::MainComponent::setMainApplication (this);
         if (not externalInfo.setCSVPath ("Cues.csv"))
@@ -168,14 +169,16 @@ public:
             return;
         }
         controlPannelWindow.reset (
-            new ControlPannelWindow (getApplicationName ()));
+            new ControlPannelWindow (getApplicationName (), *current_timecode));
 
         video = new CMP::Video (externalInfo.getVideoFile ());
+        timerUpdaterThread.startThread();
     }
 
     void shutdown () override
     {
         delete video;
+        delete current_timecode;
 
         controlPannelWindow = nullptr; // (deletes our window)
     }
@@ -205,16 +208,16 @@ public:
                                 public juce::MessageListener
     {
     public:
-        ControlPannelWindow (juce::String name)
+        ControlPannelWindow (juce::String name, CMP::Timecode& _current_timecode)
             : DocumentWindow (
                   name,
                   juce::Desktop::getInstance ()
                       .getDefaultLookAndFeel ()
                       .findColour (juce::ResizableWindow::backgroundColourId),
-                  DocumentWindow::allButtons)
+                  DocumentWindow::allButtons), current_timecode (_current_timecode)
         {
             setUsingNativeTitleBar (true);
-            content = new CMP::MainComponent ();
+            content = new CMP::MainComponent (current_timecode);
             setContentOwned (content, true);
 
 #if JUCE_IOS || JUCE_ANDROID
@@ -252,12 +255,44 @@ public:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ControlPannelWindow)
 
         CMP::MainComponent* content{nullptr};
+        CMP::Timecode& current_timecode;
     };
 
+    class TimerUpdaterThread : public juce::Thread
+    {
+    public :
+        TimerUpdaterThread (CMPApplication& _app) : Thread ("TimerUpdaterThread"), app (_app){}
+        void run () override
+        {
+            while (!threadShouldExit ())
+            {
+                updateTimer ();
+                juce::Thread::sleep (10);
+            }
+        }
+
+        void updateTimer()
+        {
+            auto nanosec = app.video->getRunningTime();
+            auto tc = CMP::Timecode(nanosec);
+            if (tc != *app.current_timecode)
+            {
+                *app.current_timecode = tc;
+                CMP::ControlPannelMessage* timecodeMsg =
+                    new CMP::ControlPannelMessage (
+                        CMP::ControlPannelMessage::Type::Refresh, "Timer");
+                app.controlPannelWindow.get ()->postMessage (timecodeMsg);
+            }
+        }
+    private :
+        CMPApplication& app;
+    } timerUpdaterThread {*this};
 
 private:
     std::unique_ptr<ControlPannelWindow> controlPannelWindow;
     CMP::Video* video{nullptr};
+
+    CMP::Timecode* current_timecode;
 
     CMP::ExternalInfo externalInfo;
 };

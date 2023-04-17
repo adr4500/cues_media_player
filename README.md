@@ -2,7 +2,7 @@
 Pour les vidéos de Cues
 
 Pour l'instant, pour l'utiliser, mettre dans le même dossier que l'executable un fichier Cues.csv et un fichier Video.mp4.
-La vidéo mp4 doit absolument être encodée en video h264, audio mpeg !
+La vidéo mp4 doit absolument être encodée en video h264, audio mpeg, 25fps !
 
 Le fichier CSV se rédige comme suit :
 

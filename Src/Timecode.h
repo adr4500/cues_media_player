@@ -14,8 +14,11 @@ class Timecode
 {
 public:
     //==============================================================================
+    Timecode () = default;
     Timecode (juce::String _timecode);
     ~Timecode ();
+    Timecode (const Timecode& other) = default;
+    Timecode (uint64_t nanoseconds);
 
     //==============================================================================
     // Getters
@@ -23,6 +26,8 @@ public:
     int getMinutes () const;
     int getSeconds () const;
     int getFrames () const;
+
+    juce::String toString () const;
 
     //==============================================================================
     // Setters
@@ -39,6 +44,9 @@ public:
     bool operator!= (const Timecode& other) const;
     bool operator>= (const Timecode& other) const;
     bool operator<= (const Timecode& other) const;
+
+    Timecode& operator= (const Timecode& other);
+
 
 private:
     //==============================================================================
