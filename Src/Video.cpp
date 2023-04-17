@@ -1,5 +1,6 @@
 #include "Video.h"
 #include <cassert>
+#include <fstream>
 
 using namespace CMP;
 
@@ -12,6 +13,8 @@ Video::Video (const juce::File& _videoFile)
     assert (mainThread != nullptr);
     videoThread.startThread ();
 }
+
+Video::~Video () { videoThread.stop (); }
 
 //==============================================================================
 // Getters
@@ -66,17 +69,27 @@ void Video::VideoThread::run ()
 
     loop = g_main_loop_new (NULL, FALSE);
 
-
+    // Create the elements
     pipeline = gst_pipeline_new ("video-decoder");
     source = gst_element_factory_make ("filesrc", "file-source");
-    demuxer = gst_element_factory_make ("qtdemux", "h264-demuxer");
-    parser = gst_element_factory_make ("h264parse", "h264-parser");
-    decoder = gst_element_factory_make ("nvh264sldec", "h264-decoder");
-    conv = gst_element_factory_make ("videoconvert", "converter");
-    sink = gst_element_factory_make ("d3d11videosink", "video-output");
+    demux = gst_element_factory_make ("qtdemux", "demux");
+    videoqueue = gst_element_factory_make ("queue", "video-queue");
+    videoparser = gst_element_factory_make ("h264parse", "h264-parser");
+    videodecoder = gst_element_factory_make ("nvh264sldec", "h264-decoder");
+    videoconv = gst_element_factory_make ("videoconvert", "converter");
+    videosink = gst_element_factory_make ("d3d11videosink", "video-output");
+    audioqueue = gst_element_factory_make ("queue", "audio-queue");
+    audioparser = gst_element_factory_make ("mpegaudioparse", "aac-parser");
+    audiodecoder = gst_element_factory_make ("mpg123audiodec", "audio-decoder");
+    audioconv = gst_element_factory_make ("audioconvert", "audio-converter");
+    audioresample =
+        gst_element_factory_make ("audioresample", "audio-resampler");
+    audiosink = gst_element_factory_make ("wasapisink", "audio-output");
 
-    if (!pipeline || !source || !demuxer || !parser || !decoder || !conv ||
-        !sink)
+    if (!pipeline || !source || !demux || !videoqueue || !videoparser ||
+        !videodecoder || !videoconv || !videosink || !audioqueue ||
+        !audioparser || !audiodecoder || !audioconv || !audioresample ||
+        !audiosink)
     {
         VideoMessage* message =
             new VideoMessage (VideoMessage::Type::ErrorFromVideo,
@@ -85,24 +98,78 @@ void Video::VideoThread::run ()
         return;
     }
 
+    // Set the source location
     g_object_set (
         G_OBJECT (source), "location", videoPath.toStdString ().c_str (), NULL);
 
-
+    // Configure groups
     bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
     busWatchId = gst_bus_add_watch (bus, busCallback, loop);
     gst_object_unref (bus);
 
-    gst_bin_add_many (
-        GST_BIN (pipeline), source, demuxer, parser, decoder, conv, sink, NULL);
+    gst_bin_add_many (GST_BIN (pipeline),
+                      source,
+                      demux,
+                      videoqueue,
+                      videoparser,
+                      videodecoder,
+                      videoconv,
+                      videosink,
+                      audioqueue,
+                      audioparser,
+                      audiodecoder,
+                      audioconv,
+                      audioresample,
+                      audiosink,
+                      NULL);
 
-    gst_element_link (source, demuxer);
-    gst_element_link_many (parser, decoder, conv, sink, NULL);
-    g_signal_connect (demuxer, "pad-added", G_CALLBACK (onPadAdded), parser);
+    if (not gst_element_link (source, demux))
+    {
+        VideoMessage* message =
+            new VideoMessage (VideoMessage::Type::ErrorFromVideo,
+                              "Unable to link source and demuxer");
+        Video::mainThread->postMessage (message);
+        clean ();
+        return;
+    }
 
+    if (not gst_element_link_many (
+            videoqueue, videoparser, videodecoder, videoconv, videosink, NULL))
+    {
+        VideoMessage* message =
+            new VideoMessage (VideoMessage::Type::ErrorFromVideo,
+                              "Unable to link video elements");
+        Video::mainThread->postMessage (message);
+        clean ();
+        return;
+    }
+    if (not gst_element_link_many (audioqueue,
+                                   audioparser,
+                                   audiodecoder,
+                                   audioconv,
+                                   audioresample,
+                                   audiosink,
+                                   NULL))
+    {
+        VideoMessage* message =
+            new VideoMessage (VideoMessage::Type::ErrorFromVideo,
+                              "Unable to link audio elements");
+        Video::mainThread->postMessage (message);
+        clean ();
+        return;
+    }
+
+    separateFlows = new DemuxOutput (audioqueue, videoqueue);
+
+    // Connect after demuxer
+
+    g_signal_connect (
+        demux, "pad-added", G_CALLBACK (onPadAdded), separateFlows);
+
+    // Play
     gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
-    GstPad* pad = gst_element_get_static_pad (sink, "sink");
+    GstPad* pad = gst_element_get_static_pad (videosink, "sink");
     gst_pad_add_probe (
         pad, GST_PAD_PROBE_TYPE_BUFFER, encoderCbHaveData, NULL, NULL);
     gst_object_unref (pad);
@@ -205,15 +272,48 @@ gboolean Video::VideoThread::busCallback (GstBus* /*bus*/,
 }
 
 void Video::VideoThread::onPadAdded (GstElement* /*element*/,
-                                     GstPad* pad,
+                                     GstPad* source_pad,
                                      gpointer data)
 {
-    GstPad* sinkpad;
-    GstElement* parser = (GstElement*)data;
-
-    sinkpad = gst_element_get_static_pad (parser, "sink");
-    gst_pad_link (pad, sinkpad);
-    gst_object_unref (sinkpad);
+    DemuxOutput* demuxOutput = (DemuxOutput*)data;
+    GstPad* sink_pad = nullptr;
+    GstCaps* caps = gst_pad_get_current_caps (source_pad);
+    GstStructure* structure = gst_caps_get_structure (caps, 0);
+    const gchar* name = gst_structure_get_name (structure);
+    if (g_str_has_prefix (name, "video"))
+    {
+        sink_pad =
+            gst_element_get_static_pad (demuxOutput->videoFlowInput, "sink");
+        GstPadLinkReturn res = gst_pad_link (source_pad, sink_pad);
+        if (res != GST_PAD_LINK_OK)
+        {
+            VideoMessage* message = new VideoMessage (
+                VideoMessage::Type::ErrorFromVideo,
+                "Unable to link video pad : Error code " + juce::String (res));
+            Video::mainThread->postMessage (message);
+        }
+    }
+    else if (g_str_has_prefix (name, "audio"))
+    {
+        sink_pad =
+            gst_element_get_static_pad (demuxOutput->audioFlowInput, "sink");
+        GstPadLinkReturn res = gst_pad_link (source_pad, sink_pad);
+        if (res != GST_PAD_LINK_OK)
+        {
+            VideoMessage* message = new VideoMessage (
+                VideoMessage::Type::ErrorFromVideo,
+                "Unable to link audio pad : Error code " + juce::String (res));
+            Video::mainThread->postMessage (message);
+        }
+    }
+    else
+    {
+        VideoMessage* message = new VideoMessage (
+            VideoMessage::Type::ErrorFromVideo,
+            "Unable to determine the type of the pad : " + std::string (name));
+        Video::mainThread->postMessage (message);
+    }
+    gst_object_unref (sink_pad);
 }
 
 GstPadProbeReturn Video::VideoThread::encoderCbHaveData (GstPad* /*pad*/,
@@ -234,6 +334,10 @@ GstPadProbeReturn Video::VideoThread::encoderCbHaveData (GstPad* /*pad*/,
 
 void Video::VideoThread::clean ()
 {
+    if (not separateFlows)
+    {
+        delete separateFlows;
+    }
     gst_element_set_state (pipeline, GST_STATE_NULL);
     gst_object_unref (GST_OBJECT (pipeline));
     g_source_remove (busWatchId);

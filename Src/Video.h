@@ -7,6 +7,16 @@
 namespace CMP
 {
 
+struct DemuxOutput
+{
+    DemuxOutput (GstElement* _audioFlowInput, GstElement* _videoFlowInput)
+        : audioFlowInput (_audioFlowInput), videoFlowInput (_videoFlowInput)
+    {
+    }
+    GstElement* audioFlowInput{nullptr};
+    GstElement* videoFlowInput{nullptr};
+};
+
 //==============================================================================
 /*
     This class represents a video. It manages all low level gstreamer calls.
@@ -16,7 +26,7 @@ class Video : juce::MessageListener
 public:
     //==============================================================================
     Video (const juce::File& _videoFile);
-    ~Video () = default;
+    ~Video ();
 
     //==============================================================================
     // Getters
@@ -68,13 +78,23 @@ private:
 
         GstElement* pipeline{nullptr};
         GstElement* source{nullptr};
-        GstElement* demuxer{nullptr};
-        GstElement* parser{nullptr};
-        GstElement* decoder{nullptr};
-        GstElement* conv{nullptr};
-        GstElement* sink{nullptr};
+        GstElement* demux{nullptr};
+
+        GstElement* videoqueue{nullptr};
+        GstElement* videoparser{nullptr};
+        GstElement* videodecoder{nullptr};
+        GstElement* videoconv{nullptr};
+        GstElement* videosink{nullptr};
+        GstElement* audioqueue{nullptr};
+        GstElement* audioparser{nullptr};
+        GstElement* audiodecoder{nullptr};
+        GstElement* audioconv{nullptr};
+        GstElement* audioresample{nullptr};
+        GstElement* audiosink{nullptr};
 
         GMainLoop* loop;
+
+        DemuxOutput* separateFlows{nullptr};
 
         GstBus* bus{nullptr};
         guint busWatchId{0};
