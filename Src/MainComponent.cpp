@@ -27,12 +27,25 @@ MainComponent::MainComponent (Timecode& _current_time) : current_time (_current_
         }
     };
     addAndMakeVisible (pausePlayButton);
-    addAndMakeVisible (timecodeLabel);
-    timecodeLabel.setText ("Pending...", juce::dontSendNotification);
+
+    // Configure Cues Components
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        cueComponents.emplace_back (new CueComponent(current_time));
+        addAndMakeVisible (cueComponents[i]);
+    }
+
     setSize (600, 400);
 }
 
-MainComponent::~MainComponent () {}
+MainComponent::~MainComponent ()
+{
+    for (auto& cueComponent : cueComponents)
+    {
+        delete cueComponent;
+    }
+    cueComponents.clear ();
+}
 
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g)
@@ -55,8 +68,19 @@ void MainComponent::resized ()
 
     pausePlayButton.setBounds (
         leftMargin, topMargin, buttonWidth, buttonHeight);
-    timecodeLabel.setBounds (
-        leftMargin, 2*topMargin + buttonHeight, buttonWidth, buttonHeight);
+    
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        auto cueComponentHeight = static_cast<int> (getHeight () * 0.15);
+        auto cueComponentWidth = static_cast<int> (getWidth () * 0.96);
+        auto cueComponentTopMargin = static_cast<int> (getHeight () * 0.02);
+        auto cueComponentLeftMargin = static_cast<int> (getWidth () * 0.02);
+        cueComponents[i]->setBounds (
+            cueComponentLeftMargin,
+            cueComponentTopMargin + buttonHeight + i * cueComponentHeight,
+            cueComponentWidth,
+            cueComponentHeight);
+    }
 }
 
 //==============================================================================
@@ -79,7 +103,7 @@ void MainComponent::handleMessage (const juce::Message& _message)
             }
             else if (messagePtr->getMessage () == "Timer")
             {
-                timecodeLabel.setText (current_time.toString(), juce::dontSendNotification);
+                // TO DO
             }
         }
     }

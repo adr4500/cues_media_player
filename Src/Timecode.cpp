@@ -1,4 +1,5 @@
 #include "Timecode.h"
+#include "Settings.h"
 
 using namespace CMP;
 
@@ -19,7 +20,7 @@ Timecode::Timecode (uint64_t nanoseconds)
     hours = static_cast<int>(nanoseconds / 3600000000000);
     minutes = (nanoseconds / 60000000000) % 60;
     seconds = (nanoseconds / 1000000000) % 60;
-    frames = (nanoseconds / 41666667) % 25;
+    frames = (nanoseconds / 41666667) % FPS;
 }
 
 //==============================================================================
@@ -35,6 +36,9 @@ int Timecode::getFrames () const { return frames; }
 juce::String Timecode::toString () const
 {
     juce::String timecode;
+
+    if (not isPositive)
+        timecode += "-";
 
     if (hours < 10)
         timecode += "0";
@@ -154,4 +158,46 @@ Timecode& Timecode::operator= (const Timecode& other)
     frames = other.frames;
 
     return *this;
+}
+
+Timecode CMP::operator- (const Timecode& lhs, const Timecode& rhs)
+{
+    Timecode result;
+
+    if (lhs < rhs)
+    {
+        result.isPositive = false;
+        result.hours = rhs.hours - lhs.hours;
+        result.minutes = rhs.minutes - lhs.minutes;
+        result.seconds = rhs.seconds - lhs.seconds;
+        result.frames = rhs.frames - lhs.frames;
+    }
+    else
+    {
+        result.isPositive = true;
+        result.hours = lhs.hours - rhs.hours;
+        result.minutes = lhs.minutes - rhs.minutes;
+        result.seconds = lhs.seconds - rhs.seconds;
+        result.frames = lhs.frames - rhs.frames;
+    }
+
+    if (result.frames < 0)
+    {
+        result.frames += FPS;
+        result.seconds -= 1;
+    }
+
+    if (result.seconds < 0)
+    {
+        result.seconds += 60;
+        result.minutes -= 1;
+    }
+
+    if (result.minutes < 0)
+    {
+        result.minutes += 60;
+        result.hours -= 1;
+    }
+
+    return result;
 }

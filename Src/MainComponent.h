@@ -3,6 +3,8 @@
 #include <JuceHeader.h>
 #include "ControlPannelMessage.h"
 #include "Timecode.h"
+#include "CueComponent.h"
+#include "Settings.h"
 
 namespace CMP
 {
@@ -41,7 +43,8 @@ private:
     Timecode& current_time;
 
     juce::TextButton pausePlayButton;
-    juce::Label timecodeLabel;
+
+    std::vector<CueComponent*> cueComponents;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

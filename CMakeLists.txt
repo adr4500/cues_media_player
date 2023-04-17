@@ -44,6 +44,18 @@ jucer_project_settings(
 jucer_project_files(
   "CMP/Src"
   # Compile   Xcode     Binary    File Resource  Resource
+  .
+  .
+  .
+  "Src/CueComponent.h"
+  x
+  .
+  .
+  "Src/CueComponents.cpp"
+  .
+  .
+  .
+  "Src/Settings.h"
   x
   .
   .

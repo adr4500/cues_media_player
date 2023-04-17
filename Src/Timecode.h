@@ -5,6 +5,9 @@
 namespace CMP
 {
 
+class Timecode;
+Timecode operator- (const Timecode& lhs, const Timecode& rhs);
+
 //------------------------------------------------------------------------------
 /*
     This class represents a timecode. It is used to store the timecode of a cue
@@ -47,6 +50,9 @@ public:
 
     Timecode& operator= (const Timecode& other);
 
+    //==============================================================================
+    // Friends
+    friend Timecode operator- (const Timecode& lhs, const Timecode& rhs);
 
 private:
     //==============================================================================
@@ -54,6 +60,8 @@ private:
     int minutes;
     int seconds;
     int frames;
+
+    bool isPositive{true};
 };
 
 } // namespace CMP
