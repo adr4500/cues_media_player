@@ -5,6 +5,7 @@
 #include "Timecode.h"
 #include "CueComponent.h"
 #include "Settings.h"
+#include "ExternalInfo.h"
 
 namespace CMP
 {
@@ -18,7 +19,7 @@ class MainComponent : public juce::Component, public juce::MessageListener
 {
 public:
     //==============================================================================
-    MainComponent (Timecode& _current_time);
+    MainComponent (Timecode& _current_time, ExternalInfo& _externalInfo);
     ~MainComponent () override;
 
     //==============================================================================
@@ -27,6 +28,8 @@ public:
 
     //==============================================================================
     void handleMessage (const juce::Message& _message) override;
+
+    void updateFirstCueId ();
 
     //==============================================================================
     // Static
@@ -41,10 +44,12 @@ private:
     bool isVideoPlaying{false};
 
     Timecode& current_time;
+    ExternalInfo& externalInfo;
 
     juce::TextButton pausePlayButton;
 
     std::vector<CueComponent*> cueComponents;
+    int firstCueId{0};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

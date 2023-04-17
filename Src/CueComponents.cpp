@@ -30,6 +30,7 @@ void CircleIndicator::setColor (juce::Colour _color)
 void CircleIndicator::setStatus (bool _is_on)
 {
     fillColour = _is_on ? color : juce::Colours::black;
+    repaint();
 }
 
 
@@ -105,6 +106,21 @@ void CueComponent::resized ()
 void CueComponent::setCue (Cue* _cue)
 {
     cue = _cue;
+    if (cue != nullptr)
+    {
+        cueNameLabel.setText (cue->getName (), juce::dontSendNotification);
+        cueDescriptionLabel.setText (cue->getDescription (), juce::dontSendNotification);
+    }
+    else
+    {
+        cueNameLabel.setText ("", juce::dontSendNotification);
+        cueDescriptionLabel.setText ("", juce::dontSendNotification);
+        timecodeLabel.setText ("", juce::dontSendNotification);
+        for (int i = 0; i < 4; i++)
+        {
+            circleIndicators[i].setStatus (false);
+        }
+    }
 }
 
 //==============================================================================
@@ -113,7 +129,35 @@ void CueComponent::updateTime ()
 {
     if (cue != nullptr)
     {
-        auto time = cue->getTimecode () - current_time;
+        auto time = current_time - cue->getTimecode ();
         auto timeString = time.toString ();
+        timecodeLabel.setText (timeString, juce::dontSendNotification);
+
+        circleIndicators[0].setStatus (false);
+        circleIndicators[1].setStatus (false);
+        circleIndicators[2].setStatus (false);
+        circleIndicators[3].setStatus (false);
+        if (time.toSeconds() > 0)
+        {
+            circleIndicators[3].setStatus (true);
+        }
+        if (time.toSeconds() > -1)
+        {
+            circleIndicators[2].setStatus (true);
+        }
+        if (time.toSeconds() > -2)
+        {
+            circleIndicators[1].setStatus (true);
+        }
+        if (time.toSeconds() > -3)
+        {
+            circleIndicators[0].setStatus (true);
+        }
     }
+}
+
+//==============================================================================
+Cue* CueComponent::getCue ()
+{
+    return cue;
 }

@@ -7,6 +7,7 @@ namespace CMP
 
 class Timecode;
 Timecode operator- (const Timecode& lhs, const Timecode& rhs);
+Timecode operator+ (const Timecode& lhs, const Timecode& rhs);
 
 //------------------------------------------------------------------------------
 /*
@@ -29,15 +30,14 @@ public:
     int getMinutes () const;
     int getSeconds () const;
     int getFrames () const;
+    int32_t getFramesTotal () const;
 
     juce::String toString () const;
+    float toSeconds () const;
 
     //==============================================================================
     // Setters
-    void setHours (int _hours);
-    void setMinutes (int _minutes);
-    void setSeconds (int _seconds);
-    void setFrames (int _frames);
+    void setFramesTotal (int32_t _framesTotal);
 
     //==============================================================================
     // Operators
@@ -53,15 +53,11 @@ public:
     //==============================================================================
     // Friends
     friend Timecode operator- (const Timecode& lhs, const Timecode& rhs);
+    friend Timecode operator+ (const Timecode& lhs, const Timecode& rhs);
 
 private:
     //==============================================================================
-    int hours;
-    int minutes;
-    int seconds;
-    int frames;
-
-    bool isPositive{true};
+    int32_t framesTotal{0};
 };
 
 } // namespace CMP

@@ -6,7 +6,7 @@ using namespace CMP;
 juce::MessageListener* MainComponent::mainApplication = nullptr;
 
 //==============================================================================
-MainComponent::MainComponent (Timecode& _current_time) : current_time (_current_time)
+MainComponent::MainComponent (Timecode& _current_time, ExternalInfo& _externalInfo) : current_time (_current_time), externalInfo (_externalInfo)
 {
     assert (mainApplication != nullptr);
 
@@ -103,8 +103,40 @@ void MainComponent::handleMessage (const juce::Message& _message)
             }
             else if (messagePtr->getMessage () == "Timer")
             {
-                // TO DO
+                for (auto& cueComponent : cueComponents)
+                {
+                    cueComponent->updateTime ();
+                }
+                if (cueComponents[0]->getCue())
+                {
+                    if (cueComponents[0]->getCue()->getTimecode() + Timecode(static_cast<uint64_t>(3) * 1000000000) < current_time )
+                    {
+                        firstCueId++;
+                        updateFirstCueId ();
+                    }
+                }
+            }
+            else if (messagePtr->getMessage () == "Cues")
+            {
+                updateFirstCueId ();
             }
         }
+    }
+}
+
+void MainComponent::updateFirstCueId ()
+{
+    for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
+    {
+        auto* cueComponent = cueComponents[i];
+        if (firstCueId + i < externalInfo.getCues ().size ())
+        {
+            cueComponent->setCue (&externalInfo.getCues()[firstCueId + i]);
+        }
+        else
+        {
+            cueComponent->setCue (nullptr);
+        }
+        cueComponent->updateTime ();
     }
 }
