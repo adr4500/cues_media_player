@@ -100,10 +100,10 @@ void Video::VideoThread::run ()
 
     // Set the source location
     g_object_set (
-        G_OBJECT (source), "location", videoPath.toStdString ().c_str (), NULL);
+        G_OBJECT (source), "location", videoPath.toStdString ().c_str (), nullptr);
 
     // Set fullscreen
-    g_object_set(G_OBJECT(videosink), "fullscreen-toggle-mode", 2, NULL); // Toggle fulllscreen on Alt+Enter
+    g_object_set(G_OBJECT(videosink), "fullscreen-toggle-mode", 2, nullptr); // Toggle fulllscreen on Alt+Enter
 
     // Configure groups
     bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
@@ -124,7 +124,7 @@ void Video::VideoThread::run ()
                       audioconv,
                       audioresample,
                       audiosink,
-                      NULL);
+                      nullptr);
 
     if (not gst_element_link (source, demux))
     {
@@ -137,7 +137,7 @@ void Video::VideoThread::run ()
     }
 
     if (not gst_element_link_many (
-            videoqueue, videoparser, videodecoder, videoconv, videosink, NULL))
+            videoqueue, videoparser, videodecoder, videoconv, videosink, nullptr))
     {
         VideoMessage* message =
             new VideoMessage (VideoMessage::Type::ErrorFromVideo,
@@ -152,7 +152,7 @@ void Video::VideoThread::run ()
                                    audioconv,
                                    audioresample,
                                    audiosink,
-                                   NULL))
+                                   nullptr))
     {
         VideoMessage* message =
             new VideoMessage (VideoMessage::Type::ErrorFromVideo,
