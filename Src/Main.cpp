@@ -32,10 +32,19 @@ public:
 
     void handleMessage (const juce::Message& _message) override
     {
-        if (auto* messagePtr =
+        if (auto* videoMessagePtr =
                 dynamic_cast<const CMP::VideoMessage*> (&_message))
         {
-            handleVideoMessage (*messagePtr);
+            handleVideoMessage (*videoMessagePtr);
+        }
+        else if (auto* controlPannelMessagePtr =
+                     dynamic_cast<const CMP::ControlPannelMessage*> (&_message))
+        {
+            handleControlPannelMessage (*controlPannelMessagePtr);
+        }
+        else
+        {
+            assert (false);
         }
     }
 
@@ -71,9 +80,45 @@ public:
                 }));
             break;
         case CMP::VideoMessage::Type::StateChanged:
-            break;
+        {
+            CMP::ControlPannelMessage* stateChangedMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::Refresh,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (stateChangedMsg);
+        }
         default:
             // Not a video message for the application
+            break;
+        }
+    }
+
+    void handleControlPannelMessage (const CMP::ControlPannelMessage& _message)
+    {
+        switch (_message.getType ())
+        {
+        case CMP::ControlPannelMessage::Type::Play:
+        {
+            CMP::VideoMessage* playMsg =
+                new CMP::VideoMessage (CMP::VideoMessage::Type::Play);
+            video->postMessage (playMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::Pause:
+        {
+            CMP::VideoMessage* pauseMsg =
+                new CMP::VideoMessage (CMP::VideoMessage::Type::Pause);
+            video->postMessage (pauseMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::Restart:
+        {
+            CMP::VideoMessage* restartMsg =
+                new CMP::VideoMessage (CMP::VideoMessage::Type::Restart);
+            video->postMessage (restartMsg);
+            break;
+        }
+        default:
             break;
         }
     }
@@ -82,6 +127,7 @@ public:
     void initialise (const juce::String& /*commandLine*/) override
     {
         CMP::Video::setMainThread (this);
+        CMP::MainComponent::setMainApplication (this);
         if (not externalInfo.setCSVPath ("Cues.csv"))
         {
             juce::AlertWindow::showMessageBoxAsync (
@@ -155,7 +201,8 @@ public:
         This class implements the desktop window that contains the cues and the
        pause button.
     */
-    class ControlPannelWindow : public juce::DocumentWindow
+    class ControlPannelWindow : public juce::DocumentWindow,
+                                public juce::MessageListener
     {
     public:
         ControlPannelWindow (juce::String name)
@@ -167,7 +214,8 @@ public:
                   DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (new MainComponent (), true);
+            content = new CMP::MainComponent ();
+            setContentOwned (content, true);
 
 #if JUCE_IOS || JUCE_ANDROID
             setFullScreen (true);
@@ -187,6 +235,11 @@ public:
             JUCEApplication::getInstance ()->systemRequestedQuit ();
         }
 
+        void handleMessage (const juce::Message& _message) override
+        {
+            content->handleMessage (_message);
+        }
+
         /* Note: Be careful if you override any DocumentWindow methods - the
            base class uses a lot of them, so by overriding you might break its
            functionality. It's best to do all your work in your content
@@ -197,6 +250,8 @@ public:
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ControlPannelWindow)
+
+        CMP::MainComponent* content{nullptr};
     };
 
 

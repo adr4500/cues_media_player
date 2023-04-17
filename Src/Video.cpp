@@ -26,22 +26,10 @@ bool Video::isPaused () const { return !videoThread.isPlaying (); }
 // MessageListener
 void Video::handleMessage (const juce::Message& _message)
 {
-    auto messagePtr = dynamic_cast<const VideoMessage*> (&_message);
-    if (messagePtr == nullptr)
+    auto* messagePtr = dynamic_cast<const VideoMessage*> (&_message);
+    if (messagePtr != nullptr)
     {
-        return;
-    }
-    if (messagePtr->isType (CMP::VideoMessage::Type::PlayPause))
-    {
-        togglePlayPause ();
-    }
-    else if (messagePtr->isType (CMP::VideoMessage::Type::Restart))
-    {
-        restartAndPause ();
-    }
-    else if (messagePtr->isType (CMP::VideoMessage::Type::Terminate))
-    {
-        terminate ();
+        videoThread.recieveMessage (*messagePtr);
     }
 }
 
@@ -52,14 +40,6 @@ void Video::setMainThread (juce::MessageListener* _mainThread)
     assert (_mainThread != nullptr);
     mainThread = _mainThread;
 }
-
-//==============================================================================
-// Setters
-void Video::togglePlayPause () {}
-
-void Video::restartAndPause () {}
-
-void Video::terminate () {}
 
 //==============================================================================
 // VideoThread
@@ -99,11 +79,16 @@ void Video::VideoThread::run ()
     }
 
     // Set the source location
-    g_object_set (
-        G_OBJECT (source), "location", videoPath.toStdString ().c_str (), nullptr);
+    g_object_set (G_OBJECT (source),
+                  "location",
+                  videoPath.toStdString ().c_str (),
+                  nullptr);
 
     // Set fullscreen
-    g_object_set(G_OBJECT(videosink), "fullscreen-toggle-mode", 2, nullptr); // Toggle fulllscreen on Alt+Enter
+    g_object_set (G_OBJECT (videosink),
+                  "fullscreen-toggle-mode",
+                  2,
+                  nullptr); // Toggle fulllscreen on Alt+Enter
 
     // Configure groups
     bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
@@ -136,8 +121,12 @@ void Video::VideoThread::run ()
         return;
     }
 
-    if (not gst_element_link_many (
-            videoqueue, videoparser, videodecoder, videoconv, videosink, nullptr))
+    if (not gst_element_link_many (videoqueue,
+                                   videoparser,
+                                   videodecoder,
+                                   videoconv,
+                                   videosink,
+                                   nullptr))
     {
         VideoMessage* message =
             new VideoMessage (VideoMessage::Type::ErrorFromVideo,
@@ -170,7 +159,10 @@ void Video::VideoThread::run ()
         demux, "pad-added", G_CALLBACK (onPadAdded), separateFlows);
 
     // Play
-    gst_element_set_state (pipeline, GST_STATE_PLAYING);
+    gst_element_set_state (pipeline, GST_STATE_PAUSED);
+    VideoMessage* message =
+        new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
+    Video::mainThread->postMessage (message);
 
     GstPad* pad = gst_element_get_static_pad (videosink, "sink");
     gst_pad_add_probe (
@@ -185,17 +177,9 @@ void Video::VideoThread::run ()
 void Video::VideoThread::recieveMessage (const VideoMessage& _message)
 {
     GstStateChangeReturn state;
-    if (_message.isType (CMP::VideoMessage::Type::PlayPause))
+    if (_message.isType (CMP::VideoMessage::Type::Play))
     {
-        if (playing)
-        {
-            state = gst_element_set_state (pipeline, GST_STATE_PAUSED);
-        }
-        else
-        {
-            state = gst_element_set_state (pipeline, GST_STATE_PLAYING);
-        }
-        playing = !playing;
+        state = gst_element_set_state (pipeline, GST_STATE_PLAYING);
         if (state == GST_STATE_CHANGE_FAILURE)
         {
             VideoMessage* message = new VideoMessage (
@@ -203,10 +187,33 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
                 "Unable to set the pipeline to the playing state.");
             Video::mainThread->postMessage (message);
             stop ();
+            return;
         }
+        playing = true;
+        VideoMessage* returnMessage =
+            new VideoMessage (VideoMessage::Type::StateChanged, "Playing");
+        Video::mainThread->postMessage (returnMessage);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::Pause))
+    {
+        state = gst_element_set_state (pipeline, GST_STATE_PAUSED);
+        if (state == GST_STATE_CHANGE_FAILURE)
+        {
+            VideoMessage* message = new VideoMessage (
+                VideoMessage::Type::ErrorFromVideo,
+                "Unable to set the pipeline to the paused state.");
+            Video::mainThread->postMessage (message);
+            stop ();
+            return;
+        }
+        playing = false;
+        VideoMessage* returnMessage =
+            new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
+        Video::mainThread->postMessage (returnMessage);
     }
     else if (_message.isType (CMP::VideoMessage::Type::Restart))
     {
+        // OFTEN CRASHES WHEN TRYING TO RESTART VIDEO
         state = gst_element_set_state (pipeline, GST_STATE_READY);
         if (state == GST_STATE_CHANGE_FAILURE)
         {
@@ -216,7 +223,7 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
             Video::mainThread->postMessage (message);
             stop ();
         }
-        state = gst_element_set_state (pipeline, GST_STATE_PLAYING);
+        state = gst_element_set_state (pipeline, GST_STATE_PAUSED);
         if (state == GST_STATE_CHANGE_FAILURE)
         {
             VideoMessage* message = new VideoMessage (
@@ -225,6 +232,9 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
             Video::mainThread->postMessage (message);
             stop ();
         }
+        VideoMessage* returnMessage =
+            new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
+        Video::mainThread->postMessage (returnMessage);
     }
     else if (_message.isType (CMP::VideoMessage::Type::Terminate))
     {
@@ -261,8 +271,8 @@ gboolean Video::VideoThread::busCallback (GstBus* /*bus*/,
 
         gst_message_parse_error (msg, &error, &debug);
         g_free (debug);
-        message =
-            new VideoMessage (VideoMessage::Type::EndOfStream, error->message);
+        message = new VideoMessage (VideoMessage::Type::ErrorFromVideo,
+                                    error->message);
         Video::mainThread->postMessage (message);
         g_error_free (error);
         g_main_loop_quit (loop);
@@ -341,7 +351,10 @@ void Video::VideoThread::clean ()
     {
         delete separateFlows;
     }
-    gst_element_set_state (pipeline, GST_STATE_NULL);
+    if (pipeline->current_state != GST_STATE_NULL)
+    {
+        gst_element_set_state (pipeline, GST_STATE_NULL);
+    }
     gst_object_unref (GST_OBJECT (pipeline));
     g_source_remove (busWatchId);
     g_main_loop_unref (loop);

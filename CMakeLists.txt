@@ -63,6 +63,14 @@ jucer_project_files(
   x
   .
   .
+  "Src/ControlPannelMessage.cpp"
+  .
+  .
+  .
+  "Src/ControlPannelMessage.h"
+  x
+  .
+  .
   "Src/VideoMessage.cpp"
   .
   .
