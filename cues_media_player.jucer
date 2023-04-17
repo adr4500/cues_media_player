@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="WtGlSN" name="cues_media_player" projectType="guiapp" useAppConfig="0"
+<JUCERPROJECT id="WtGlSN" name="CMP" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
               version="0.0.0" companyName="SiMDE" companyWebsite="https://assos.utc.fr/simde/"
               cppLanguageStandard="20">
-  <MAINGROUP id="YVRKD7" name="cues_media_player">
+  <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="c3xacu" name="Cue.cpp" compile="1" resource="0" file="Src/Cue.cpp"/>
+      <FILE id="zM9InN" name="Cue.h" compile="0" resource="0" file="Src/Cue.h"/>
+      <FILE id="QjNY5d" name="ExternalInfo.cpp" compile="1" resource="0"
+            file="Src/ExternalInfo.cpp"/>
+      <FILE id="mWFUo1" name="ExternalInfo.h" compile="0" resource="0" file="Src/ExternalInfo.h"/>
+      <FILE id="pzUgDU" name="Timecode.cpp" compile="1" resource="0" file="Src/Timecode.cpp"/>
+      <FILE id="N8syCN" name="Timecode.h" compile="0" resource="0" file="Src/Timecode.h"/>
       <FILE id="zUsRWN" name="Main.cpp" compile="1" resource="0" file="Src/Main.cpp"/>
       <FILE id="N944nx" name="MainComponent.h" compile="0" resource="0" file="Src/MainComponent.h"/>
       <FILE id="XOMrBe" name="MainComponent.cpp" compile="1" resource="0"
@@ -26,6 +33,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -40,6 +48,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017">
@@ -54,6 +63,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2019 targetFolder="Builds/VisualStudio2019">
@@ -68,6 +78,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2022 targetFolder="Builds/VisualStudio2022">
@@ -82,6 +93,7 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>
@@ -92,5 +104,6 @@
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
 </JUCERPROJECT>

@@ -1,6 +1,15 @@
 # cues_media_player
 Pour les vidéos de Cues
 
+Pour l'instant, pour l'utiliser, mettre dans le même dossier que l'executable un fichier Cues.csv et un fichier Video.avi (ATTENTION, NE FONCTIONNE QUE POUR DES FORMATS PRIS EN CHARGE PAR DIRECTSHOW).
+
+Le fichier CSV se rédige comme suit :
+
+timecode,nom,description
+00:00:00:00,name,descr
+...
+
+Le timecode est formé de la façon suivante : heures:minutes:secondes:frame
 
 ## Getting started
 

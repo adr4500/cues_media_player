@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "AppConfig.h"
 
 #include <juce_core/juce_core.h>
 #include <juce_data_structures/juce_data_structures.h>
@@ -19,6 +20,7 @@
 #include <juce_graphics/juce_graphics.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_gui_extra/juce_gui_extra.h>
+#include <juce_video/juce_video.h>
 
 
 #if defined (JUCE_PROJUCER_VERSION) && JUCE_PROJUCER_VERSION < JUCE_VERSION
@@ -34,7 +36,7 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-    const char* const  projectName    = "cues_media_player";
+    const char* const  projectName    = "CMP";
     const char* const  companyName    = "SiMDE";
     const char* const  versionString  = "0.0.0";
     const int          versionNumber  = 0x0;

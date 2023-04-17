@@ -17,7 +17,7 @@ clean :
 	rm -rf build
 
 run :
-	./build/Debug/Cues_Media_Player.exe
+	./build/Debug/App/cues_media_player.exe
 
 build_release :
 	rm -rf build

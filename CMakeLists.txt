@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.4)
 
-project("cues_media_player")
+project("CMP")
 
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/ThirdParty/FRUT/prefix/FRUT/cmake")
@@ -10,8 +10,6 @@ include(Reprojucer)
 
 if(MSVC)
   add_compile_options(/bigobj)
-else()
-  add_compile_options(-Wa,-mbig-obj)
 endif()
 
 set(cues_media_player_jucer_FILE
@@ -22,7 +20,7 @@ jucer_project_begin(JUCER_FORMAT_VERSION "1" PROJECT_FILE
 
 jucer_project_settings(
   PROJECT_NAME
-  "cues_media_player"
+  "CMP"
   PROJECT_VERSION
   "0.0.0"
   COMPANY_NAME
@@ -30,7 +28,7 @@ jucer_project_settings(
   COMPANY_WEBSITE
   "https://assos.utc.fr/simde/"
   USE_GLOBAL_APPCONFIG_HEADER
-  OFF
+  ON
   ADD_USING_NAMESPACE_JUCE_TO_JUCE_HEADER
   OFF
   DISPLAY_THE_JUCE_SPLASH_SCREEN
@@ -39,13 +37,37 @@ jucer_project_settings(
   PROJECT_TYPE
   "GUI Application"
   BUNDLE_IDENTIFIER
-  "com.SiMDE.cues_media_player"
+  "com.SiMDE.CMP"
   CXX_LANGUAGE_STANDARD
   "C++20")
 
 jucer_project_files(
-  "cues_media_player/Src"
+  "CMP/Src"
   # Compile   Xcode     Binary    File Resource  Resource
+  x
+  .
+  .
+  "Src/Cue.cpp"
+  .
+  .
+  .
+  "Src/Cue.h"
+  x
+  .
+  .
+  "Src/ExternalInfo.cpp"
+  .
+  .
+  .
+  "Src/ExternalInfo.h"
+  x
+  .
+  .
+  "Src/Timecode.cpp"
+  .
+  .
+  .
+  "Src/Timecode.h"
   x
   .
   .
@@ -97,6 +119,11 @@ jucer_project_module(
 jucer_project_module(
   juce_gui_extra PATH "ThirdParty/JUCE/modules"
   # JUCE_WEB_BROWSER JUCE_USE_WIN_WEBVIEW2 JUCE_ENABLE_LIVE_CONSTANT_EDITOR
+)
+
+jucer_project_module(
+  juce_video PATH "ThirdParty/JUCE/modules"
+  # JUCE_USE_CAMERA JUCE_SYNC_VIDEO_VOLUME_WITH_OS_MEDIA_VOLUME
 )
 
 jucer_export_target("Code::Blocks (Windows)")
