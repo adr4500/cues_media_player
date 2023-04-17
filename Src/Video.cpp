@@ -102,6 +102,9 @@ void Video::VideoThread::run ()
     g_object_set (
         G_OBJECT (source), "location", videoPath.toStdString ().c_str (), NULL);
 
+    // Set fullscreen
+    g_object_set(G_OBJECT(videosink), "fullscreen-toggle-mode", 2, NULL); // Toggle fulllscreen on Alt+Enter
+
     // Configure groups
     bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
     busWatchId = gst_bus_add_watch (bus, busCallback, loop);
