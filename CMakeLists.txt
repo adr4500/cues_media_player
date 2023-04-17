@@ -183,13 +183,12 @@ jucer_export_target_configuration(
 
 jucer_export_target(
   "Linux Makefile"
-  TARGET_PROJECT_FOLDER
-  "Builds/LinuxMakefile" # used by HEADER_SEARCH_PATHS,
-                         # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0.lib"
-  "gobject-2.0.lib"
-  "gstreamer-1.0.lib")
+  "glib-2.0"
+  "gobject-2.0"
+  "gstreamer-1.0"
+  PKGCONFIG_LIBRARIES
+  "gstreamer-1.0")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -198,15 +197,7 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player"
-  HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
-  EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "cues_media_player")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -215,15 +206,7 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player"
-  HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
-  EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "cues_media_player")
 
 jucer_export_target(
   "Visual Studio 2017"
