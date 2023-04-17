@@ -6,8 +6,13 @@
               cppLanguageStandard="20">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="BWLODc" name="Video.cpp" compile="1" resource="0" file="Src/Video.cpp"/>
+      <FILE id="DcVzad" name="Video.h" compile="0" resource="0" file="Src/Video.h"/>
       <FILE id="c3xacu" name="Cue.cpp" compile="1" resource="0" file="Src/Cue.cpp"/>
       <FILE id="zM9InN" name="Cue.h" compile="0" resource="0" file="Src/Cue.h"/>
+      <FILE id="ORATdG" name="VideoMessage.cpp" compile="1" resource="0"
+            file="Src/VideoMessage.cpp"/>
+      <FILE id="teELDu" name="VideoMessage.h" compile="0" resource="0" file="Src/VideoMessage.h"/>
       <FILE id="QjNY5d" name="ExternalInfo.cpp" compile="1" resource="0"
             file="Src/ExternalInfo.cpp"/>
       <FILE id="mWFUo1" name="ExternalInfo.h" compile="0" resource="0" file="Src/ExternalInfo.h"/>
@@ -21,10 +26,12 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows">
+    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -33,10 +40,10 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="glib-2.0&#10;gobject-2.0&#10;gstreamer-1.0"
+                linuxExtraPkgConfig="gstreamer-1.0">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"/>
@@ -48,13 +55,16 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VisualStudio2017">
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -63,13 +73,16 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -78,13 +91,16 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
-    <VS2022 targetFolder="Builds/VisualStudio2022">
+    <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
+                       headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
+                       libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -93,7 +109,6 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>
@@ -104,6 +119,5 @@
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
 </JUCERPROJECT>

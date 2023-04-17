@@ -1,5 +1,6 @@
 format :
 	clang-format -i -style=file Src/*.cpp
+	clang-format -i -style=file Src/*.h
 	cmake-format -i CMakeLists.txt
 
 generate :

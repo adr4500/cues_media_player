@@ -47,11 +47,27 @@ jucer_project_files(
   x
   .
   .
+  "Src/Video.cpp"
+  .
+  .
+  .
+  "Src/Video.h"
+  x
+  .
+  .
   "Src/Cue.cpp"
   .
   .
   .
   "Src/Cue.h"
+  x
+  .
+  .
+  "Src/VideoMessage.cpp"
+  .
+  .
+  .
+  "Src/VideoMessage.h"
   x
   .
   .
@@ -121,12 +137,15 @@ jucer_project_module(
   # JUCE_WEB_BROWSER JUCE_USE_WIN_WEBVIEW2 JUCE_ENABLE_LIVE_CONSTANT_EDITOR
 )
 
-jucer_project_module(
-  juce_video PATH "ThirdParty/JUCE/modules"
-  # JUCE_USE_CAMERA JUCE_SYNC_VIDEO_VOLUME_WITH_OS_MEDIA_VOLUME
-)
-
-jucer_export_target("Code::Blocks (Windows)")
+jucer_export_target(
+  "Code::Blocks (Windows)"
+  TARGET_PROJECT_FOLDER
+  "Builds/CodeBlocksWindows" # used by HEADER_SEARCH_PATHS,
+                             # EXTRA_LIBRARY_SEARCH_PATHS
+  EXTERNAL_LIBRARIES_TO_LINK
+  "glib-2.0.lib"
+  "gobject-2.0.lib"
+  "gstreamer-1.0.lib")
 
 jucer_export_target_configuration(
   "Code::Blocks (Windows)"
@@ -135,7 +154,15 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
 jucer_export_target_configuration(
   "Code::Blocks (Windows)"
@@ -144,9 +171,24 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
-jucer_export_target("Linux Makefile")
+jucer_export_target(
+  "Linux Makefile"
+  EXTERNAL_LIBRARIES_TO_LINK
+  "glib-2.0"
+  "gobject-2.0"
+  "gstreamer-1.0"
+  PKGCONFIG_LIBRARIES
+  "gstreamer-1.0")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -166,7 +208,15 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player")
 
-jucer_export_target("Visual Studio 2017")
+jucer_export_target(
+  "Visual Studio 2017"
+  TARGET_PROJECT_FOLDER
+  "Builds/VisualStudio2017" # used by HEADER_SEARCH_PATHS,
+                            # EXTRA_LIBRARY_SEARCH_PATHS
+  EXTERNAL_LIBRARIES_TO_LINK
+  "glib-2.0.lib"
+  "gobject-2.0.lib"
+  "gstreamer-1.0.lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2017"
@@ -175,7 +225,14 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0")
 
 jucer_export_target_configuration(
   "Visual Studio 2017"
@@ -184,9 +241,25 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
-jucer_export_target("Visual Studio 2019")
+jucer_export_target(
+  "Visual Studio 2019"
+  TARGET_PROJECT_FOLDER
+  "Builds/VisualStudio2019" # used by HEADER_SEARCH_PATHS,
+                            # EXTRA_LIBRARY_SEARCH_PATHS
+  EXTERNAL_LIBRARIES_TO_LINK
+  "glib-2.0.lib"
+  "gobject-2.0.lib"
+  "gstreamer-1.0.lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2019"
@@ -195,7 +268,15 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2019"
@@ -204,9 +285,25 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
-jucer_export_target("Visual Studio 2022")
+jucer_export_target(
+  "Visual Studio 2022"
+  TARGET_PROJECT_FOLDER
+  "Builds/VisualStudio2022" # used by HEADER_SEARCH_PATHS,
+                            # EXTRA_LIBRARY_SEARCH_PATHS
+  EXTERNAL_LIBRARIES_TO_LINK
+  "glib-2.0.lib"
+  "gobject-2.0.lib"
+  "gstreamer-1.0.lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2022"
@@ -215,7 +312,15 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2022"
@@ -224,6 +329,14 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
+  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
 
 jucer_project_end()

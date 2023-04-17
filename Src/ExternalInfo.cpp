@@ -22,7 +22,8 @@ std::vector<Cue>& ExternalInfo::getCues () { return cues; }
 bool ExternalInfo::setVideoPath (juce::String _path)
 {
     videoPath = _path;
-    videoFile = juce::File::getCurrentWorkingDirectory ().getChildFile (videoPath);
+    videoFile =
+        juce::File::getCurrentWorkingDirectory ().getChildFile (videoPath);
 
     if (videoFile.existsAsFile ())
         return true;
