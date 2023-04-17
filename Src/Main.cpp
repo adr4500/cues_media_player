@@ -44,6 +44,10 @@ public:
         switch (_message.getType ())
         {
         case CMP::VideoMessage::Type::ErrorFromVideo:
+        {
+            CMP::VideoMessage* terminateMsg =
+                new CMP::VideoMessage (CMP::VideoMessage::Type::Terminate);
+            video->postMessage (terminateMsg);
             juce::AlertWindow::showMessageBoxAsync (
                 juce::AlertWindow::AlertIconType::WarningIcon,
                 "Video Player Error",
@@ -54,6 +58,7 @@ public:
                     juce::MessageManager::getInstance ()->stopDispatchLoop ();
                 }));
             break;
+        }
         case CMP::VideoMessage::Type::EndOfStream:
             juce::AlertWindow::showMessageBoxAsync (
                 juce::AlertWindow::AlertIconType::InfoIcon,

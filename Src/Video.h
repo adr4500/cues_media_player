@@ -21,7 +21,7 @@ struct DemuxOutput
 /*
     This class represents a video. It manages all low level gstreamer calls.
 */
-class Video : juce::MessageListener
+class Video : public juce::MessageListener
 {
 public:
     //==============================================================================
