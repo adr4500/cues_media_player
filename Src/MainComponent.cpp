@@ -146,6 +146,7 @@ void MainComponent::handleMessage (const juce::Message& _message)
                                  Timecode (static_cast<uint64_t> (5) *
                                            1000000000) <
                              current_time &&
+                         cueComponents[nextCuePosition]->getCue () &&
                          cueComponents[nextCuePosition]
                                      ->getCue ()
                                      ->getTimecode () -
