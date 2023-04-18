@@ -12,25 +12,32 @@ Timecode::Timecode (juce::String _timecode)
     auto seconds = _timecode.substring (6, 8).getIntValue ();
     auto frames = _timecode.substring (9, 11).getIntValue ();
 
-    framesTotal = frames + seconds * FPS + minutes * 60 * FPS + hours * 3600 * FPS;
+    framesTotal =
+        frames + seconds * FPS + minutes * 60 * FPS + hours * 3600 * FPS;
 }
 
 Timecode::~Timecode () {}
 
 Timecode::Timecode (uint64_t nanoseconds)
 {
-    framesTotal = static_cast<int32_t>(nanoseconds * FPS / 1000000000);
+    framesTotal = static_cast<int32_t> (nanoseconds * FPS / 1000000000);
 }
 
 //==============================================================================
 // Getters
-int Timecode::getHours () const { return std::abs(framesTotal) / (3600 * FPS); }
+int Timecode::getHours () const
+{
+    return std::abs (framesTotal) / (3600 * FPS);
+}
 
-int Timecode::getMinutes () const { return std::abs(framesTotal) / (60 * FPS) % 60; }
+int Timecode::getMinutes () const
+{
+    return std::abs (framesTotal) / (60 * FPS) % 60;
+}
 
-int Timecode::getSeconds () const { return std::abs(framesTotal) / FPS % 60; }
+int Timecode::getSeconds () const { return std::abs (framesTotal) / FPS % 60; }
 
-int Timecode::getFrames () const { return std::abs(framesTotal) % FPS; }
+int Timecode::getFrames () const { return std::abs (framesTotal) % FPS; }
 
 int32_t Timecode::getFramesTotal () const { return framesTotal; }
 
@@ -49,14 +56,14 @@ juce::String Timecode::toString () const
     return timecode;
 }
 
-float Timecode::toSeconds () const
-{
-    return framesTotal / (float) FPS;
-}
+float Timecode::toSeconds () const { return framesTotal / (float)FPS; }
 
 //==============================================================================
 // Setters
-void Timecode::setFramesTotal (int32_t _framesTotal) { framesTotal = _framesTotal; }
+void Timecode::setFramesTotal (int32_t _framesTotal)
+{
+    framesTotal = _framesTotal;
+}
 
 //==============================================================================
 // Operators
@@ -77,7 +84,7 @@ bool Timecode::operator== (const Timecode& other) const
 
 bool Timecode::operator!= (const Timecode& other) const
 {
- return framesTotal != other.framesTotal;
+    return framesTotal != other.framesTotal;
 }
 
 bool Timecode::operator>= (const Timecode& other) const

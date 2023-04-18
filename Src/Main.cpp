@@ -125,7 +125,7 @@ public:
     //==============================================================================
     void initialise (const juce::String& /*commandLine*/) override
     {
-        externalInfo = new CMP::ExternalInfo();
+        externalInfo = new CMP::ExternalInfo ();
         CMP::Video::setMainThread (this);
         CMP::MainComponent::setMainApplication (this);
         if (not externalInfo->setCSVPath ("Cues.csv"))
@@ -167,15 +167,15 @@ public:
                 }));
             return;
         }
-        controlPannelWindow.reset (
-            new ControlPannelWindow (getApplicationName (), current_timecode, *externalInfo));
+        controlPannelWindow.reset (new ControlPannelWindow (
+            getApplicationName (), current_timecode, *externalInfo));
 
         video = new CMP::Video (externalInfo->getVideoFile ());
-        timerUpdaterThread.startThread();
+        timerUpdaterThread.startThread ();
 
         // Display cues
-        CMP::ControlPannelMessage* refreshMsg =
-            new CMP::ControlPannelMessage (CMP::ControlPannelMessage::Type::Refresh, "Cues");
+        CMP::ControlPannelMessage* refreshMsg = new CMP::ControlPannelMessage (
+            CMP::ControlPannelMessage::Type::Refresh, "Cues");
         controlPannelWindow->postMessage (refreshMsg);
     }
 
@@ -212,13 +212,16 @@ public:
                                 public juce::MessageListener
     {
     public:
-        ControlPannelWindow (juce::String name, CMP::Timecode& _current_timecode, CMP::ExternalInfo& _externalInfo)
+        ControlPannelWindow (juce::String name,
+                             CMP::Timecode& _current_timecode,
+                             CMP::ExternalInfo& _externalInfo)
             : DocumentWindow (
                   name,
                   juce::Desktop::getInstance ()
                       .getDefaultLookAndFeel ()
                       .findColour (juce::ResizableWindow::backgroundColourId),
-                  DocumentWindow::allButtons), current_timecode (_current_timecode)
+                  DocumentWindow::allButtons),
+              current_timecode (_current_timecode)
         {
             setUsingNativeTitleBar (true);
             content = new CMP::MainComponent (current_timecode, _externalInfo);
@@ -264,8 +267,11 @@ public:
 
     class TimerUpdaterThread : public juce::Thread
     {
-    public :
-        TimerUpdaterThread (CMPApplication& _app) : Thread ("TimerUpdaterThread"), app (_app){}
+    public:
+        TimerUpdaterThread (CMPApplication& _app)
+            : Thread ("TimerUpdaterThread"), app (_app)
+        {
+        }
         void run () override
         {
             while (!threadShouldExit ())
@@ -275,25 +281,26 @@ public:
             }
         }
 
-        void updateTimer()
+        void updateTimer ()
         {
-            if (app.video->isPlaying())
+            if (app.video->isPlaying ())
             {
-                auto nanosec = app.video->getRunningTime();
-                auto tc = CMP::Timecode(nanosec);
+                auto nanosec = app.video->getRunningTime ();
+                auto tc = CMP::Timecode (nanosec);
                 if (tc != app.current_timecode)
                 {
-                    app.current_timecode.setFramesTotal(tc.getFramesTotal());
+                    app.current_timecode.setFramesTotal (tc.getFramesTotal ());
                     CMP::ControlPannelMessage* timecodeMsg =
                         new CMP::ControlPannelMessage (
                             CMP::ControlPannelMessage::Type::Refresh, "Timer");
                     app.controlPannelWindow.get ()->postMessage (timecodeMsg);
                 }
-                }
+            }
         }
-    private :
+
+    private:
         CMPApplication& app;
-    } timerUpdaterThread {*this};
+    } timerUpdaterThread{*this};
 
 private:
     std::unique_ptr<ControlPannelWindow> controlPannelWindow;

@@ -42,7 +42,7 @@ public:
     static void setMainThread (juce::MessageListener* _mainThread);
 
     //==============================================================================
-    guint64 getRunningTime() const;
+    guint64 getRunningTime () const;
 
 private:
     class VideoThread : public juce::Thread
@@ -61,7 +61,7 @@ private:
 
         bool isPlaying () const;
 
-        guint64 getRunningTime() const;
+        guint64 getRunningTime () const;
 
     private:
         static gboolean
