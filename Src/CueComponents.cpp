@@ -37,7 +37,6 @@ CueComponent::CueComponent (Timecode& _current_time)
     : current_time (_current_time)
 {
     addAndMakeVisible (timecodeLabel);
-    addAndMakeVisible (cueNameLabel);
     addAndMakeVisible (cueDescriptionLabel);
     timecodeLabel.setFont (juce::Font (20.0f));
 
@@ -73,10 +72,9 @@ void CueComponent::resized ()
     auto topMargin = static_cast<int> (getHeight () * 0.05);
     // Name and description
     auto labelWidth = static_cast<int> (getWidth () * 0.3);
-    auto labelHeight = static_cast<int> (getHeight () * 0.4);
-    cueNameLabel.setBounds (leftMargin, topMargin, labelWidth, labelHeight);
+    auto labelHeight = static_cast<int> (getHeight () * 0.8);
     cueDescriptionLabel.setBounds (
-        leftMargin, 2 * topMargin + labelHeight, labelWidth, labelHeight);
+        leftMargin, topMargin, labelWidth, labelHeight);
 
     // Timecode
     auto timecodeWidth = static_cast<int> (getWidth () * 0.3);
@@ -106,13 +104,17 @@ void CueComponent::setCue (Cue* _cue)
     cue = _cue;
     if (cue != nullptr)
     {
-        cueNameLabel.setText (cue->getName (), juce::dontSendNotification);
         cueDescriptionLabel.setText (cue->getDescription (),
                                      juce::dontSendNotification);
+        cueDescriptionLabel.setColour (
+            0x1000281,
+            cue->getCueType ()
+                .getColour ()); // 0x value sets where the color is set. Here,
+                                // it's the text color
+        timecodeLabel.setColour (0x1000281, cue->getCueType ().getColour ());
     }
     else
     {
-        cueNameLabel.setText ("", juce::dontSendNotification);
         cueDescriptionLabel.setText ("", juce::dontSendNotification);
         timecodeLabel.setText ("", juce::dontSendNotification);
         for (int i = 0; i < 4; i++)

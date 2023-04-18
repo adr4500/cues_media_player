@@ -60,7 +60,6 @@ private:
 
     // Graphic Components
     juce::Label timecodeLabel;
-    juce::Label cueNameLabel;
     juce::Label cueDescriptionLabel;
 
     std::array<CircleIndicator, 4> circleIndicators;

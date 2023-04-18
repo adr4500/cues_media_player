@@ -7,7 +7,7 @@ La vidéo mp4 doit absolument être encodée en video h264, audio mpeg, 25fps !
 Le fichier CSV se rédige comme suit :
 
 timecode,nom,description
-00:00:00:00,name,descr
+00:00:00:00,type,descr
 ...
 
 Le timecode est formé de la façon suivante : heures:minutes:secondes:frame

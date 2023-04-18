@@ -111,8 +111,9 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 }
                 if (cueComponents[nextCuePosition]->getCue ())
                 {
-                    if (cueComponents[nextCuePosition]->getCue ()->getTimecode () <
-                        current_time)
+                    if (cueComponents[nextCuePosition]
+                            ->getCue ()
+                            ->getTimecode () < current_time)
                     {
                         firstCueId++;
                         nextCuePosition++;

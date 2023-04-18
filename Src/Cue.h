@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "Timecode.h"
+#include "CueTypes.h"
 
 namespace CMP
 {
@@ -15,25 +16,27 @@ class Cue
 {
 public:
     //==============================================================================
-    Cue (juce::String _timecode, juce::String _name, juce::String _description);
+    Cue (juce::String _timecode,
+         CueTypes::CueType _cueType,
+         juce::String _description);
     ~Cue ();
 
     //==============================================================================
     // Getters
     CMP::Timecode getTimecode () const;
-    juce::String getName () const;
+    CueTypes::CueType getCueType () const;
     juce::String getDescription () const;
 
     //==============================================================================
     // Setters
     void setTimecode (CMP::Timecode _timecode);
-    void setName (juce::String _name);
+    void setCueType (CueTypes::CueType _cueType);
     void setDescription (juce::String _description);
 
 private:
     //==============================================================================
     CMP::Timecode timecode;
-    juce::String name;
+    CueTypes::CueType cueType;
     juce::String description;
 };
 

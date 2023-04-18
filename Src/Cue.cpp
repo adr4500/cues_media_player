@@ -3,11 +3,11 @@
 using namespace CMP;
 
 //==============================================================================
-Cue::Cue (juce::String _timecode, juce::String _name, juce::String _description)
-    : timecode (_timecode)
+Cue::Cue (juce::String _timecode,
+          CueTypes::CueType _cueType,
+          juce::String _description)
+    : timecode (_timecode), cueType (_cueType), description (_description)
 {
-    name = _name;
-    description = _description;
 }
 
 Cue::~Cue () {}
@@ -16,7 +16,7 @@ Cue::~Cue () {}
 // Getters
 Timecode Cue::getTimecode () const { return timecode; }
 
-juce::String Cue::getName () const { return name; }
+CueTypes::CueType Cue::getCueType () const { return cueType; }
 
 juce::String Cue::getDescription () const { return description; }
 
@@ -24,7 +24,7 @@ juce::String Cue::getDescription () const { return description; }
 // Setters
 void Cue::setTimecode (CMP::Timecode _timecode) { timecode = _timecode; }
 
-void Cue::setName (juce::String _name) { name = _name; }
+void Cue::setCueType (CueTypes::CueType _cueType) { cueType = _cueType; }
 
 void Cue::setDescription (juce::String _description)
 {

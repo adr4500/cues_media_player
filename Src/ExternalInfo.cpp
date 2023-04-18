@@ -62,8 +62,20 @@ bool ExternalInfo::setupCSV ()
         if (line.size () != 3)
             return false;
 
-        Cue cue (line[0], line[1], line[2]);
-        cues.push_back (cue);
+
+        // Find the cue type
+        CueTypes::CueType cueType =
+            CueTypes::getInstance ().getCueType (line[1]);
+
+        Cue cue (line[0], cueType, line[2]);
+        if (line[1] != "GOTO")
+        {
+            cues.push_back (cue);
+        }
+        else
+        {
+            goto_cues.push_back (cue);
+        }
     }
 
     sortCues ();

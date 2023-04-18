@@ -72,6 +72,10 @@ jucer_project_files(
   .
   .
   "Src/Cue.h"
+  .
+  .
+  .
+  "Src/CueTypes.h"
   x
   .
   .

@@ -46,6 +46,7 @@ private:
     juce::StringArray CSVLines;
 
     std::vector<Cue> cues;
+    std::vector<Cue> goto_cues;
 };
 
 } // namespace CMP
