@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="WtGlSN" name="CMP" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              version="0.0.0" companyName="SiMDE" companyWebsite="https://assos.utc.fr/simde/"
+              version="1.0.0" companyName="SiMDE" companyWebsite="https://assos.utc.fr/simde/"
               cppLanguageStandard="20">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
