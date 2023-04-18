@@ -115,6 +115,22 @@ void MainComponent::handleMessage (const juce::Message& _message)
                             ->getCue ()
                             ->getTimecode () < current_time)
                     {
+                        if (cueComponents[nextCuePosition]
+                                ->getCue ()
+                                ->getCueType ()
+                                .isCommandCue ())
+                        {
+                            // Add commands behaviour here
+                            if (cueComponents[nextCuePosition]
+                                    ->getCue ()
+                                    ->getDescription () == "Pause")
+                            {
+                                CMP::ControlPannelMessage* pauseMsg =
+                                    new CMP::ControlPannelMessage (
+                                        CMP::ControlPannelMessage::Type::Pause);
+                                mainApplication->postMessage (pauseMsg);
+                            }
+                        }
                         firstCueId++;
                         nextCuePosition++;
                         lastCueExecution = current_time;

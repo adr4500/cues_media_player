@@ -26,6 +26,8 @@ public:
         juce::String getName () const { return name; }
         juce::Colour getColour () const { return colour; }
 
+        bool isCommandCue () const { return name == "Command"; }
+
     private:
         juce::String name;
         juce::Colour colour;
