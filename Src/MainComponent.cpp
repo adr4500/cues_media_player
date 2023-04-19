@@ -8,7 +8,9 @@ juce::MessageListener* MainComponent::mainApplication = nullptr;
 //==============================================================================
 MainComponent::MainComponent (Timecode& _current_time,
                               ExternalInfo& _externalInfo)
-    : current_time (_current_time), externalInfo (_externalInfo)
+    : current_time (_current_time),
+      externalInfo (_externalInfo),
+      gotoComponent (_externalInfo, mainApplication)
 {
     assert (mainApplication != nullptr);
 
@@ -29,6 +31,14 @@ MainComponent::MainComponent (Timecode& _current_time,
         }
     };
     addAndMakeVisible (pausePlayButton);
+    addAndMakeVisible (restartButton);
+    restartButton.setButtonText ("Restart");
+    restartButton.onClick = [this] () {
+        CMP::ControlPannelMessage* restartMsg = new CMP::ControlPannelMessage (
+            CMP::ControlPannelMessage::Type::Goto, "00:00:00:00");
+        mainApplication->postMessage (restartMsg);
+    };
+    addAndMakeVisible (gotoComponent);
 
     // Configure Cues Components
     for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
@@ -63,25 +73,31 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::resized ()
 {
-    auto leftMargin = static_cast<int> (getWidth () * 0.02);
-    auto topMargin = static_cast<int> (getHeight () * 0.02);
-    auto buttonWidth = static_cast<int> (getWidth () * 0.96);
-    auto buttonHeight = static_cast<int> (getHeight () * 0.2);
+    auto leftMargins = static_cast<int> (getWidth () * 0.02);
+    auto topMargins = static_cast<int> (getHeight () * 0.02);
+
+    auto buttonWidth = static_cast<int> (getWidth () / 2 - 2 * leftMargins);
+    auto elemntWidth = static_cast<int> (getWidth () - 2 * leftMargins);
+    auto elementsHeight = static_cast<int> (
+        getHeight () / (NB_DISPLAYED_TIMECODES + 2) - 2 * topMargins);
 
     pausePlayButton.setBounds (
-        leftMargin, topMargin, buttonWidth, buttonHeight);
+        leftMargins, topMargins, buttonWidth, elementsHeight);
+    restartButton.setBounds (
+        3 * leftMargins + buttonWidth, topMargins, buttonWidth, elementsHeight);
+
+    gotoComponent.setBounds (leftMargins,
+                             3 * topMargins + elementsHeight,
+                             elemntWidth,
+                             elementsHeight);
 
     for (int i = 0; i < NB_DISPLAYED_TIMECODES; ++i)
     {
-        auto cueComponentHeight = static_cast<int> (getHeight () * 0.15);
-        auto cueComponentWidth = static_cast<int> (getWidth () * 0.96);
-        auto cueComponentTopMargin = static_cast<int> (getHeight () * 0.02);
-        auto cueComponentLeftMargin = static_cast<int> (getWidth () * 0.02);
-        cueComponents[i]->setBounds (cueComponentLeftMargin,
-                                     cueComponentTopMargin + buttonHeight +
-                                         i * cueComponentHeight,
-                                     cueComponentWidth,
-                                     cueComponentHeight);
+        cueComponents[i]->setBounds (
+            leftMargins,
+            topMargins + (i + 2) * (elementsHeight + 2 * topMargins),
+            elemntWidth,
+            elementsHeight);
     }
 }
 

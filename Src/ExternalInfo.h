@@ -45,6 +45,7 @@ public:
     // Getters
     juce::File& getVideoFile ();
     std::vector<Cue>& getCues ();
+    std::vector<Cue>& getGotoCues ();
 
     //==============================================================================
     // Setters

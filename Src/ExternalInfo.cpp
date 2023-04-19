@@ -17,6 +17,8 @@ juce::File& ExternalInfo::getVideoFile () { return videoFile; }
 
 std::vector<Cue>& ExternalInfo::getCues () { return cues; }
 
+std::vector<Cue>& ExternalInfo::getGotoCues () { return goto_cues; }
+
 //==============================================================================
 // Setters
 bool ExternalInfo::setVideoPath (juce::String _path)

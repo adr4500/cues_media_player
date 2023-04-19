@@ -117,6 +117,13 @@ public:
             video->postMessage (restartMsg);
             break;
         }
+        case CMP::ControlPannelMessage::Type::Goto:
+        {
+            CMP::VideoMessage* gotoMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::Goto, _message.getMessage ());
+            video->postMessage (gotoMsg);
+            break;
+        }
         default:
             break;
         }

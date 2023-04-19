@@ -25,12 +25,17 @@ public:
         Play,
         Pause,
         Restart,
+        Goto,
         ErrorFromPannel,
     };
 
     //==============================================================================
     ControlPannelMessage (Type _type, juce::String _message = juce::String ());
     ~ControlPannelMessage () = default;
+
+    //==============================================================================
+    // Setters
+    void setMessage (juce::String _message);
 
     //==============================================================================
     // Getters

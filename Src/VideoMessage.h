@@ -24,6 +24,7 @@ public:
         Pause,
         Restart,
         Terminate,
+        Goto,
 
         FROM_VIDEO = 100,
         ErrorFromVideo,

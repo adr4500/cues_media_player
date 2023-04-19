@@ -9,6 +9,13 @@ ControlPannelMessage::ControlPannelMessage (Type _type, juce::String _message)
 }
 
 //==============================================================================
+// Setters
+void ControlPannelMessage::setMessage (juce::String _message)
+{
+    message = _message;
+}
+
+//==============================================================================
 // Getters
 ControlPannelMessage::Type ControlPannelMessage::getType () const
 {

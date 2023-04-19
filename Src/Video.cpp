@@ -1,4 +1,5 @@
 #include "Video.h"
+#include "Settings.h"
 #include <cassert>
 #include <fstream>
 
@@ -243,6 +244,17 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
     else if (_message.isType (CMP::VideoMessage::Type::Terminate))
     {
         stop ();
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::Goto))
+    {
+        guint64 nanosecondsRunningTime = static_cast<guint64> (
+            _message.getMessage ().getLargeIntValue () * 1000000000 / FPS);
+        if (pipeline == nullptr)
+            return;
+        gst_element_seek_simple (pipeline,
+                                 GST_FORMAT_TIME,
+                                 GST_SEEK_FLAG_FLUSH,
+                                 nanosecondsRunningTime);
     }
 }
 
