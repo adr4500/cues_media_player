@@ -62,6 +62,8 @@ bool ExternalInfo::setupCSV ()
         if (line.size () != 3)
             return false;
 
+        if (!isTimecodeFormat (line[0]))
+            return false;
 
         // Find the cue type
         CueTypes::CueType cueType =
