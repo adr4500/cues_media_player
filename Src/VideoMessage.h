@@ -29,7 +29,8 @@ public:
         FROM_VIDEO = 100,
         ErrorFromVideo,
         EndOfStream,
-        StateChanged
+        StateChanged,
+        GotoOK,
     };
 
     //==============================================================================

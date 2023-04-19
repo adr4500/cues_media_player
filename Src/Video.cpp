@@ -255,6 +255,9 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
                                  GST_FORMAT_TIME,
                                  GST_SEEK_FLAG_FLUSH,
                                  nanosecondsRunningTime);
+        VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::GotoOK, _message.getMessage ());
+        Video::mainThread->postMessage (returnMessage);
     }
 }
 
@@ -270,7 +273,8 @@ guint64 Video::VideoThread::getRunningTime () const
 {
     if (pipeline == nullptr)
         return 0;
-    return gst_clock_get_time (pipeline->clock) - pipeline->base_time;
+    return gst_clock_get_time (pipeline->clock) - pipeline->base_time -
+           pipeline->start_time;
 }
 
 gboolean Video::VideoThread::busCallback (GstBus* /*bus*/,

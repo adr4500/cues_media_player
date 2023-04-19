@@ -171,13 +171,21 @@ void MainComponent::handleMessage (const juce::Message& _message)
                              current_time))
                     {
                         updateFirstCueId ();
-                        nextCuePosition = 0;
                     }
                 }
             }
             else if (messagePtr->getMessage () == "Cues")
             {
                 updateFirstCueId ();
+            }
+        }
+        else if (messagePtr->isType (ControlPannelMessage::Type::GotoOK))
+        {
+            firstCueId = computeFirstCueId ();
+            updateFirstCueId ();
+            for (auto& cueComponent : cueComponents)
+            {
+                cueComponent->updateTime ();
             }
         }
     }
@@ -198,4 +206,17 @@ void MainComponent::updateFirstCueId ()
         }
         cueComponent->updateTime ();
     }
+    nextCuePosition = 0;
+}
+
+int MainComponent::computeFirstCueId () const
+{
+    for (int i = 0; i < externalInfo.getCues ().size (); ++i)
+    {
+        if (externalInfo.getCues ()[i].getTimecode () > current_time)
+        {
+            return i;
+        }
+    }
+    return static_cast<int> (externalInfo.getCues ().size () - 1);
 }

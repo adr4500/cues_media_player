@@ -20,6 +20,7 @@ public:
 
         TO_PANNEL = 1,
         Refresh,
+        GotoOK,
 
         FROM_PANNEL = 100,
         Play,

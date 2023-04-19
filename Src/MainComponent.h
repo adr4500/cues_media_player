@@ -40,6 +40,7 @@ public:
     }
 
 private:
+    int computeFirstCueId () const;
     static juce::MessageListener* mainApplication;
 
     bool isVideoPlaying{false};
