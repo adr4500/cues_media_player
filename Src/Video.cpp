@@ -273,8 +273,7 @@ guint64 Video::VideoThread::getRunningTime () const
 {
     if (pipeline == nullptr)
         return 0;
-    return gst_clock_get_time (pipeline->clock) - pipeline->base_time -
-           pipeline->start_time;
+    return gst_clock_get_time (pipeline->clock) - pipeline->base_time;
 }
 
 gboolean Video::VideoThread::busCallback (GstBus* /*bus*/,
