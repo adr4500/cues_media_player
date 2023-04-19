@@ -44,6 +44,14 @@ jucer_project_settings(
 jucer_project_files(
   "CMP/Src"
   # Compile   Xcode     Binary    File Resource  Resource
+  x
+  .
+  .
+  "Src/GotoComponent.cpp"
+  .
+  .
+  .
+  "Src/GotoComponent.h"
   .
   .
   .

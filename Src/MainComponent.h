@@ -6,6 +6,7 @@
 #include "CueComponent.h"
 #include "Settings.h"
 #include "ExternalInfo.h"
+#include "GotoComponent.h"
 
 namespace CMP
 {
@@ -39,6 +40,7 @@ public:
     }
 
 private:
+    int computeFirstCueId () const;
     static juce::MessageListener* mainApplication;
 
     bool isVideoPlaying{false};
@@ -50,6 +52,8 @@ private:
 
 
     juce::TextButton pausePlayButton;
+    juce::TextButton restartButton;
+    GotoComponent gotoComponent;
 
     std::vector<CueComponent*> cueComponents;
     int firstCueId{0};

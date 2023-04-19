@@ -85,6 +85,18 @@ public:
                     CMP::ControlPannelMessage::Type::Refresh,
                     _message.getMessage ());
             controlPannelWindow.get ()->postMessage (stateChangedMsg);
+            break;
+        }
+        case CMP::VideoMessage::Type::GotoOK:
+        {
+            current_timecode.setFramesTotal (static_cast<int32_t> (
+                _message.getMessage ().getLargeIntValue ()));
+            timerUpdaterThread.setLastGoto (current_timecode);
+            CMP::ControlPannelMessage* gotoOKMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::GotoOK,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (gotoOKMsg);
         }
         default:
             // Not a video message for the application
@@ -115,6 +127,13 @@ public:
             CMP::VideoMessage* restartMsg =
                 new CMP::VideoMessage (CMP::VideoMessage::Type::Restart);
             video->postMessage (restartMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::Goto:
+        {
+            CMP::VideoMessage* gotoMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::Goto, _message.getMessage ());
+            video->postMessage (gotoMsg);
             break;
         }
         default:
@@ -286,7 +305,10 @@ public:
             if (app.video->isPlaying ())
             {
                 auto nanosec = app.video->getRunningTime ();
-                auto tc = CMP::Timecode (nanosec);
+                auto tc =
+                    CMP::Timecode (nanosec) +
+                    last_goto; // Workaround because gstreamer timer seems to
+                               // have an offset when we use the seek function
                 if (tc != app.current_timecode)
                 {
                     app.current_timecode.setFramesTotal (tc.getFramesTotal ());
@@ -298,8 +320,11 @@ public:
             }
         }
 
+        void setLastGoto (CMP::Timecode _last_goto) { last_goto = _last_goto; }
+
     private:
         CMPApplication& app;
+        CMP::Timecode last_goto{0};
     } timerUpdaterThread{*this};
 
 private:

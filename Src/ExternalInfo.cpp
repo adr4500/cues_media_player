@@ -17,6 +17,8 @@ juce::File& ExternalInfo::getVideoFile () { return videoFile; }
 
 std::vector<Cue>& ExternalInfo::getCues () { return cues; }
 
+std::vector<Cue>& ExternalInfo::getGotoCues () { return goto_cues; }
+
 //==============================================================================
 // Setters
 bool ExternalInfo::setVideoPath (juce::String _path)
@@ -62,6 +64,8 @@ bool ExternalInfo::setupCSV ()
         if (line.size () != 3)
             return false;
 
+        if (!isTimecodeFormat (line[0]))
+            return false;
 
         // Find the cue type
         CueTypes::CueType cueType =

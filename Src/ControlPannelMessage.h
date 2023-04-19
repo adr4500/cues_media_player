@@ -20,17 +20,23 @@ public:
 
         TO_PANNEL = 1,
         Refresh,
+        GotoOK,
 
         FROM_PANNEL = 100,
         Play,
         Pause,
         Restart,
+        Goto,
         ErrorFromPannel,
     };
 
     //==============================================================================
     ControlPannelMessage (Type _type, juce::String _message = juce::String ());
     ~ControlPannelMessage () = default;
+
+    //==============================================================================
+    // Setters
+    void setMessage (juce::String _message);
 
     //==============================================================================
     // Getters
