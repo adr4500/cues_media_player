@@ -21,9 +21,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized () override;
 
-private:
     void gotoTimecode (juce::String _timecode);
 
+private:
     juce::TextButton gotoButton;
     juce::TextEditor gotoTextBox;
 

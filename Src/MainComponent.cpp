@@ -136,7 +136,7 @@ void MainComponent::handleMessage (const juce::Message& _message)
                                 ->getCueType ()
                                 .isCommandCue ())
                         {
-                            // Add commands behaviour here
+                            //================ Add commands behaviour here
                             if (cueComponents[nextCuePosition]
                                     ->getCue ()
                                     ->getDescription () == "Pause")
@@ -145,6 +145,17 @@ void MainComponent::handleMessage (const juce::Message& _message)
                                     new CMP::ControlPannelMessage (
                                         CMP::ControlPannelMessage::Type::Pause);
                                 mainApplication->postMessage (pauseMsg);
+                            }
+                            else if (cueComponents[nextCuePosition]
+                                         ->getCue ()
+                                         ->getDescription ()
+                                         .startsWith ("Goto "))
+                            {
+                                gotoComponent.gotoTimecode (
+                                    cueComponents[nextCuePosition]
+                                        ->getCue ()
+                                        ->getDescription ()
+                                        .substring (5));
                             }
                         }
                         firstCueId++;
