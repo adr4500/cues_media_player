@@ -22,7 +22,7 @@ jucer_project_settings(
   PROJECT_NAME
   "CMP"
   PROJECT_VERSION
-  "1.1.0"
+  "1.1.1"
   COMPANY_NAME
   "SiMDE"
   COMPANY_WEBSITE
