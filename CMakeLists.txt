@@ -129,6 +129,34 @@ jucer_project_files(
   .
   "Src/MainComponent.cpp")
 
+jucer_project_files(
+  "CMP/resources/images"
+  # Compile   Xcode     Binary    File Resource  Resource
+  .
+  .
+  x
+  "resources/images/Icon_large.ico"
+  .
+  .
+  x
+  "resources/images/Icon_large.png"
+  .
+  .
+  x
+  "resources/images/Icon_small.ico"
+  .
+  .
+  x
+  "resources/images/Icon_small.png"
+  .
+  .
+  x
+  "resources/images/Logo.ai"
+  .
+  .
+  x
+  "resources/images/Logo.png")
+
 jucer_project_module(
   juce_core
   PATH
@@ -177,7 +205,11 @@ jucer_export_target(
   EXTERNAL_LIBRARIES_TO_LINK
   "glib-2.0.lib"
   "gobject-2.0.lib"
-  "gstreamer-1.0.lib")
+  "gstreamer-1.0.lib"
+  ICON_SMALL
+  "resources/images/Icon_small.png"
+  ICON_LARGE
+  "resources/images/Icon_large.png")
 
 jucer_export_target_configuration(
   "Code::Blocks (Windows)"
@@ -219,6 +251,10 @@ jucer_export_target(
   "glib-2.0"
   "gobject-2.0"
   "gstreamer-1.0"
+  ICON_SMALL
+  "resources/images/Icon_small.png"
+  ICON_LARGE
+  "resources/images/Icon_large.png"
   PKGCONFIG_LIBRARIES
   "gstreamer-1.0")
 
@@ -248,7 +284,11 @@ jucer_export_target(
   EXTERNAL_LIBRARIES_TO_LINK
   "glib-2.0.lib"
   "gobject-2.0.lib"
-  "gstreamer-1.0.lib")
+  "gstreamer-1.0.lib"
+  ICON_SMALL
+  "resources/images/Icon_small.png"
+  ICON_LARGE
+  "resources/images/Icon_large.png")
 
 jucer_export_target_configuration(
   "Visual Studio 2017"
@@ -291,7 +331,11 @@ jucer_export_target(
   EXTERNAL_LIBRARIES_TO_LINK
   "glib-2.0.lib"
   "gobject-2.0.lib"
-  "gstreamer-1.0.lib")
+  "gstreamer-1.0.lib"
+  ICON_SMALL
+  "resources/images/Icon_small.png"
+  ICON_LARGE
+  "resources/images/Icon_large.png")
 
 jucer_export_target_configuration(
   "Visual Studio 2019"
@@ -335,7 +379,11 @@ jucer_export_target(
   EXTERNAL_LIBRARIES_TO_LINK
   "glib-2.0.lib"
   "gobject-2.0.lib"
-  "gstreamer-1.0.lib")
+  "gstreamer-1.0.lib"
+  ICON_SMALL
+  "resources/images/Icon_small.png"
+  ICON_LARGE
+  "resources/images/Icon_large.png")
 
 jucer_export_target_configuration(
   "Visual Studio 2022"

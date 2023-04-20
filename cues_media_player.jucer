@@ -35,10 +35,21 @@
       <FILE id="XOMrBe" name="MainComponent.cpp" compile="1" resource="0"
             file="Src/MainComponent.cpp"/>
     </GROUP>
+    <GROUP id="{CA351B36-D9CF-5651-25A3-E6E074BA6671}" name="resources">
+      <GROUP id="{81AEB683-C5B2-EDE3-61E1-170AE040CECC}" name="images">
+        <FILE id="WJ7Kn8" name="Icon_large.ico" compile="0" resource="1" file="resources/images/Icon_large.ico"/>
+        <FILE id="BonbXY" name="Icon_large.png" compile="0" resource="1" file="resources/images/Icon_large.png"/>
+        <FILE id="lmqdXA" name="Icon_small.ico" compile="0" resource="1" file="resources/images/Icon_small.ico"/>
+        <FILE id="uAtnia" name="Icon_small.png" compile="0" resource="1" file="resources/images/Icon_small.png"/>
+        <FILE id="FL2h2q" name="Logo.ai" compile="0" resource="1" file="resources/images/Logo.ai"/>
+        <FILE id="BDbKfm" name="Logo.png" compile="0" resource="1" file="resources/images/Logo.png"/>
+      </GROUP>
+    </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
+    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
+                        smallIcon="uAtnia" bigIcon="BonbXY">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
                        libraryPath="C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib"/>
@@ -55,7 +66,7 @@
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="glib-2.0&#10;gobject-2.0&#10;gstreamer-1.0"
-                linuxExtraPkgConfig="gstreamer-1.0">
+                linuxExtraPkgConfig="gstreamer-1.0" smallIcon="uAtnia" bigIcon="BonbXY">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"/>
@@ -69,7 +80,8 @@
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
+    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
+            smallIcon="uAtnia" bigIcon="BonbXY">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
                        headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
@@ -87,7 +99,8 @@
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
+            smallIcon="uAtnia" bigIcon="BonbXY">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
                        headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
@@ -105,7 +118,8 @@
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
-    <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib">
+    <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
+            smallIcon="uAtnia" bigIcon="BonbXY">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
                        headerPath="C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0&#10;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0&#10;C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include&#10;C:\gstreamer\1.0\msvc_x86_64\lib\gstreamer-1.0\include"
