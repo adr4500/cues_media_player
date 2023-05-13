@@ -147,7 +147,7 @@ public:
         externalInfo = new CMP::ExternalInfo ();
         CMP::Video::setMainThread (this);
         CMP::MainComponent::setMainApplication (this);
-        if (not externalInfo->setCSVPath ("Cues.csv"))
+        if (not externalInfo->setCSVPath ())
         {
             juce::AlertWindow::showMessageBoxAsync (
                 juce::AlertWindow::AlertIconType::WarningIcon,
@@ -160,7 +160,7 @@ public:
                 }));
             return;
         }
-        if (not externalInfo->setVideoPath ("Video.mp4"))
+        if (not externalInfo->setVideoPath ())
         {
             juce::AlertWindow::showMessageBoxAsync (
                 juce::AlertWindow::AlertIconType::WarningIcon,

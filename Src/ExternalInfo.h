@@ -49,8 +49,8 @@ public:
 
     //==============================================================================
     // Setters
-    bool setVideoPath (juce::String _path);
-    bool setCSVPath (juce::String _path);
+    bool setVideoPath (void);
+    bool setCSVPath (void);
 
     //==============================================================================
     // Setup
@@ -63,10 +63,11 @@ private:
     void readCSV ();
 
     //==============================================================================
-    juce::String videoPath;
-    juce::String CSVPath;
+    //juce::String videoPath;
+    //juce::String CSVPath;
     juce::File videoFile;
     juce::File CSVFile;
+    juce::File lastdir;
     juce::StringArray CSVLines;
 
     std::vector<Cue> cues;
