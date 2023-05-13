@@ -17,12 +17,13 @@ std::vector<Cue>& ExternalInfo::getGotoCues () { return goto_cues; }
 
 //==============================================================================
 // Setters
-bool ExternalInfo::setCSVPath (void) {
-    juce::FileChooser csvFinder ((juce::String)"Choisissez un fichier CSV ...",
-                               juce::File::getCurrentWorkingDirectory(),
-                               (juce::String)"*.csv");
+bool ExternalInfo::setCSVPath (void)
+{
+    juce::FileChooser csvFinder ((juce::String) "Choisissez un fichier CSV ...",
+                                 juce::File::getCurrentWorkingDirectory (),
+                                 (juce::String) "*.csv");
 
-    if (csvFinder.browseForFileToOpen()) 
+    if (csvFinder.browseForFileToOpen ())
     {
         CSVFile = csvFinder.getResult ();
         lastdir = CSVFile.getParentDirectory ();
@@ -32,10 +33,12 @@ bool ExternalInfo::setCSVPath (void) {
         return false;
 }
 
-bool ExternalInfo::setVideoPath (void) {
-    juce::FileChooser videoFinder ((juce::String) "Choisissez un fichier video ...",
-                                 lastdir,
-                                 (juce::String) "*.mp4");
+bool ExternalInfo::setVideoPath (void)
+{
+    juce::FileChooser videoFinder (
+        (juce::String) "Choisissez un fichier video ...",
+        lastdir,
+        (juce::String) "*.mp4");
     if (videoFinder.browseForFileToOpen ())
     {
         videoFile = videoFinder.getResult ();
@@ -44,7 +47,7 @@ bool ExternalInfo::setVideoPath (void) {
     else
         return false;
 }
-    //==============================================================================
+//==============================================================================
 // Setup
 bool ExternalInfo::setupCSV ()
 {
