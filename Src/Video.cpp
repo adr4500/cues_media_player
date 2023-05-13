@@ -60,7 +60,6 @@ void Video::VideoThread::run ()
     demux = gst_element_factory_make ("qtdemux", "demux");
     videoqueue = gst_element_factory_make ("queue", "video-queue");
     videoparser = gst_element_factory_make ("h264parse", "h264-parser");
-    videodecoder = gst_element_factory_make ("avdec_h264", "h264-decoder");
     videoconv = gst_element_factory_make ("videoconvert", "converter");
     videosink = gst_element_factory_make ("d3d11videosink", "video-output");
     audioqueue = gst_element_factory_make ("queue", "audio-queue");
@@ -70,6 +69,16 @@ void Video::VideoThread::run ()
     audioresample =
         gst_element_factory_make ("audioresample", "audio-resampler");
     audiosink = gst_element_factory_make ("wasapisink", "audio-output");
+
+    // Video selector
+    const char* videodec[] = {"nvh264sldec", "qsvh264dec", "avdec_h264"};
+
+    for (auto elem : videodec)
+    {
+        videodecoder = gst_element_factory_make (elem, "h264-decoder");
+        if (videodecoder != NULL)
+            break;
+    }
 
     if (!pipeline || !source || !demux || !videoqueue || !videoparser ||
         !videodecoder || !videoconv || !videosink || !audioqueue ||
