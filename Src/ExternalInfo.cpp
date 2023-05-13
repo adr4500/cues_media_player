@@ -3,11 +3,7 @@
 using namespace CMP;
 
 //==============================================================================
-ExternalInfo::ExternalInfo ()
-{
-    //videoPath = "";
-    //CSVPath = "";
-}
+ExternalInfo::ExternalInfo () {}
 
 ExternalInfo::~ExternalInfo () {}
 
@@ -21,35 +17,11 @@ std::vector<Cue>& ExternalInfo::getGotoCues () { return goto_cues; }
 
 //==============================================================================
 // Setters
-/*
-bool ExternalInfo::setVideoPath (juce::String _path)
-{
-    videoPath = _path;
-    videoFile =
-        juce::File::getCurrentWorkingDirectory ().getChildFile (videoPath);
-
-    if (videoFile.existsAsFile ())
-        return true;
-    else
-        return false;
-}
-
-bool ExternalInfo::setCSVPath (juce::String _path)
-{
-    CSVPath = _path;
-    CSVFile = juce::File::getCurrentWorkingDirectory ().getChildFile (CSVPath);
-
-    if (CSVFile.existsAsFile ())
-        return true;
-    else
-        return false;
-}
-*/
-
 bool ExternalInfo::setCSVPath (void) {
     juce::FileChooser csvFinder ((juce::String)"Choisissez un fichier CSV ...",
                                juce::File::getCurrentWorkingDirectory(),
                                (juce::String)"*.csv");
+
     if (csvFinder.browseForFileToOpen()) 
     {
         CSVFile = csvFinder.getResult ();
@@ -57,10 +29,9 @@ bool ExternalInfo::setCSVPath (void) {
         return true;
     }
     else
-    {
         return false;
-    }
 }
+
 bool ExternalInfo::setVideoPath (void) {
     juce::FileChooser videoFinder ((juce::String) "Choisissez un fichier video ...",
                                  lastdir,
@@ -71,9 +42,7 @@ bool ExternalInfo::setVideoPath (void) {
         return true;
     }
     else
-    {
         return false;
-    }
 }
     //==============================================================================
 // Setup

@@ -63,8 +63,6 @@ private:
     void readCSV ();
 
     //==============================================================================
-    //juce::String videoPath;
-    //juce::String CSVPath;
     juce::File videoFile;
     juce::File CSVFile;
     juce::File lastdir;
