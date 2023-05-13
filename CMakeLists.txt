@@ -39,7 +39,9 @@ jucer_project_settings(
   BUNDLE_IDENTIFIER
   "com.SiMDE.CMP"
   CXX_LANGUAGE_STANDARD
-  "C++20")
+  "C++20"
+  PREPROCESSOR_DEFINITIONS
+  "JUCE_MODAL_LOOPS_PERMITTED=1")
 
 jucer_project_files(
   "CMP/Src"
