@@ -12,7 +12,7 @@ GotoComponent::GotoComponent (ExternalInfo& _externalInfo,
     gotoButton.onClick = [this] { gotoTimecode (gotoTextBox.getText ()); };
 
     addAndMakeVisible (gotoTextBox);
-    gotoTextBox.setText ("Timecode name or timecode value");
+    gotoTextBox.setTextToShowWhenEmpty ("Timecode name or timecode value", juce::Colour::fromRGB(172,172,172));
 }
 
 GotoComponent::~GotoComponent () {}

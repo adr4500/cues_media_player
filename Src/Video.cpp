@@ -60,7 +60,7 @@ void Video::VideoThread::run ()
     demux = gst_element_factory_make ("qtdemux", "demux");
     videoqueue = gst_element_factory_make ("queue", "video-queue");
     videoparser = gst_element_factory_make ("h264parse", "h264-parser");
-    videodecoder = gst_element_factory_make ("nvh264sldec", "h264-decoder");
+    videodecoder = gst_element_factory_make ("avdec_h264", "h264-decoder");
     videoconv = gst_element_factory_make ("videoconvert", "converter");
     videosink = gst_element_factory_make ("d3d11videosink", "video-output");
     audioqueue = gst_element_factory_make ("queue", "audio-queue");
