@@ -39,7 +39,8 @@ void Cue::setExecuted (bool _executed) { executed = _executed; }
 
 //==============================================================================
 // Other methods
-void Cue::executeCue (juce::MessageListener* _mainApp, ExternalInfo* _externalInfo)
+void Cue::executeCue (juce::MessageListener* _mainApp,
+                      ExternalInfo* _externalInfo)
 {
     executed = true;
     if (cueType.isCommandCue ())
@@ -54,8 +55,7 @@ void Cue::executeCue (juce::MessageListener* _mainApp, ExternalInfo* _externalIn
         }
         else if (description.startsWith ("Goto "))
         {
-            gotoTimecode (_mainApp, _externalInfo,
-                description.substring (5));
+            gotoTimecode (_mainApp, _externalInfo, description.substring (5));
         }
     }
 }

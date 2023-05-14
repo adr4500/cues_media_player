@@ -128,13 +128,17 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 if (cueComponents[nextCuePosition]->getCue ())
                 {
                     if (cueComponents[nextCuePosition]
-                            ->getCue ()
-                            ->getTimecode () < current_time && cueComponents[nextCuePosition]
-                            ->getCue ()->isExecuted() == false)
+                                ->getCue ()
+                                ->getTimecode () < current_time &&
+                        cueComponents[nextCuePosition]
+                                ->getCue ()
+                                ->isExecuted () == false)
                     {
                         if (isVideoPlaying)
                         {
-                            cueComponents[nextCuePosition]->getCue()->executeCue (mainApplication, &externalInfo);
+                            cueComponents[nextCuePosition]
+                                ->getCue ()
+                                ->executeCue (mainApplication, &externalInfo);
                         }
                         firstCueId++;
                         nextCuePosition++;
@@ -205,7 +209,7 @@ void MainComponent::refreshAllCues ()
     {
         if (externalInfo.getCues ()[i].getTimecode () > current_time)
         {
-            cueComponents[nextCuePosition]->getCue ()->setExecuted(false);
+            externalInfo.getCues ()[i].setExecuted (false);
             if (firstCueId == -1)
             {
                 firstCueId = i;
@@ -213,7 +217,7 @@ void MainComponent::refreshAllCues ()
         }
         else
         {
-            cueComponents[nextCuePosition]->getCue ()->setExecuted(true);
+            externalInfo.getCues ()[i].setExecuted (true);
         }
     }
 }

@@ -9,7 +9,9 @@ GotoComponent::GotoComponent (ExternalInfo& _externalInfo,
 {
     addAndMakeVisible (gotoButton);
     gotoButton.setButtonText ("Goto");
-    gotoButton.onClick = [this] { gotoTimecode (mainApplication, &externalInfo, gotoTextBox.getText ()); };
+    gotoButton.onClick = [this] {
+        gotoTimecode (mainApplication, &externalInfo, gotoTextBox.getText ());
+    };
 
     addAndMakeVisible (gotoTextBox);
     gotoTextBox.setTextToShowWhenEmpty ("Timecode name or timecode value",

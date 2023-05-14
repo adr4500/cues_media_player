@@ -50,7 +50,9 @@ private:
     juce::String message;
 };
 
-inline void gotoTimecode (juce::MessageListener* _mainApplication, ExternalInfo* _externalInfo, juce::String _gotoArgument)
+inline void gotoTimecode (juce::MessageListener* _mainApplication,
+                          ExternalInfo* _externalInfo,
+                          juce::String _gotoArgument)
 {
     if (isTimecodeFormat (_gotoArgument))
     {

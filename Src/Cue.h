@@ -39,7 +39,8 @@ public:
 
     //==============================================================================
     // Other methods
-    void executeCue (juce::MessageListener* _mainApp, ExternalInfo* _externalInfo);
+    void executeCue (juce::MessageListener* _mainApp,
+                     ExternalInfo* _externalInfo);
 
 private:
     //==============================================================================
