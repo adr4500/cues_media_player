@@ -39,8 +39,6 @@ public:
         mainApplication = _mainApplication;
     }
 
-    void gotoTimecode (juce::String _timecode);
-
 private:
     void refreshAllCues ();
     static juce::MessageListener* mainApplication;
