@@ -7,6 +7,7 @@
 #include "Settings.h"
 #include "ExternalInfo.h"
 #include "GotoComponent.h"
+#include "SliderComponent.h"
 
 namespace CMP
 {

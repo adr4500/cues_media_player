@@ -6,6 +6,10 @@
               cppLanguageStandard="20" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="ZMS7g8" name="SliderComponent.cpp" compile="1" resource="0"
+            file="Src/SliderComponent.cpp"/>
+      <FILE id="wTGm5y" name="SliderComponent.h" compile="0" resource="0"
+            file="Src/SliderComponent.h"/>
       <FILE id="ErCB6U" name="GotoComponent.cpp" compile="1" resource="0"
             file="Src/GotoComponent.cpp"/>
       <FILE id="qcAWIq" name="GotoComponent.h" compile="0" resource="0" file="Src/GotoComponent.h"/>
