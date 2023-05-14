@@ -39,8 +39,10 @@ public:
         mainApplication = _mainApplication;
     }
 
+    void gotoTimecode (juce::String _timecode);
+
 private:
-    int computeFirstCueId () const;
+    void refreshAllCues ();
     static juce::MessageListener* mainApplication;
 
     bool isVideoPlaying{false};

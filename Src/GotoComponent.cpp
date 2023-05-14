@@ -9,7 +9,7 @@ GotoComponent::GotoComponent (ExternalInfo& _externalInfo,
 {
     addAndMakeVisible (gotoButton);
     gotoButton.setButtonText ("Goto");
-    gotoButton.onClick = [this] { gotoTimecode (gotoTextBox.getText ()); };
+    gotoButton.onClick = [this] { gotoTimecode (mainApplication, &externalInfo, gotoTextBox.getText ()); };
 
     addAndMakeVisible (gotoTextBox);
     gotoTextBox.setTextToShowWhenEmpty ("Timecode name or timecode value",
@@ -42,30 +42,4 @@ void GotoComponent::resized ()
                           verticalMargin,
                           buttonWidth,
                           buttonHeight);
-}
-
-void GotoComponent::gotoTimecode (juce::String _gotoArgument)
-{
-    if (isTimecodeFormat (_gotoArgument))
-    {
-        Timecode timecode (_gotoArgument);
-        ControlPannelMessage* message = new ControlPannelMessage (
-            ControlPannelMessage::Type::Goto,
-            juce::String (timecode.getFramesTotal ()));
-        mainApplication->postMessage (message);
-    }
-    else
-    {
-        for (auto gotoCue : externalInfo.getGotoCues ())
-        {
-            if (gotoCue.getDescription () == _gotoArgument)
-            {
-                ControlPannelMessage* message = new ControlPannelMessage (
-                    ControlPannelMessage::Type::Goto,
-                    juce::String (gotoCue.getTimecode ().getFramesTotal ()));
-                mainApplication->postMessage (message);
-                return;
-            }
-        }
-    }
 }
