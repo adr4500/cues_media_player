@@ -13,5 +13,6 @@ public:
 
 private:
     juce::Slider timeSlider;
+    Timecode& current_time;
 };
 }
