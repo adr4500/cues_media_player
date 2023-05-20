@@ -33,6 +33,7 @@ public:
     bool isPlaying () const;
     bool isPaused () const;
 
+
     //==============================================================================
     // MessageListener
     void handleMessage (const juce::Message& _message) override;

@@ -10,6 +10,8 @@ class SliderComponent : public juce::Component
 public:
     SliderComponent ();
     ~SliderComponent ();
+    void SliderSetTime (Timecode& _current_time);
+    static double timeToDouble (Timecode& _current_time);
 
 private:
     juce::Slider timeSlider;
