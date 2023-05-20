@@ -1,6 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "ExternalInfo.h"
 
 namespace CMP
 {
@@ -48,5 +49,33 @@ private:
     Type type;
     juce::String message;
 };
+
+inline void gotoTimecode (juce::MessageListener* _mainApplication,
+                          ExternalInfo* _externalInfo,
+                          juce::String _gotoArgument)
+{
+    if (isTimecodeFormat (_gotoArgument))
+    {
+        Timecode timecode (_gotoArgument);
+        ControlPannelMessage* message = new ControlPannelMessage (
+            ControlPannelMessage::Type::Goto,
+            juce::String (timecode.getFramesTotal ()));
+        _mainApplication->postMessage (message);
+    }
+    else
+    {
+        for (auto gotoCue : _externalInfo->getGotoCues ())
+        {
+            if (gotoCue.getDescription () == _gotoArgument)
+            {
+                ControlPannelMessage* message = new ControlPannelMessage (
+                    ControlPannelMessage::Type::Goto,
+                    juce::String (gotoCue.getTimecode ().getFramesTotal ()));
+                _mainApplication->postMessage (message);
+                return;
+            }
+        }
+    }
+}
 
 } // namespace CMP

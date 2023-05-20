@@ -128,35 +128,17 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 if (cueComponents[nextCuePosition]->getCue ())
                 {
                     if (cueComponents[nextCuePosition]
-                            ->getCue ()
-                            ->getTimecode () < current_time)
-                    {
-                        if (cueComponents[nextCuePosition]
                                 ->getCue ()
-                                ->getCueType ()
-                                .isCommandCue ())
+                                ->getTimecode () < current_time &&
+                        cueComponents[nextCuePosition]
+                                ->getCue ()
+                                ->isExecuted () == false)
+                    {
+                        if (isVideoPlaying)
                         {
-                            //================ Add commands behaviour here
-                            if (cueComponents[nextCuePosition]
-                                    ->getCue ()
-                                    ->getDescription () == "Pause")
-                            {
-                                CMP::ControlPannelMessage* pauseMsg =
-                                    new CMP::ControlPannelMessage (
-                                        CMP::ControlPannelMessage::Type::Pause);
-                                mainApplication->postMessage (pauseMsg);
-                            }
-                            else if (cueComponents[nextCuePosition]
-                                         ->getCue ()
-                                         ->getDescription ()
-                                         .startsWith ("Goto "))
-                            {
-                                gotoComponent.gotoTimecode (
-                                    cueComponents[nextCuePosition]
-                                        ->getCue ()
-                                        ->getDescription ()
-                                        .substring (5));
-                            }
+                            cueComponents[nextCuePosition]
+                                ->getCue ()
+                                ->executeCue (mainApplication, &externalInfo);
                         }
                         firstCueId++;
                         nextCuePosition++;
@@ -192,7 +174,7 @@ void MainComponent::handleMessage (const juce::Message& _message)
         }
         else if (messagePtr->isType (ControlPannelMessage::Type::GotoOK))
         {
-            firstCueId = computeFirstCueId ();
+            refreshAllCues ();
             updateFirstCueId ();
             for (auto& cueComponent : cueComponents)
             {
@@ -220,14 +202,22 @@ void MainComponent::updateFirstCueId ()
     nextCuePosition = 0;
 }
 
-int MainComponent::computeFirstCueId () const
+void MainComponent::refreshAllCues ()
 {
+    firstCueId = -1;
     for (int i = 0; i < externalInfo.getCues ().size (); ++i)
     {
         if (externalInfo.getCues ()[i].getTimecode () > current_time)
         {
-            return i;
+            externalInfo.getCues ()[i].setExecuted (false);
+            if (firstCueId == -1)
+            {
+                firstCueId = i;
+            }
+        }
+        else
+        {
+            externalInfo.getCues ()[i].setExecuted (true);
         }
     }
-    return static_cast<int> (externalInfo.getCues ().size () - 1);
 }
