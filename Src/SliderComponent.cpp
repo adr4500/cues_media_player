@@ -2,10 +2,11 @@
 
 using namespace CMP;
 
-SliderComponent::SliderComponent ()
+SliderComponent::SliderComponent (Timecode& _current_time)
 {
+    Timecode& current_time = _current_time;
     timeSlider.setSliderStyle (juce::Slider::SliderStyle::LinearHorizontal);
-    timeSlider.setRange (0, );
+    timeSlider.setRange (0, 2);
 }
 
 void SliderComponent::SliderSetTime (Timecode& _current_time)

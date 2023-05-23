@@ -45,6 +45,7 @@ void Video::setMainThread (juce::MessageListener* _mainThread)
 //==============================================================================
 
 guint64 Video::getRunningTime () const { return videoThread.getRunningTime (); }
+guint64 Video::getDurationTime () const { return videoThread.getDurationTime (); }
 
 //==============================================================================
 // VideoThread
@@ -177,7 +178,7 @@ void Video::VideoThread::run ()
     VideoMessage* message =
         new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
     Video::mainThread->postMessage (message);
-
+    getDurationTime ();
     GstPad* pad = gst_element_get_static_pad (videosink, "sink");
     gst_pad_add_probe (
         pad, GST_PAD_PROBE_TYPE_BUFFER, encoderCbHaveData, NULL, NULL);
@@ -284,6 +285,20 @@ guint64 Video::VideoThread::getRunningTime () const
         return 0;
     return gst_clock_get_time (pipeline->clock) - pipeline->base_time;
 }
+
+guint64 Video::VideoThread::getDurationTime () const
+{
+    if (pipeline == nullptr)
+        return 0;
+    gint64 duration;
+    duration = gst_element_query_duration (pipeline, GST_FORMAT_TIME, &duration);
+    if (duration)
+        std::cout << "  OK   ";
+    else
+        std::cout << "  FUCK NO   ";
+    std::cout << duration;
+}
+
 
 gboolean Video::VideoThread::busCallback (GstBus* /*bus*/,
                                           GstMessage* msg,

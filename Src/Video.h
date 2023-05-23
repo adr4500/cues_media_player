@@ -44,6 +44,7 @@ public:
 
     //==============================================================================
     guint64 getRunningTime () const;
+    guint64 getDurationTime () const;
 
 private:
     class VideoThread : public juce::Thread
@@ -63,6 +64,7 @@ private:
         bool isPlaying () const;
 
         guint64 getRunningTime () const;
+        guint64 getDurationTime () const;
 
     private:
         static gboolean

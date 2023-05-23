@@ -8,7 +8,7 @@ namespace CMP
 class SliderComponent : public juce::Component
 {
 public:
-    SliderComponent ();
+    SliderComponent (Timecode& current_time);
     ~SliderComponent ();
     void SliderSetTime (Timecode& _current_time);
     static double timeToDouble (Timecode& _current_time);
