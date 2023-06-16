@@ -1,7 +1,11 @@
 # cues_media_player
-Pour les vidéos de Cues
+### Présentation
 
-Pour l'instant, pour l'utiliser, mettre dans le même dossier que l'executable un fichier Cues.csv et un fichier Video.mp4.
+Cues Media Player est un lecteur vidéo qui permet d'afficher des timecodes sur la vidéo. Cela peut être utile pour mettre automatiquement la vidéo en pause, executer des commandes à certains moments où planifier des scènes lumières.
+Il a été crée pour un spectacle de danse dans lequel il etait necessaire de synchroniser la vidéo, le son et la lumière avec des moyens limités.
+
+### Utilisation
+
 La vidéo mp4 doit absolument être encodée en video h264, audio mpeg, 25fps !
 
 Le fichier CSV se rédige comme suit :
@@ -21,6 +25,8 @@ Command : Execute une commande automatiquement quand on atteint le timecode. Ent
     - "Goto ..." Permet d'aller automatiquement à un endroit (on peut mettre un timecode explicitement un le nom d'une cue GOTO)
 
 ## Getting started
+Pour installer les dépendances necessaires, veuillez lancer la commande
+```make setup_env```
 
 Avant de pouvoir compiler le programme, vous devez installer FRUT. Pour cela, lancer les commandes suivantes dans un bash
 ```bash
