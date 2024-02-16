@@ -1,6 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <array>
 
 namespace CMP
 {
@@ -34,6 +35,7 @@ public:
 
     juce::String toString () const;
     float toSeconds () const;
+    std::array<int,8> toNibbles () const;
 
     //==============================================================================
     // Setters
