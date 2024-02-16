@@ -66,21 +66,17 @@ void MTCSender::stop()
 //==============================================================================
 void MTCSender::run()
 {
-    auto nextTime = std::chrono::high_resolution_clock::now();
-    int nextTimeInt = std::chrono::duration_cast<std::chrono::milliseconds>(nextTime.time_since_epoch()).count();
     // Calculate sleep time
     int sleepTime = 1000 / (4 * FPS); // 4 times the frame rate because of the quarter frame messages
     while (!threadShouldExit ())
     {
+        auto start = juce::Time::getMillisecondCounter();
         if (isRunning and currentTime != nullptr)
         {
             sendMTC();
         }
-
-        while (std::chrono::high_resolution_clock::now() < nextTime)
-        {
-        }
-        nextTime += std::chrono::milliseconds(sleepTime);
+        auto end = juce::Time::getMillisecondCounter();
+        juce::Thread::sleep(sleepTime - (end - start));
     }
 }
 
