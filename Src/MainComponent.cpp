@@ -14,6 +14,10 @@ MainComponent::MainComponent (Timecode& _current_time,
 {
     assert (mainApplication != nullptr);
 
+    // Configure MTC Sender
+    mtcSender.setCurrentTime (current_time);
+    mtcSender.startThread ();
+
     // Configure PausePlay Button
     pausePlayButton.onClick = [this] () {
         if (isVideoPlaying)
@@ -28,6 +32,25 @@ MainComponent::MainComponent (Timecode& _current_time,
             CMP::ControlPannelMessage* playMsg = new CMP::ControlPannelMessage (
                 CMP::ControlPannelMessage::Type::Play);
             mainApplication->postMessage (playMsg);
+        }
+    };
+    addAndMakeVisible (midiDeviceButton);
+    midiDeviceButton.setButtonText ("Select Midi Device. Current : None");
+    midiDeviceButton.onClick = [this] () {
+        // Open a dropdown menu to select the midi device
+        juce::PopupMenu menu;
+        auto midiOutputs = juce::MidiOutput::getAvailableDevices ();
+        for (int i = 0; i < midiOutputs.size (); ++i)
+        {
+            menu.addItem (i + 1, midiOutputs[i].name);
+        }
+        int result = menu.showAt (&midiDeviceButton);
+        if (result != 0)
+        {
+            mtcSender.setMidiOutput (midiOutputs[result - 1].identifier);
+            midiDeviceButton.setButtonText (
+                "Select Midi Device. Current : " +
+                midiOutputs[result - 1].name);
         }
     };
     addAndMakeVisible (pausePlayButton);
@@ -79,15 +102,20 @@ void MainComponent::resized ()
     auto buttonWidth = static_cast<int> (getWidth () / 2 - 2 * leftMargins);
     auto elemntWidth = static_cast<int> (getWidth () - 2 * leftMargins);
     auto elementsHeight = static_cast<int> (
-        getHeight () / (NB_DISPLAYED_TIMECODES + 2) - 2 * topMargins);
+        getHeight () / (NB_DISPLAYED_TIMECODES + 2.5) - 2 * topMargins);
+
+    midiDeviceButton.setBounds (leftMargins,
+                               topMargins,
+                               getWidth () - 2 * leftMargins,
+                               elementsHeight/2);
 
     pausePlayButton.setBounds (
-        leftMargins, topMargins, buttonWidth, elementsHeight);
+        leftMargins, topMargins * 2 + elementsHeight/2, buttonWidth, elementsHeight);
     restartButton.setBounds (
-        3 * leftMargins + buttonWidth, topMargins, buttonWidth, elementsHeight);
+        3 * leftMargins + buttonWidth, topMargins * 2 + elementsHeight/2, buttonWidth, elementsHeight);
 
     gotoComponent.setBounds (leftMargins,
-                             3 * topMargins + elementsHeight,
+                             4 * topMargins + elementsHeight * 1.5,
                              elemntWidth,
                              elementsHeight);
 
@@ -95,7 +123,7 @@ void MainComponent::resized ()
     {
         cueComponents[i]->setBounds (
             leftMargins,
-            topMargins + (i + 2) * (elementsHeight + 2 * topMargins),
+            topMargins + (i + 2) * (elementsHeight + 4 * topMargins),
             elemntWidth,
             elementsHeight);
     }
@@ -113,11 +141,13 @@ void MainComponent::handleMessage (const juce::Message& _message)
             {
                 pausePlayButton.setButtonText ("Pause");
                 isVideoPlaying = true;
+                mtcSender.start ();
             }
             else if (messagePtr->getMessage () == "Paused")
             {
                 pausePlayButton.setButtonText ("Play");
                 isVideoPlaying = false;
+                mtcSender.stop ();
             }
             else if (messagePtr->getMessage () == "Timer")
             {
@@ -180,6 +210,7 @@ void MainComponent::handleMessage (const juce::Message& _message)
             {
                 cueComponent->updateTime ();
             }
+            mtcSender.sendMTC ();
         }
     }
 }

@@ -49,6 +49,14 @@ jucer_project_files(
   x
   .
   .
+  "Src/MTCSender.cpp"
+  .
+  .
+  .
+  "Src/MTCSender.h"
+  x
+  .
+  .
   "Src/GotoComponent.cpp"
   .
   .
@@ -158,6 +166,17 @@ jucer_project_files(
   .
   x
   "resources/images/Logo.png")
+
+jucer_project_module(juce_audio_basics PATH "ThirdParty/JUCE/modules")
+
+jucer_project_module(
+  juce_audio_devices
+  PATH
+  "ThirdParty/JUCE/modules"
+  # JUCE_USE_WINRT_MIDI JUCE_ASIO JUCE_WASAPI JUCE_DIRECTSOUND JUCE_ALSA
+  # JUCE_JACK JUCE_BELA JUCE_USE_ANDROID_OBOE JUCE_USE_OBOE_STABILIZED_CALLBACK
+  # JUCE_USE_ANDROID_OPENSLES JUCE_DISABLE_AUDIO_MIXING_WITH_OTHER_APPS
+)
 
 jucer_project_module(
   juce_core

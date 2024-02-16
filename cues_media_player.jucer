@@ -6,6 +6,8 @@
               cppLanguageStandard="20" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="H7547u" name="MTCSender.cpp" compile="1" resource="0" file="Src/MTCSender.cpp"/>
+      <FILE id="JIsZH3" name="MTCSender.h" compile="0" resource="0" file="Src/MTCSender.h"/>
       <FILE id="ErCB6U" name="GotoComponent.cpp" compile="1" resource="0"
             file="Src/GotoComponent.cpp"/>
       <FILE id="qcAWIq" name="GotoComponent.h" compile="0" resource="0" file="Src/GotoComponent.h"/>
@@ -63,6 +65,8 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="glib-2.0&#10;gobject-2.0&#10;gstreamer-1.0"
@@ -78,6 +82,8 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
@@ -97,6 +103,8 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
     <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
@@ -116,6 +124,8 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
@@ -135,10 +145,14 @@
         <MODULEPATH id="juce_events" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="ThirdParty/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="ThirdParty/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>
   <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
