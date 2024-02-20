@@ -241,13 +241,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target_configuration(
   "Code::Blocks (Windows)"
@@ -258,16 +255,16 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target(
   "Linux Makefile"
+  TARGET_PROJECT_FOLDER
+  "Builds/LinuxMakefile" # used by HEADER_SEARCH_PATHS,
+                         # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
   "glib-2.0"
   "gobject-2.0"
@@ -286,7 +283,12 @@ jucer_export_target_configuration(
   DEBUG_MODE
   ON
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -295,7 +297,12 @@ jucer_export_target_configuration(
   DEBUG_MODE
   OFF
   BINARY_NAME
-  "cues_media_player")
+  "cues_media_player"
+  HEADER_SEARCH_PATHS
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
+  EXTRA_LIBRARY_SEARCH_PATHS
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target(
   "Visual Studio 2017"
@@ -320,12 +327,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2017"
@@ -336,13 +341,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target(
   "Visual Studio 2019"
@@ -367,13 +369,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2019"
@@ -384,13 +383,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target(
   "Visual Studio 2022"
@@ -415,13 +411,10 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_export_target_configuration(
   "Visual Studio 2022"
@@ -432,12 +425,9 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\include\\glib-2.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\glib-2.0\\include"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0\\include"
+  "C:\\libvlcpp-master\\vlcpp"
+  "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib\\gstreamer-1.0"
-  "C:\\gstreamer\\1.0\\msvc_x86_64\\lib")
+  "C:\\vlc_sdk\\lib")
 
 jucer_project_end()
