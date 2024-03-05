@@ -2,6 +2,7 @@
 #include "Settings.h"
 #include <cassert>
 #include <fstream>
+#include <iostream>
 
 using namespace CMP;
 
@@ -44,33 +45,32 @@ void Video::setMainThread (juce::MessageListener* _mainThread)
 
 //==============================================================================
 
-long long int Video::getRunningTime () const { return videoThread.getRunningTime (); }
+long long int Video::getRunningTime () const
+{
+    return videoThread.getRunningTime ();
+}
 
 //==============================================================================
 // VideoThread
 void Video::VideoThread::run ()
 {
-    instance = new VLC::Instance (0, nullptr);
-    player = new VLC::MediaPlayer (*instance);
-    media = new VLC::Media (instance, videoPath);
-    player->setMedia (*media);
-    player->play ();
-    player->pause ();
-    playing = false;
-    while (!threadShouldExit ())
-    {
-        juce::Thread::sleep (1000);
-    }
-    delete media;
-    delete player;
-    delete instance;
+    vlcInstance = libvlc_new (0, nullptr);
+    vlcMediaPlayer = libvlc_media_player_new (vlcInstance);
+    libvlc_media_t* media = libvlc_media_new_path (videoPath.toRawUTF8 ());
+    libvlc_media_player_set_media (vlcMediaPlayer, media);
+    libvlc_media_release (media);
+    libvlc_media_player_play (vlcMediaPlayer);
+    VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::StateChanged, "Playing");
+    Video::mainThread->postMessage (returnMessage);
+    playing = true;
 }
 
 void Video::VideoThread::recieveMessage (const VideoMessage& _message)
 {
     if (_message.isType (CMP::VideoMessage::Type::Play))
     {
-        player->play ();
+        libvlc_media_player_play (vlcMediaPlayer);
         playing = true;
         VideoMessage* returnMessage =
             new VideoMessage (VideoMessage::Type::StateChanged, "Playing");
@@ -78,7 +78,7 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
     }
     else if (_message.isType (CMP::VideoMessage::Type::Pause))
     {
-        player->pause ();
+        libvlc_media_player_pause (vlcMediaPlayer);
         playing = false;
         VideoMessage* returnMessage =
             new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
@@ -86,8 +86,8 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
     }
     else if (_message.isType (CMP::VideoMessage::Type::Restart))
     {
-        player->setTime (0);
-        player->pause ();
+        libvlc_media_player_set_time (vlcMediaPlayer, 0, false);
+        libvlc_media_player_pause (vlcMediaPlayer);
         VideoMessage* returnMessage =
             new VideoMessage (VideoMessage::Type::StateChanged, "Paused");
         Video::mainThread->postMessage (returnMessage);
@@ -98,9 +98,9 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
     }
     else if (_message.isType (CMP::VideoMessage::Type::Goto))
     {
-        long long int microsecondsRunningTime = static_cast<long long int> (
+        long long int millisecondsRunningTime = static_cast<long long int> (
             _message.getMessage ().getLargeIntValue () * 1000 / FPS);
-        player->setTime (microsecondsRunningTime);
+        libvlc_media_player_set_time (vlcMediaPlayer, millisecondsRunningTime, false);
         VideoMessage* returnMessage = new VideoMessage (
             VideoMessage::Type::GotoOK, _message.getMessage ());
         Video::mainThread->postMessage (returnMessage);
@@ -109,13 +109,16 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
 
 void Video::VideoThread::stop ()
 {
-    player->stop ();
     playing = false;
+    libvlc_media_player_stop_async (vlcMediaPlayer);
+    libvlc_media_player_release (vlcMediaPlayer);
+    libvlc_release (vlcInstance);
+    signalThreadShouldExit ();
 }
 
 bool Video::VideoThread::isPlaying () const { return playing; }
 
 long long int Video::VideoThread::getRunningTime () const
 {
-    return player->time ();
+    return libvlc_media_player_get_time (vlcMediaPlayer);
 }

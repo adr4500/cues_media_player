@@ -58,9 +58,9 @@ juce::String Timecode::toString () const
 
 float Timecode::toSeconds () const { return framesTotal / (float)FPS; }
 
-std::array<int,8> Timecode::toNibbles () const
+std::array<int, 8> Timecode::toNibbles () const
 {
-    std::array<int,8> nibbles;
+    std::array<int, 8> nibbles;
 
     nibbles[0] = getFrames () & 0x0F;
     nibbles[1] = getFrames () >> 4;

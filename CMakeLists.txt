@@ -224,9 +224,7 @@ jucer_export_target(
   "Builds/CodeBlocksWindows" # used by HEADER_SEARCH_PATHS,
                              # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0.lib"
-  "gobject-2.0.lib"
-  "gstreamer-1.0.lib"
+  "libvlc.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
@@ -241,7 +239,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -255,7 +252,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -266,9 +262,7 @@ jucer_export_target(
   "Builds/LinuxMakefile" # used by HEADER_SEARCH_PATHS,
                          # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0"
-  "gobject-2.0"
-  "gstreamer-1.0"
+  "libvlc.x64.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
@@ -285,7 +279,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -299,7 +292,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -310,9 +302,7 @@ jucer_export_target(
   "Builds/VisualStudio2017" # used by HEADER_SEARCH_PATHS,
                             # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0.lib"
-  "gobject-2.0.lib"
-  "gstreamer-1.0.lib"
+  "libvlc.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
@@ -327,7 +317,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -341,7 +330,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -352,9 +340,7 @@ jucer_export_target(
   "Builds/VisualStudio2019" # used by HEADER_SEARCH_PATHS,
                             # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0.lib"
-  "gobject-2.0.lib"
-  "gstreamer-1.0.lib"
+  "libvlc.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
@@ -369,7 +355,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -383,7 +368,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -394,9 +378,7 @@ jucer_export_target(
   "Builds/VisualStudio2022" # used by HEADER_SEARCH_PATHS,
                             # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "glib-2.0.lib"
-  "gobject-2.0.lib"
-  "gstreamer-1.0.lib"
+  "libvlc.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
@@ -411,7 +393,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")
@@ -425,7 +406,6 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\libvlcpp-master\\vlcpp"
   "C:\\vlc_sdk\\include"
   EXTRA_LIBRARY_SEARCH_PATHS
   "C:\\vlc_sdk\\lib")

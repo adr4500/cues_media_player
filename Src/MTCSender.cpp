@@ -4,7 +4,7 @@
 using namespace CMP;
 
 //==============================================================================
-MTCSender::MTCSender() : juce::Thread("MTC Sender")
+MTCSender::MTCSender () : juce::Thread ("MTC Sender")
 {
     midiOutput = nullptr;
     isRunning = false;
@@ -27,29 +27,27 @@ MTCSender::MTCSender() : juce::Thread("MTC Sender")
 }
 
 //==============================================================================
-MTCSender::~MTCSender()
-{
-    stop();
-}
+MTCSender::~MTCSender () { stop (); }
 
 //==============================================================================
-void MTCSender::setMidiOutput(juce::String t_midiOutput)
+void MTCSender::setMidiOutput (juce::String t_midiOutput)
 {
     if (midiOutput != nullptr)
     {
-        midiOutput->stopBackgroundThread();
+        midiOutput->stopBackgroundThread ();
     }
-    static std::unique_ptr<juce::MidiOutput> unique_midiOutput = juce::MidiOutput::openDevice(t_midiOutput);
-    sendFullMTC(Timecode("00:00:00:00"));
-    midiOutput = unique_midiOutput.get();
+    static std::unique_ptr<juce::MidiOutput> unique_midiOutput =
+        juce::MidiOutput::openDevice (t_midiOutput);
+    sendFullMTC (Timecode ("00:00:00:00"));
+    midiOutput = unique_midiOutput.get ();
     if (midiOutput != nullptr)
     {
-        midiOutput->startBackgroundThread();
+        midiOutput->startBackgroundThread ();
     }
 }
 
 //==============================================================================
-void MTCSender::start()
+void MTCSender::start ()
 {
     if (midiOutput != nullptr and currentTime != nullptr)
     {
@@ -58,44 +56,45 @@ void MTCSender::start()
 }
 
 //==============================================================================
-void MTCSender::stop()
-{
-    isRunning = false;
-}
+void MTCSender::stop () { isRunning = false; }
 
 //==============================================================================
-void MTCSender::run()
+void MTCSender::run ()
 {
     // Calculate sleep time
-    int sleepTime = 1000 / (4 * FPS); // 4 times the frame rate because of the quarter frame messages
+    int sleepTime =
+        1000 /
+        (4 *
+         FPS); // 4 times the frame rate because of the quarter frame messages
     while (!threadShouldExit ())
     {
-        auto start = juce::Time::getMillisecondCounter();
+        auto start = juce::Time::getMillisecondCounter ();
         if (isRunning and currentTime != nullptr)
         {
-            sendMTC();
+            sendMTC ();
         }
-        auto end = juce::Time::getMillisecondCounter();
-        juce::Thread::sleep(sleepTime - (end - start));
+        auto end = juce::Time::getMillisecondCounter ();
+        juce::Thread::sleep (sleepTime - (end - start));
     }
 }
 
 //==============================================================================
-void MTCSender::sendFullMTC(Timecode t_time)
+void MTCSender::sendFullMTC (Timecode t_time)
 {
     if (isRunning and midiOutput != nullptr)
     {
-        juce::MidiMessage mtcMessage = juce::MidiMessage::fullFrame(t_time.getHours(),
-                                                                    t_time.getMinutes(),
-                                                                    t_time.getSeconds(),
-                                                                    t_time.getFrames(),
-                                                                    frameRate);
-        midiOutput->sendMessageNow(mtcMessage);
+        juce::MidiMessage mtcMessage =
+            juce::MidiMessage::fullFrame (t_time.getHours (),
+                                          t_time.getMinutes (),
+                                          t_time.getSeconds (),
+                                          t_time.getFrames (),
+                                          frameRate);
+        midiOutput->sendMessageNow (mtcMessage);
     }
 }
 
 //==============================================================================
-void MTCSender::sendQuarterFrameMTC(int nibble, int value)
+void MTCSender::sendQuarterFrameMTC (int nibble, int value)
 {
     if (isRunning)
     {
@@ -103,28 +102,30 @@ void MTCSender::sendQuarterFrameMTC(int nibble, int value)
         {
             value = (frameRate << 1) | value;
         }
-        juce::MidiMessage mtcMessage = juce::MidiMessage::quarterFrame(nibble, value);
-        midiOutput->sendMessageNow(mtcMessage);
+        juce::MidiMessage mtcMessage =
+            juce::MidiMessage::quarterFrame (nibble, value);
+        midiOutput->sendMessageNow (mtcMessage);
     }
 }
 
-void MTCSender::sendMTC()
+void MTCSender::sendMTC ()
 {
     if (sequence == 0)
     {
         lastTime = codedTime;
         codedTime = *currentTime;
     }
-    static Timecode FullFrameDifference = Timecode("00:00:00:10");
-    if (codedTime - lastTime >= FullFrameDifference or codedTime - lastTime < Timecode())
+    static Timecode FullFrameDifference = Timecode ("00:00:00:10");
+    if (codedTime - lastTime >= FullFrameDifference or
+        codedTime - lastTime < Timecode ())
     {
-        sendFullMTC(codedTime);
+        sendFullMTC (codedTime);
         sequence = 0;
     }
     else
     {
-        auto nibbles = codedTime.toNibbles();
-        sendQuarterFrameMTC(sequence, nibbles[sequence]);
+        auto nibbles = codedTime.toNibbles ();
+        sendQuarterFrameMTC (sequence, nibbles[sequence]);
         sequence = (sequence + 1) % 8;
     }
 }

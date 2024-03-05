@@ -50,12 +50,12 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
-                        smallIcon="uAtnia" bigIcon="BonbXY">
+    <CODEBLOCKS_WINDOWS targetFolder="Builds/CodeBlocksWindows" smallIcon="uAtnia" bigIcon="BonbXY"
+                        externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+        <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+        <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -69,14 +69,14 @@
         <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </CODEBLOCKS_WINDOWS>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="glib-2.0&#10;gobject-2.0&#10;gstreamer-1.0"
-                linuxExtraPkgConfig="gstreamer-1.0" smallIcon="uAtnia" bigIcon="BonbXY">
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" linuxExtraPkgConfig="gstreamer-1.0"
+                smallIcon="uAtnia" bigIcon="BonbXY" externalLibraries="libvlc.x64.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -90,14 +90,14 @@
         <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VisualStudio2017" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
-            smallIcon="uAtnia" bigIcon="BonbXY">
+    <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="uAtnia" bigIcon="BonbXY"
+            externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -111,14 +111,14 @@
         <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
-            smallIcon="uAtnia" bigIcon="BonbXY">
+    <VS2019 targetFolder="Builds/VisualStudio2019" smallIcon="uAtnia" bigIcon="BonbXY"
+            externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -132,14 +132,14 @@
         <MODULEPATH id="juce_audio_devices" path="ThirdParty/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
-    <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="glib-2.0.lib&#10;gobject-2.0.lib&#10;gstreamer-1.0.lib"
-            smallIcon="uAtnia" bigIcon="BonbXY">
+    <VS2022 targetFolder="Builds/VisualStudio2022" smallIcon="uAtnia" bigIcon="BonbXY"
+            externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\libvlcpp-master\vlcpp&#10;C:\vlc_sdk\include"
+                       headerPath="C:\vlc_sdk\include"
                        libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

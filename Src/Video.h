@@ -2,7 +2,6 @@
 
 #include <sys/types.h>
 #include <vlc/vlc.h>
-#include "MediaPlayer.hpp"
 #include <JuceHeader.h>
 #include "VideoMessage.h"
 
@@ -56,9 +55,8 @@ private:
         long long int getRunningTime () const;
 
     private:
-        VLC::Instance* instance;
-        VLC::MediaPlayer* player;
-        VLC::Media* media;
+        libvlc_instance_t* vlcInstance{nullptr};
+        libvlc_media_player_t* vlcMediaPlayer{nullptr};
 
         bool playing{false};
 
