@@ -1,5 +1,6 @@
 #include "MTCSender.h"
 #include "Settings.h"
+#include <algorithm>
 
 using namespace CMP;
 
@@ -88,7 +89,7 @@ void MTCSender::run ()
             sendMTC ();
         }
         auto end = juce::Time::getMillisecondCounter ();
-        juce::Thread::sleep (sleepTime - (end - start));
+        juce::Thread::sleep (std::max<int>(sleepTime - (int)(end - start), 0));
     }
 }
 
