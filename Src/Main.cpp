@@ -97,6 +97,42 @@ public:
                     _message.getMessage ());
             controlPannelWindow.get ()->postMessage (gotoOKMsg);
         }
+        case CMP::VideoMessage::Type::ReturnAudioTracks:
+        {
+            CMP::ControlPannelMessage* returnAudioTracksMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::ReturnAudioTracks,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (returnAudioTracksMsg);
+            break;
+        }
+        case CMP::VideoMessage::Type::ReturnSubtitleTracks:
+        {
+            CMP::ControlPannelMessage* returnSubtitleTracksMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::ReturnSubtitleTracks,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (returnSubtitleTracksMsg);
+            break;
+        }
+        case CMP::VideoMessage::Type::ReturnAudioCurrentTrack:
+        {
+            CMP::ControlPannelMessage* returnAudioCurrentTrackMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::ReturnAudioCurrentTrack,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (returnAudioCurrentTrackMsg);
+            break;
+        }
+        case CMP::VideoMessage::Type::ReturnSubtitleCurrentTrack:
+        {
+            CMP::ControlPannelMessage* returnSubtitleCurrentTrackMsg =
+                new CMP::ControlPannelMessage (
+                    CMP::ControlPannelMessage::Type::ReturnSubtitleCurrentTrack,
+                    _message.getMessage ());
+            controlPannelWindow.get ()->postMessage (returnSubtitleCurrentTrackMsg);
+            break;
+        }
         default:
             // Not a video message for the application
             break;
@@ -133,6 +169,50 @@ public:
             CMP::VideoMessage* gotoMsg = new CMP::VideoMessage (
                 CMP::VideoMessage::Type::Goto, _message.getMessage ());
             video->postMessage (gotoMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::RequestAudioTracks:
+        {
+            CMP::VideoMessage* requestAudioTracksMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::RequestAudioTracks);
+            video->postMessage (requestAudioTracksMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::RequestSubtitleTracks:
+        {
+            CMP::VideoMessage* requestSubtitleTracksMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::RequestSubtitleTracks);
+            video->postMessage (requestSubtitleTracksMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::RequestAudioCurrentTrack:
+        {
+            CMP::VideoMessage* requestAudioCurrentTrackMsg =
+                new CMP::VideoMessage (
+                    CMP::VideoMessage::Type::RequestAudioCurrentTrack);
+            video->postMessage (requestAudioCurrentTrackMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::RequestSubtitleCurrentTrack:
+        {
+            CMP::VideoMessage* requestSubtitleCurrentTrackMsg =
+                new CMP::VideoMessage (
+                    CMP::VideoMessage::Type::RequestSubtitleCurrentTrack);
+            video->postMessage (requestSubtitleCurrentTrackMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::SetAudioTrack:
+        {
+            CMP::VideoMessage* setAudioTrackMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::SetAudioTrack, _message.getMessage ());
+            video->postMessage (setAudioTrackMsg);
+            break;
+        }
+        case CMP::ControlPannelMessage::Type::SetSubtitleTrack:
+        {
+            CMP::VideoMessage* setSubtitleTrackMsg = new CMP::VideoMessage (
+                CMP::VideoMessage::Type::SetSubtitleTrack, _message.getMessage ());
+            video->postMessage (setSubtitleTrackMsg);
             break;
         }
         default:

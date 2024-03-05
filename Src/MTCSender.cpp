@@ -52,6 +52,12 @@ void MTCSender::setMidiOutput (juce::String t_midiOutput)
 }
 
 //==============================================================================
+void MTCSender::setMidiOutputName (juce::String t_midiOutputName)
+{
+    midiOutputName = t_midiOutputName;
+}
+
+//==============================================================================
 void MTCSender::start ()
 {
     if (midiOutput != nullptr and currentTime != nullptr)
@@ -62,6 +68,9 @@ void MTCSender::start ()
 
 //==============================================================================
 void MTCSender::stop () { isRunning = false; }
+
+//==============================================================================
+juce::String MTCSender::getMidiOutputName () { return midiOutputName; }
 
 //==============================================================================
 void MTCSender::run ()

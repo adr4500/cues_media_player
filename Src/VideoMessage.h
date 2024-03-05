@@ -25,12 +25,22 @@ public:
         Restart,
         Terminate,
         Goto,
+        RequestAudioTracks,
+        RequestSubtitleTracks,
+        RequestAudioCurrentTrack,
+        RequestSubtitleCurrentTrack,
+        SetAudioTrack,
+        SetSubtitleTrack,
 
         FROM_VIDEO = 100,
         ErrorFromVideo,
         EndOfStream,
         StateChanged,
         GotoOK,
+        ReturnAudioTracks,
+        ReturnSubtitleTracks,
+        ReturnAudioCurrentTrack,
+        ReturnSubtitleCurrentTrack,
     };
 
     //==============================================================================

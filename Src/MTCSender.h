@@ -22,8 +22,12 @@ public:
 
     //==============================================================================
     void setMidiOutput (juce::String t_midiOutput);
+    void setMidiOutputName (juce::String t_midiOutputName);
     void start ();
     void stop ();
+
+    //==============================================================================
+    juce::String getMidiOutputName ();
 
     void setCurrentTime (Timecode& t_currentTime)
     {
@@ -43,6 +47,7 @@ private:
     Timecode lastTime;
     Timecode* currentTime;
     Timecode codedTime;
+    juce::String midiOutputName = "None";
     int sequence = 0;
 };
 

@@ -49,6 +49,14 @@ jucer_project_files(
   x
   .
   .
+  "Src/SettingsWindow.cpp"
+  .
+  .
+  .
+  "Src/SettingsWindow.h"
+  x
+  .
+  .
   "Src/MTCSender.cpp"
   .
   .

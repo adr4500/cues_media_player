@@ -6,6 +6,10 @@
               cppLanguageStandard="20" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="YVRKD7" name="CMP">
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
+      <FILE id="gX7YkP" name="SettingsWindow.cpp" compile="1" resource="0"
+            file="Src/SettingsWindow.cpp"/>
+      <FILE id="cSIJIX" name="SettingsWindow.h" compile="0" resource="0"
+            file="Src/SettingsWindow.h"/>
       <FILE id="H7547u" name="MTCSender.cpp" compile="1" resource="0" file="Src/MTCSender.cpp"/>
       <FILE id="JIsZH3" name="MTCSender.h" compile="0" resource="0" file="Src/MTCSender.h"/>
       <FILE id="ErCB6U" name="GotoComponent.cpp" compile="1" resource="0"
@@ -73,11 +77,9 @@
                 smallIcon="uAtnia" bigIcon="BonbXY" externalLibraries="libvlc.x64.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="-Wa,-mbig-obj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -94,11 +96,9 @@
             externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -115,11 +115,9 @@
             externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
@@ -136,11 +134,9 @@
             externalLibraries="libvlc.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="cues_media_player" extraCompilerFlags="/bigobj"
-                       headerPath="C:\vlc_sdk\include"
-                       libraryPath="C:\vlc_sdk\lib"/>
+                       headerPath="C:\vlc_sdk\include" libraryPath="C:\vlc_sdk\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="ThirdParty/JUCE/modules"/>
