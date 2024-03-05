@@ -10,7 +10,8 @@ MainComponent::MainComponent (Timecode& _current_time,
                               ExternalInfo& _externalInfo)
     : current_time (_current_time),
       externalInfo (_externalInfo),
-      gotoComponent (_externalInfo, mainApplication)
+      gotoComponent (_externalInfo, mainApplication),
+      settingsWindow (mainApplication, mtcSender)
 {
     assert (mainApplication != nullptr);
 
@@ -34,31 +35,13 @@ MainComponent::MainComponent (Timecode& _current_time,
             mainApplication->postMessage (playMsg);
         }
     };
-    addAndMakeVisible (midiDeviceButton);
-    midiDeviceButton.setButtonText ("Select Midi Device. Current : None");
-    midiDeviceButton.onClick = [this] () {
-        // Open a dropdown menu to select the midi device
-        juce::PopupMenu menu;
-        auto midiOutputs = juce::MidiOutput::getAvailableDevices ();
-        menu.addItem (1, "None");
-        for (int i = 0; i < midiOutputs.size (); ++i)
-        {
-            menu.addItem (i + 2, midiOutputs[i].name);
-        }
-        int result = menu.showAt (&midiDeviceButton); 
-        if (result != 0)
-        {
-            if (result == 1)
-            {
-                mtcSender.setMidiOutput ("None");
-                midiDeviceButton.setButtonText ("Select Midi Device. Current : None");
-                return;
-            }
-            mtcSender.setMidiOutput (midiOutputs[result - 2].identifier);
-            midiDeviceButton.setButtonText ("Select Midi Device. Current : " +
-                                            midiOutputs[result - 2].name);
-        }
+    addAndMakeVisible (settingsButton);
+    settingsButton.setButtonText ("Settings");
+    settingsButton.onClick = [this] () {
+        // Open the settings window
+        settingsWindow.open();
     };
+
     addAndMakeVisible (pausePlayButton);
     addAndMakeVisible (restartButton);
     restartButton.setButtonText ("Restart");
@@ -110,11 +93,10 @@ void MainComponent::resized ()
     auto elementsHeight = static_cast<int> (
         getHeight () / (NB_DISPLAYED_TIMECODES + 2.5) - 2 * topMargins);
 
-    midiDeviceButton.setBounds (leftMargins,
-                                topMargins,
-                                getWidth () - 2 * leftMargins,
-                                elementsHeight / 2);
-
+    settingsButton.setBounds (leftMargins,
+                             topMargins,
+                             buttonWidth,
+                             elementsHeight/2);
     pausePlayButton.setBounds (leftMargins,
                                topMargins * 2 + elementsHeight / 2,
                                buttonWidth,
@@ -221,6 +203,13 @@ void MainComponent::handleMessage (const juce::Message& _message)
                 cueComponent->updateTime ();
             }
             mtcSender.sendMTC ();
+        }
+        else if (messagePtr->isType (ControlPannelMessage::Type::ReturnAudioTracks) ||
+                 messagePtr->isType (ControlPannelMessage::Type::ReturnSubtitleTracks) ||
+                 messagePtr->isType (ControlPannelMessage::Type::ReturnAudioCurrentTrack) ||
+                 messagePtr->isType (ControlPannelMessage::Type::ReturnSubtitleCurrentTrack))
+        {
+            settingsWindow.handleMessage (_message);
         }
     }
 }

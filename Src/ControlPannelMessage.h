@@ -22,12 +22,22 @@ public:
         TO_PANNEL = 1,
         Refresh,
         GotoOK,
+        ReturnAudioTracks,
+        ReturnSubtitleTracks,
+        ReturnAudioCurrentTrack,
+        ReturnSubtitleCurrentTrack,
 
         FROM_PANNEL = 100,
         Play,
         Pause,
         Restart,
         Goto,
+        RequestAudioTracks,
+        RequestSubtitleTracks,
+        RequestAudioCurrentTrack,
+        RequestSubtitleCurrentTrack,
+        SetAudioTrack,
+        SetSubtitleTrack,
         ErrorFromPannel,
     };
 

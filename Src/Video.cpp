@@ -105,6 +105,82 @@ void Video::VideoThread::recieveMessage (const VideoMessage& _message)
             VideoMessage::Type::GotoOK, _message.getMessage ());
         Video::mainThread->postMessage (returnMessage);
     }
+    else if (_message.isType (CMP::VideoMessage::Type::RequestAudioTracks))
+    {
+        libvlc_media_tracklist_t* trackList;
+        libvlc_track_type_t type = libvlc_track_audio;
+        trackList = libvlc_media_player_get_tracklist (vlcMediaPlayer, type, false);
+        int nbTracks = libvlc_media_tracklist_count (trackList);
+        juce::String message;
+        for (int i = 0; i < nbTracks; ++i)
+        {
+            auto track = libvlc_media_tracklist_at(trackList, i);
+            message += juce::String (i) + " : " + juce::String (track->i_id) + " : " + juce::String (track->psz_name) + "\n";
+        }
+        VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::ReturnAudioTracks, message);
+        Video::mainThread->postMessage (returnMessage);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::RequestSubtitleTracks))
+    {
+        libvlc_media_tracklist_t* trackList;
+        libvlc_track_type_t type = libvlc_track_text;
+        trackList = libvlc_media_player_get_tracklist (vlcMediaPlayer, type, false);
+        int nbTracks = libvlc_media_tracklist_count (trackList);
+        juce::String message;
+        for (int i = 0; i < nbTracks; ++i)
+        {
+            auto track = libvlc_media_tracklist_at(trackList, i);
+            message += juce::String (i) + " : " + juce::String (track->i_id) + " : " + juce::String (track->psz_name) + "\n";
+        }
+        VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::ReturnSubtitleTracks, message);
+        Video::mainThread->postMessage (returnMessage);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::RequestAudioCurrentTrack))
+    {
+        libvlc_media_track_t* track;
+        libvlc_track_type_t type = libvlc_track_audio;
+        track = libvlc_media_player_get_selected_track (vlcMediaPlayer, type);
+        if (track == nullptr)
+        {
+            return;
+        }
+        juce::String message = juce::String (track->i_id) + " : " + juce::String (track->psz_name);
+        VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::ReturnAudioCurrentTrack, message);
+        Video::mainThread->postMessage (returnMessage);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::RequestSubtitleCurrentTrack))
+    {
+        libvlc_media_track_t* track;
+        libvlc_track_type_t type = libvlc_track_text;
+        track = libvlc_media_player_get_selected_track (vlcMediaPlayer, type);
+        if (track == nullptr)
+        {
+            return;
+        }
+        juce::String message = juce::String (track->i_id) + " : " + juce::String (track->psz_name);
+        VideoMessage* returnMessage = new VideoMessage (
+            VideoMessage::Type::ReturnSubtitleCurrentTrack, message);
+        Video::mainThread->postMessage (returnMessage);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::SetAudioTrack))
+    {
+        libvlc_media_track_t* track;
+        libvlc_track_type_t type = libvlc_track_audio;
+        int id = _message.getMessage ().getIntValue ();
+        track = libvlc_media_tracklist_at(libvlc_media_player_get_tracklist (vlcMediaPlayer, type, false), id);
+        libvlc_media_player_select_track (vlcMediaPlayer, track);
+    }
+    else if (_message.isType (CMP::VideoMessage::Type::SetSubtitleTrack))
+    {
+        libvlc_media_track_t* track;
+        libvlc_track_type_t type = libvlc_track_text;
+        int id = _message.getMessage ().getIntValue ();
+        track = libvlc_media_tracklist_at(libvlc_media_player_get_tracklist (vlcMediaPlayer, type, false), id);
+        libvlc_media_player_select_track (vlcMediaPlayer, track);
+    }
 }
 
 void Video::VideoThread::stop ()

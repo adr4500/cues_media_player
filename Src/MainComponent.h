@@ -8,6 +8,7 @@
 #include "ExternalInfo.h"
 #include "GotoComponent.h"
 #include "MTCSender.h"
+#include "SettingsWindow.h"
 
 namespace CMP
 {
@@ -51,7 +52,10 @@ private:
 
     Timecode lastCueExecution;
 
+    CMP::SettingsWindow settingsWindow;
+
     juce::TextButton midiDeviceButton;
+    juce::TextButton settingsButton;
     juce::TextButton pausePlayButton;
     juce::TextButton restartButton;
     GotoComponent gotoComponent;
