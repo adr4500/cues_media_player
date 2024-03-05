@@ -40,16 +40,23 @@ MainComponent::MainComponent (Timecode& _current_time,
         // Open a dropdown menu to select the midi device
         juce::PopupMenu menu;
         auto midiOutputs = juce::MidiOutput::getAvailableDevices ();
+        menu.addItem (1, "None");
         for (int i = 0; i < midiOutputs.size (); ++i)
         {
-            menu.addItem (i + 1, midiOutputs[i].name);
+            menu.addItem (i + 2, midiOutputs[i].name);
         }
-        int result = menu.showAt (&midiDeviceButton);
+        int result = menu.showAt (&midiDeviceButton); 
         if (result != 0)
         {
-            mtcSender.setMidiOutput (midiOutputs[result - 1].identifier);
+            if (result == 1)
+            {
+                mtcSender.setMidiOutput ("None");
+                midiDeviceButton.setButtonText ("Select Midi Device. Current : None");
+                return;
+            }
+            mtcSender.setMidiOutput (midiOutputs[result - 2].identifier);
             midiDeviceButton.setButtonText ("Select Midi Device. Current : " +
-                                            midiOutputs[result - 1].name);
+                                            midiOutputs[result - 2].name);
         }
     };
     addAndMakeVisible (pausePlayButton);

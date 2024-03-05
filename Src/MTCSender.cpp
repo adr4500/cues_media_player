@@ -32,13 +32,18 @@ MTCSender::~MTCSender () { stop (); }
 //==============================================================================
 void MTCSender::setMidiOutput (juce::String t_midiOutput)
 {
+    if (t_midiOutput == "None" and midiOutput != nullptr)
+    {
+        midiOutput->stopBackgroundThread ();
+        midiOutput = nullptr;
+        return;
+    }
     if (midiOutput != nullptr)
     {
         midiOutput->stopBackgroundThread ();
     }
     static std::unique_ptr<juce::MidiOutput> unique_midiOutput =
         juce::MidiOutput::openDevice (t_midiOutput);
-    sendFullMTC (Timecode ("00:00:00:00"));
     midiOutput = unique_midiOutput.get ();
     if (midiOutput != nullptr)
     {
@@ -110,6 +115,10 @@ void MTCSender::sendQuarterFrameMTC (int nibble, int value)
 
 void MTCSender::sendMTC ()
 {
+    if (midiOutput == nullptr or currentTime == nullptr)
+    {
+        return;
+    }
     if (sequence == 0)
     {
         lastTime = codedTime;
