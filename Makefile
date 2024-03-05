@@ -20,6 +20,9 @@ clean :
 run :
 	./build/Debug/App/cues_media_player.exe
 
+run_release :
+	./build/Release/App/cues_media_player.exe
+
 build_release :
 	rm -rf build
 	make generate

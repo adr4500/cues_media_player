@@ -48,9 +48,8 @@ MainComponent::MainComponent (Timecode& _current_time,
         if (result != 0)
         {
             mtcSender.setMidiOutput (midiOutputs[result - 1].identifier);
-            midiDeviceButton.setButtonText (
-                "Select Midi Device. Current : " +
-                midiOutputs[result - 1].name);
+            midiDeviceButton.setButtonText ("Select Midi Device. Current : " +
+                                            midiOutputs[result - 1].name);
         }
     };
     addAndMakeVisible (pausePlayButton);
@@ -105,14 +104,18 @@ void MainComponent::resized ()
         getHeight () / (NB_DISPLAYED_TIMECODES + 2.5) - 2 * topMargins);
 
     midiDeviceButton.setBounds (leftMargins,
-                               topMargins,
-                               getWidth () - 2 * leftMargins,
-                               elementsHeight/2);
+                                topMargins,
+                                getWidth () - 2 * leftMargins,
+                                elementsHeight / 2);
 
-    pausePlayButton.setBounds (
-        leftMargins, topMargins * 2 + elementsHeight/2, buttonWidth, elementsHeight);
-    restartButton.setBounds (
-        3 * leftMargins + buttonWidth, topMargins * 2 + elementsHeight/2, buttonWidth, elementsHeight);
+    pausePlayButton.setBounds (leftMargins,
+                               topMargins * 2 + elementsHeight / 2,
+                               buttonWidth,
+                               elementsHeight);
+    restartButton.setBounds (3 * leftMargins + buttonWidth,
+                             topMargins * 2 + elementsHeight / 2,
+                             buttonWidth,
+                             elementsHeight);
 
     gotoComponent.setBounds (leftMargins,
                              4 * topMargins + elementsHeight * 1.5,

@@ -91,7 +91,6 @@ public:
         {
             current_timecode.setFramesTotal (static_cast<int32_t> (
                 _message.getMessage ().getLargeIntValue ()));
-            timerUpdaterThread.setLastGoto (current_timecode);
             CMP::ControlPannelMessage* gotoOKMsg =
                 new CMP::ControlPannelMessage (
                     CMP::ControlPannelMessage::Type::GotoOK,
@@ -304,11 +303,9 @@ public:
         {
             if (app.video->isPlaying ())
             {
-                auto nanosec = app.video->getRunningTime ();
+                auto nanosec = app.video->getRunningTime ()*1000000;
                 auto tc =
-                    CMP::Timecode (nanosec) +
-                    last_goto; // Workaround because gstreamer timer seems to
-                               // have an offset when we use the seek function
+                    CMP::Timecode (nanosec);
                 if (tc != app.current_timecode)
                 {
                     app.current_timecode.setFramesTotal (tc.getFramesTotal ());
@@ -320,11 +317,8 @@ public:
             }
         }
 
-        void setLastGoto (CMP::Timecode _last_goto) { last_goto = _last_goto; }
-
     private:
         CMPApplication& app;
-        CMP::Timecode last_goto{0};
     } timerUpdaterThread{*this};
 
 private:
