@@ -22,7 +22,7 @@ jucer_project_settings(
   PROJECT_NAME
   "CMP"
   PROJECT_VERSION
-  "1.2.0"
+  "1.2.1"
   COMPANY_NAME
   "SiMDE"
   COMPANY_WEBSITE
@@ -270,13 +270,11 @@ jucer_export_target(
   "Builds/LinuxMakefile" # used by HEADER_SEARCH_PATHS,
                          # EXTRA_LIBRARY_SEARCH_PATHS
   EXTERNAL_LIBRARIES_TO_LINK
-  "libvlc.x64.lib"
+  "libvlc.lib"
   ICON_SMALL
   "resources/images/Icon_small.png"
   ICON_LARGE
-  "resources/images/Icon_large.png"
-  PKGCONFIG_LIBRARIES
-  "gstreamer-1.0")
+  "resources/images/Icon_large.png")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -287,9 +285,9 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\vlc_sdk\\include"
+  "/usr/include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\vlc_sdk\\lib")
+  "/usr/lib/x86_64-linux-gnu")
 
 jucer_export_target_configuration(
   "Linux Makefile"
@@ -300,9 +298,9 @@ jucer_export_target_configuration(
   BINARY_NAME
   "cues_media_player"
   HEADER_SEARCH_PATHS
-  "C:\\vlc_sdk\\include"
+  "/usr/include"
   EXTRA_LIBRARY_SEARCH_PATHS
-  "C:\\vlc_sdk\\lib")
+  "/usr/lib/x86_64-linux-gnu")
 
 jucer_export_target(
   "Visual Studio 2017"
