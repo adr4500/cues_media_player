@@ -17,6 +17,7 @@ MainComponent::MainComponent (Timecode& _current_time,
 
     // Configure MTC Sender
     mtcSender.setCurrentTime (current_time);
+    mtcSender.setTimeOffset (settingsWindow.getTimeOffset ());
     mtcSender.startThread ();
 
     // Configure PausePlay Button

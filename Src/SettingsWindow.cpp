@@ -3,10 +3,11 @@
 using namespace CMP;
 
 //==============================================================================
-SettingsComponent::SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton)
+SettingsComponent::SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton, juce::TextEditor& _timeOffsetEditor)
     : audioTrackButton (_audioTrackButton),
       subtitleTrackButton (_subtitleTrackButton),
-      midiDeviceButton (_midiDeviceButton)
+      midiDeviceButton (_midiDeviceButton),
+      timeOffsetEditor (_timeOffsetEditor)
 {
 }
 
@@ -21,6 +22,7 @@ void SettingsComponent::resized ()
     audioTrackButton.setBounds (10, 10, 280, 40);
     subtitleTrackButton.setBounds (10, 60, 280, 40);
     midiDeviceButton.setBounds (10, 110, 280, 40);
+    timeOffsetEditor.setBounds (10, 160, 280, 40);
 }
 
 //==============================================================================
@@ -29,7 +31,7 @@ SettingsWindow::SettingsWindow (juce::MessageListener* _mainApplication, CMP::MT
                             juce::Colours::darkgrey,
                             juce::DocumentWindow::allButtons,
                             true),
-      content (audioTrackButton, subtitleTrackButton, midiDeviceButton),
+      content (audioTrackButton, subtitleTrackButton, midiDeviceButton, timeOffsetEditor),
       mainApplication (_mainApplication),
       mtcSender (_mtcSender)
 {
@@ -112,6 +114,20 @@ SettingsWindow::SettingsWindow (juce::MessageListener* _mainApplication, CMP::MT
                                             midiOutputs[result - 2].name);
         }
     };
+    content.addAndMakeVisible (timeOffsetEditor);
+    timeOffsetEditor.setText (timeOffset.toString ());
+    timeOffsetEditor.onTextChange = [this] () {
+        // Set the time offset
+        if (isTimecodeFormat(timeOffsetEditor.getText()))
+        {
+            timeOffset = Timecode(timeOffsetEditor.getText());
+            timeOffsetEditor.applyColourToAllText(juce::Colours::green);
+        }
+        else
+        {
+            timeOffsetEditor.applyColourToAllText(juce::Colours::red);
+        }
+    };
     content.resized ();
 }
 
@@ -133,6 +149,8 @@ void SettingsWindow::open ()
     requestAudioTracks ();
     requestSubtitleTracks ();
     midiDeviceButton.setButtonText ("Select Midi Device. Current : " + mtcSender.getMidiOutputName ());
+    timeOffsetEditor.setText (timeOffset.toString ());
+    timeOffsetEditor.applyColourToAllText(juce::Colours::green);
     // Open the window
     setVisible (true);
 }
@@ -251,4 +269,10 @@ void SettingsWindow::handleMessage (const juce::Message& _message)
             }
         }
     }
+}
+
+//==============================================================================
+Timecode& SettingsWindow::getTimeOffset ()
+{
+    return timeOffset;
 }

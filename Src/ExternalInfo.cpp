@@ -36,7 +36,7 @@ bool ExternalInfo::setCSVPath (void)
 bool ExternalInfo::setVideoPath (void)
 {
     juce::FileChooser videoFinder (
-        (juce::String) "Open the video", lastdir, (juce::String) "*.mp4;*.mkv");
+        (juce::String) "Open the video", lastdir, (juce::String) "*.mp4;*.mkv;*.m2ts");
     if (videoFinder.browseForFileToOpen ())
     {
         videoFile = videoFinder.getResult ();

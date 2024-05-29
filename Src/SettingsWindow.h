@@ -11,7 +11,7 @@ namespace CMP
 class SettingsComponent : public juce::Component
 {
 public :
-    SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton);
+    SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton, juce::TextEditor& _timeOffsetEditor);
     ~SettingsComponent () override;
 
     void resized () override;
@@ -19,6 +19,7 @@ private :
     juce::TextButton& audioTrackButton;
     juce::TextButton& subtitleTrackButton;
     juce::TextButton& midiDeviceButton;
+    juce::TextEditor& timeOffsetEditor;
 };
 
 //==============================================================================
@@ -40,6 +41,9 @@ public:
 
     void handleMessage (const juce::Message& _message) override;
 
+    //==============================================================================
+    Timecode& getTimeOffset ();
+
 private:
     void requestAudioTracks ();
     void requestSubtitleTracks ();
@@ -56,9 +60,11 @@ private:
     juce::TextButton audioTrackButton;
     juce::TextButton subtitleTrackButton;
     juce::TextButton midiDeviceButton;
+    juce::TextEditor timeOffsetEditor;
 
     juce::MessageListener* mainApplication;
     CMP::MTCSender& mtcSender;
+    CMP::Timecode timeOffset;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsWindow)
 };
