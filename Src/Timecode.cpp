@@ -7,6 +7,12 @@ using namespace CMP;
 
 Timecode::Timecode (juce::String _timecode)
 {
+    int sign = 1;
+    if (_timecode[0] == '-')
+    {
+        _timecode = _timecode.substring (1);
+        sign = -1;
+    }
     auto hours = _timecode.substring (0, 2).getIntValue ();
     auto minutes = _timecode.substring (3, 5).getIntValue ();
     auto seconds = _timecode.substring (6, 8).getIntValue ();
@@ -14,6 +20,8 @@ Timecode::Timecode (juce::String _timecode)
 
     framesTotal =
         frames + seconds * FPS + minutes * 60 * FPS + hours * 3600 * FPS;
+    
+    framesTotal *= sign;
 }
 
 Timecode::~Timecode () {}
