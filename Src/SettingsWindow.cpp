@@ -3,11 +3,14 @@
 using namespace CMP;
 
 //==============================================================================
-SettingsComponent::SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton, juce::TextEditor& _timeOffsetEditor)
+SettingsComponent::SettingsComponent (juce::TextButton& _audioTrackButton, juce::TextButton& _subtitleTrackButton, juce::TextButton& _midiDeviceButton, juce::TextEditor& _timeOffsetEditor, CMP::UIModules::SectionSeparator& _mediaSeparator, CMP::UIModules::SectionSeparator& _midiSeparator, CMP::UIModules::SectionSeparator& _playerSeparator)
     : audioTrackButton (_audioTrackButton),
       subtitleTrackButton (_subtitleTrackButton),
       midiDeviceButton (_midiDeviceButton),
-      timeOffsetEditor (_timeOffsetEditor)
+      timeOffsetEditor (_timeOffsetEditor),
+      mediaSeparator (_mediaSeparator),
+      midiSeparator (_midiSeparator),
+      playerSeparator (_playerSeparator)
 {
 }
 
@@ -19,10 +22,13 @@ SettingsComponent::~SettingsComponent ()
 void SettingsComponent::resized ()
 {
     // Set the layout of the component
-    audioTrackButton.setBounds (10, 10, 280, 40);
-    subtitleTrackButton.setBounds (10, 60, 280, 40);
-    midiDeviceButton.setBounds (10, 110, 280, 40);
-    timeOffsetEditor.setBounds (10, 160, 280, 40);
+    mediaSeparator.setBounds (0, 0, getWidth(), 20);
+    audioTrackButton.setBounds (10, 30, 280, 40);
+    subtitleTrackButton.setBounds (10, 80, 280, 40);
+    mediaSeparator.setBounds (0, 130, getWidth(), 20);
+    midiDeviceButton.setBounds (10, 150, 280, 40);
+    timeOffsetEditor.setBounds (10, 200, 280, 40);
+    midiSeparator.setBounds (0, 250, getWidth(), 20);
 }
 
 //==============================================================================
@@ -31,16 +37,20 @@ SettingsWindow::SettingsWindow (juce::MessageListener* _mainApplication, CMP::MT
                             juce::Colours::darkgrey,
                             juce::DocumentWindow::allButtons,
                             true),
-      content (audioTrackButton, subtitleTrackButton, midiDeviceButton, timeOffsetEditor),
+      content (audioTrackButton, subtitleTrackButton, midiDeviceButton, timeOffsetEditor, mediaSeparator, midiSeparator, playerSeparator),
       mainApplication (_mainApplication),
       mtcSender (_mtcSender)
 {
 
     // Set the content of the window
     centreWithSize (400, 300);
-    content.setBounds (0, 0, 400, 300);
+    content.setBounds (0, 0, 400, 500);
     setContentNonOwned (&content, true);
     content.setVisible(true);
+
+    mediaSeparator.setText ("Media");
+    content.addAndMakeVisible (mediaSeparator);
+    mediaSeparator.setWidth(getWidth());
 
     // Set the buttons
     audioTrackButton.setButtonText ("Audio Track. Current : Unavailabe");
@@ -87,6 +97,11 @@ SettingsWindow::SettingsWindow (juce::MessageListener* _mainApplication, CMP::MT
             mainApplication->postMessage (message);
         }
     };
+
+    midiSeparator.setText ("Midi");
+    content.addAndMakeVisible (midiSeparator);
+    midiSeparator.setWidth(getWidth());
+
     content.addAndMakeVisible (midiDeviceButton);
     midiDeviceButton.setButtonText ("Select Midi Device. Current : Unavailable");
     midiDeviceButton.onClick = [this] () {
@@ -128,6 +143,12 @@ SettingsWindow::SettingsWindow (juce::MessageListener* _mainApplication, CMP::MT
             timeOffsetEditor.applyColourToAllText(juce::Colours::red);
         }
     };
+
+    playerSeparator.setText ("Player");
+    content.addAndMakeVisible (playerSeparator);
+    playerSeparator.setWidth(getWidth());
+
+
     content.resized ();
 }
 

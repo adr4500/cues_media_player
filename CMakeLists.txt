@@ -50,6 +50,14 @@ jucer_project_files(
   .
   .
   "Src/SettingsWindow.cpp"
+  x
+  .
+  .
+  "Src/UIModules.cpp"
+  .
+  .
+  .
+  "Src/UIModules.h"
   .
   .
   .
