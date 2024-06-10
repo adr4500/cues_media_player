@@ -54,7 +54,14 @@ long long int Video::getRunningTime () const
 // VideoThread
 void Video::VideoThread::run ()
 {
-    vlcInstance = libvlc_new (0, nullptr);
+    const char* font_option = "--freetype-font=Lato Regular";
+    char** vlc_args = new char*[2];
+    vlc_args[0] = new char[strlen(font_option) + 1];
+    strcpy(vlc_args[0], font_option);
+    vlc_args[1] = nullptr;
+    int argc = 1;
+
+    vlcInstance = libvlc_new (argc, vlc_args);
     vlcMediaPlayer = libvlc_media_player_new (vlcInstance);
     libvlc_media_t* media = libvlc_media_new_path (videoPath.toRawUTF8 ());
     libvlc_media_player_set_media (vlcMediaPlayer, media);
