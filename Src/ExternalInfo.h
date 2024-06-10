@@ -6,21 +6,26 @@
 
 inline bool isTimecodeFormat (const juce::String& _string)
 {
-    if (_string.length () != 11)
+    juce::String _string_copy = _string;
+    if (_string[0]=='-')
+    {
+        _string_copy = _string.substring (1);
+    }
+    if (_string_copy.length () != 11)
         return false;
 
-    if (_string[2] != ':' || _string[5] != ':' || _string[8] != ':')
+    if (_string_copy[2] != ':' || _string_copy[5] != ':' || _string_copy[8] != ':')
         return false;
 
-    if (!_string.substring (0, 2).containsOnly ("0123456789") ||
-        !_string.substring (3, 5).containsOnly ("0123456789") ||
-        !_string.substring (6, 8).containsOnly ("0123456789") ||
-        !_string.substring (9, 11).containsOnly ("0123456789"))
+    if (!_string_copy.substring (0, 2).containsOnly ("0123456789") ||
+        !_string_copy.substring (3, 5).containsOnly ("0123456789") ||
+        !_string_copy.substring (6, 8).containsOnly ("0123456789") ||
+        !_string_copy.substring (9, 11).containsOnly ("0123456789"))
         return false;
 
-    if (_string.substring (3, 5).getIntValue () > 59 ||
-        _string.substring (6, 8).getIntValue () > 59 ||
-        _string.substring (9, 11).getIntValue () > FPS - 1)
+    if (_string_copy.substring (3, 5).getIntValue () > 59 ||
+        _string_copy.substring (6, 8).getIntValue () > 59 ||
+        _string_copy.substring (9, 11).getIntValue () > FPS - 1)
         return false;
 
     return true;

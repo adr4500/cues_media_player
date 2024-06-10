@@ -8,6 +8,8 @@
     <GROUP id="{B342804F-2292-B51B-3FC2-BA1515A8C45E}" name="Src">
       <FILE id="gX7YkP" name="SettingsWindow.cpp" compile="1" resource="0"
             file="Src/SettingsWindow.cpp"/>
+      <FILE id="Nk8lFQ" name="UIModules.cpp" compile="1" resource="0" file="Src/UIModules.cpp"/>
+      <FILE id="NXfwVb" name="UIModules.h" compile="0" resource="0" file="Src/UIModules.h"/>
       <FILE id="cSIJIX" name="SettingsWindow.h" compile="0" resource="0"
             file="Src/SettingsWindow.h"/>
       <FILE id="H7547u" name="MTCSender.cpp" compile="1" resource="0" file="Src/MTCSender.cpp"/>

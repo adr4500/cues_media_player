@@ -34,6 +34,11 @@ public:
         currentTime = &t_currentTime;
     }
 
+    void setTimeOffset (Timecode& t_timeOffset)
+    {
+        timeOffset = &t_timeOffset;
+    }
+
     void run () override;
 
     void sendMTC ();
@@ -46,6 +51,7 @@ private:
     juce::MidiMessage::SmpteTimecodeType frameRate;
     Timecode lastTime;
     Timecode* currentTime;
+    Timecode* timeOffset;
     Timecode codedTime;
     juce::String midiOutputName = "None";
     int sequence = 0;

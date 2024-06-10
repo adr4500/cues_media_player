@@ -132,7 +132,11 @@ void MTCSender::sendMTC ()
     if (sequence == 0)
     {
         lastTime = codedTime;
-        codedTime = *currentTime;
+        codedTime = *currentTime + *timeOffset;
+        if (codedTime < Timecode ())
+        {
+            codedTime.setFramesTotal (0);
+        }
     }
     static Timecode FullFrameDifference = Timecode ("00:00:00:10");
     if (codedTime - lastTime >= FullFrameDifference or
